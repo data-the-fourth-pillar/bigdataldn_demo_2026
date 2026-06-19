@@ -1,0 +1,7 @@
+﻿src/App.tsx(1,1): error TS6133: 'React' is declared but its value is never read.
+src/components/Graph/EntityPanel.tsx(3,15): error TS6196: 'Entity' is declared but never used.
+src/components/Graph/EntityPanel.tsx(29,9): error TS6133: 'selectEntity' is declared but its value is never read.
+src/components/Layout/AppLayout.tsx(1,17): error TS1484: 'ReactNode' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/store/chatStore.ts(2,39): error TS6196: 'UsedContext' is declared but never used.
+src/store/graphStore.ts(2,61): error TS6196: 'EntityType' is declared but never used.
+src/store/graphStore.ts(2,73): error TS6196: 'RelationshipType' is declared but never used.

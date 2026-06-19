@@ -1,0 +1,312 @@
+{
+    "entities": {
+        "f105a575-3736-486d-b82d-4c6cd3f02369": {
+            "name": "Customer",
+            "type": "domain",
+            "description": "Customers in AcmeCorp",
+            "metadata": {},
+            "id": "f105a575-3736-486d-b82d-4c6cd3f02369",
+            "createdAt": "2026-02-09T11:55:07.362347",
+            "updatedAt": "2026-02-09T11:55:07.362347"
+        },
+        "83f79a0b-070f-405c-87b2-7e8228ee9af6": {
+            "name": "Orders",
+            "type": "domain",
+            "description": "Orders by Customers in AcmeCorp",
+            "metadata": {},
+            "id": "83f79a0b-070f-405c-87b2-7e8228ee9af6",
+            "createdAt": "2026-02-09T11:55:36.750740",
+            "updatedAt": "2026-02-09T11:55:36.750740"
+        },
+        "ae4fc3f2-73fb-4d18-8baf-7a86d7345ccb": {
+            "name": "Payments",
+            "type": "domain",
+            "description": "Payment transcations made in AcmeCorp",
+            "metadata": {},
+            "id": "ae4fc3f2-73fb-4d18-8baf-7a86d7345ccb",
+            "createdAt": "2026-02-09T11:56:00.711459",
+            "updatedAt": "2026-02-09T11:56:00.711459"
+        },
+        "705d6dc8-ab6c-45e7-bc10-f3aef964ca88": {
+            "name": "Refund Policy",
+            "type": "policy",
+            "description": "Refund Policy is 30 days",
+            "metadata": {},
+            "id": "705d6dc8-ab6c-45e7-bc10-f3aef964ca88",
+            "createdAt": "2026-02-09T11:57:09.027064",
+            "updatedAt": "2026-02-09T11:57:09.027064"
+        },
+        "b095b1a5-0796-4dc1-95e0-d4e10da8db7e": {
+            "name": "Delivery SLA Policy",
+            "type": "policy",
+            "description": "Orders must be delivered within 5 days",
+            "metadata": {},
+            "id": "b095b1a5-0796-4dc1-95e0-d4e10da8db7e",
+            "createdAt": "2026-02-09T11:57:40.265759",
+            "updatedAt": "2026-02-09T11:57:40.265759"
+        },
+        "9b113d4d-97eb-4011-a1a3-8bcf572caaf1": {
+            "name": "Support Agent",
+            "type": "person",
+            "description": "",
+            "metadata": {},
+            "id": "9b113d4d-97eb-4011-a1a3-8bcf572caaf1",
+            "createdAt": "2026-02-09T11:58:06.520879",
+            "updatedAt": "2026-02-09T11:58:06.520879"
+        },
+        "8b296b1b-1175-4998-8da8-b93aad238f82": {
+            "name": "Order Processing",
+            "type": "process",
+            "description": "Order to Delivery process",
+            "metadata": {},
+            "id": "8b296b1b-1175-4998-8da8-b93aad238f82",
+            "createdAt": "2026-02-09T11:58:35.895763",
+            "updatedAt": "2026-02-09T11:58:35.895763"
+        },
+        "525e142d-41e0-418d-9dcf-a2da6a3086f5": {
+            "name": "Delay Detection",
+            "type": "process",
+            "description": "Detecting order delays",
+            "metadata": {},
+            "id": "525e142d-41e0-418d-9dcf-a2da6a3086f5",
+            "createdAt": "2026-02-09T11:59:16.688720",
+            "updatedAt": "2026-02-09T11:59:16.688720"
+        },
+        "2edf8a20-1a41-4b6c-a1fc-c2d9a03594f4": {
+            "name": "Customer Tier",
+            "type": "metadata_business",
+            "description": "Tiers are Bronze, Silver and Gold",
+            "metadata": {},
+            "id": "2edf8a20-1a41-4b6c-a1fc-c2d9a03594f4",
+            "createdAt": "2026-02-09T11:59:46.910556",
+            "updatedAt": "2026-02-09T11:59:46.910556"
+        },
+        "59461add-7ce7-4b5b-9e76-f3a77da61e62": {
+            "name": "High Priority Customer Flag",
+            "type": "metadata_business",
+            "description": "Can be set to Yes or No. If yes then their orders must be processed in 2 days and they can return within 60 days instead of 30",
+            "metadata": {},
+            "id": "59461add-7ce7-4b5b-9e76-f3a77da61e62",
+            "createdAt": "2026-02-09T12:00:38.152219",
+            "updatedAt": "2026-02-09T12:00:38.152219"
+        },
+        "725ac021-311e-406a-a2e8-9c629b50cc6b": {
+            "name": "Order Status",
+            "type": "data_product",
+            "description": "Status of Orders in AcmeCorp",
+            "metadata": {
+                "tabular_data": {
+                    "headers": [
+                        "order_id",
+                        "order_status",
+                        "delay_reason",
+                        "order_value",
+                        "order_date",
+                        "customer_id"
+                    ],
+                    "rows": [
+                        [
+                            "ORD-9843321",
+                            "DELAYED",
+                            "WAREHOUSE_BACKLOG",
+                            "129.99",
+                            "2026-02-01",
+                            "CUST-77102"
+                        ]
+                    ]
+                }
+            },
+            "id": "725ac021-311e-406a-a2e8-9c629b50cc6b",
+            "createdAt": "2026-02-09T12:30:56.095929",
+            "updatedAt": "2026-02-09T12:37:01.820626"
+        },
+        "f59bce5f-252d-42ce-9502-8b806274a635": {
+            "name": "Payment & Refund",
+            "type": "data_product",
+            "description": "Payments of Orders in AcmeCorp",
+            "metadata": {
+                "tabular_data": {
+                    "headers": [
+                        "order_id",
+                        "payment_method",
+                        "payment_status",
+                        "refund_status",
+                        "refund_eta_days"
+                    ],
+                    "rows": [
+                        [
+                            "ORD-9843321",
+                            "CREDIT CARD",
+                            "CAPTURED",
+                            "NOT_INITIATED",
+                            "5"
+                        ]
+                    ]
+                }
+            },
+            "id": "f59bce5f-252d-42ce-9502-8b806274a635",
+            "createdAt": "2026-02-09T12:32:44.981165",
+            "updatedAt": "2026-02-09T12:32:44.981165"
+        },
+        "c88be857-23a5-40c1-8dd1-611da903176f": {
+            "name": "Delivery Commitment",
+            "type": "data_product",
+            "description": "Delivery Status of Orders",
+            "metadata": {
+                "tabular_data": {
+                    "headers": [
+                        "order_id",
+                        "promised_delivery_date",
+                        "current_estimated_delivery",
+                        "carrier_status",
+                        "warehouse_status"
+                    ],
+                    "rows": [
+                        [
+                            "ORD-9843321",
+                            "2026-02-05",
+                            "2026-02-10",
+                            "DELAYED",
+                            "BACKLOG"
+                        ]
+                    ]
+                }
+            },
+            "id": "c88be857-23a5-40c1-8dd1-611da903176f",
+            "createdAt": "2026-02-09T12:34:42.962512",
+            "updatedAt": "2026-02-09T12:34:42.962512"
+        }
+    },
+    "relationships": {
+        "fcf120f2-c0b7-4be9-a466-b92d32d4cad5": {
+            "sourceId": "f105a575-3736-486d-b82d-4c6cd3f02369",
+            "targetId": "705d6dc8-ab6c-45e7-bc10-f3aef964ca88",
+            "type": "contains",
+            "properties": null,
+            "confidence": null,
+            "notes": null,
+            "id": "fcf120f2-c0b7-4be9-a466-b92d32d4cad5",
+            "createdAt": "2026-02-09T11:57:09.037176"
+        },
+        "48035980-22c8-4342-bef5-673d5eb7b2ea": {
+            "sourceId": "83f79a0b-070f-405c-87b2-7e8228ee9af6",
+            "targetId": "b095b1a5-0796-4dc1-95e0-d4e10da8db7e",
+            "type": "contains",
+            "properties": null,
+            "confidence": null,
+            "notes": null,
+            "id": "48035980-22c8-4342-bef5-673d5eb7b2ea",
+            "createdAt": "2026-02-09T11:57:40.274003"
+        },
+        "d8427df9-b7ea-4ed8-b947-78b603eb17d9": {
+            "sourceId": "f105a575-3736-486d-b82d-4c6cd3f02369",
+            "targetId": "9b113d4d-97eb-4011-a1a3-8bcf572caaf1",
+            "type": "contains",
+            "properties": null,
+            "confidence": null,
+            "notes": null,
+            "id": "d8427df9-b7ea-4ed8-b947-78b603eb17d9",
+            "createdAt": "2026-02-09T11:58:06.532478"
+        },
+        "302e0dd2-ae97-440a-9e48-d92c34f24ee9": {
+            "sourceId": "83f79a0b-070f-405c-87b2-7e8228ee9af6",
+            "targetId": "8b296b1b-1175-4998-8da8-b93aad238f82",
+            "type": "contains",
+            "properties": null,
+            "confidence": null,
+            "notes": null,
+            "id": "302e0dd2-ae97-440a-9e48-d92c34f24ee9",
+            "createdAt": "2026-02-09T11:58:35.907546"
+        },
+        "c3ed5c16-6c33-43e9-9367-8e75e5e22f4a": {
+            "sourceId": "83f79a0b-070f-405c-87b2-7e8228ee9af6",
+            "targetId": "525e142d-41e0-418d-9dcf-a2da6a3086f5",
+            "type": "contains",
+            "properties": null,
+            "confidence": null,
+            "notes": null,
+            "id": "c3ed5c16-6c33-43e9-9367-8e75e5e22f4a",
+            "createdAt": "2026-02-09T11:59:16.700363"
+        },
+        "4151c3f1-f634-4f93-904a-809538a57c9f": {
+            "sourceId": "f105a575-3736-486d-b82d-4c6cd3f02369",
+            "targetId": "2edf8a20-1a41-4b6c-a1fc-c2d9a03594f4",
+            "type": "contains",
+            "properties": null,
+            "confidence": null,
+            "notes": null,
+            "id": "4151c3f1-f634-4f93-904a-809538a57c9f",
+            "createdAt": "2026-02-09T11:59:46.924697"
+        },
+        "39414f28-17ce-4c9a-8c86-69735e0f6a6a": {
+            "sourceId": "f105a575-3736-486d-b82d-4c6cd3f02369",
+            "targetId": "59461add-7ce7-4b5b-9e76-f3a77da61e62",
+            "type": "contains",
+            "properties": null,
+            "confidence": null,
+            "notes": null,
+            "id": "39414f28-17ce-4c9a-8c86-69735e0f6a6a",
+            "createdAt": "2026-02-09T12:00:38.164870"
+        },
+        "a69b094a-ede8-4615-886c-12ca84290227": {
+            "sourceId": "f105a575-3736-486d-b82d-4c6cd3f02369",
+            "targetId": "83f79a0b-070f-405c-87b2-7e8228ee9af6",
+            "type": "places",
+            "properties": null,
+            "confidence": null,
+            "notes": null,
+            "id": "a69b094a-ede8-4615-886c-12ca84290227",
+            "createdAt": "2026-02-09T12:01:04.303056"
+        },
+        "8b8bf3e9-1641-49f9-b6d9-a3606d4bb8bf": {
+            "sourceId": "83f79a0b-070f-405c-87b2-7e8228ee9af6",
+            "targetId": "ae4fc3f2-73fb-4d18-8baf-7a86d7345ccb",
+            "type": "paid by",
+            "properties": null,
+            "confidence": null,
+            "notes": null,
+            "id": "8b8bf3e9-1641-49f9-b6d9-a3606d4bb8bf",
+            "createdAt": "2026-02-09T12:01:24.912552"
+        },
+        "74223fc4-7abe-4038-b03f-f418a5271afc": {
+            "sourceId": "ae4fc3f2-73fb-4d18-8baf-7a86d7345ccb",
+            "targetId": "705d6dc8-ab6c-45e7-bc10-f3aef964ca88",
+            "type": "governed by",
+            "properties": null,
+            "confidence": null,
+            "notes": null,
+            "id": "74223fc4-7abe-4038-b03f-f418a5271afc",
+            "createdAt": "2026-02-09T12:28:34.378298"
+        },
+        "673a510f-6442-4973-8ee5-aa0f4d38c26b": {
+            "sourceId": "83f79a0b-070f-405c-87b2-7e8228ee9af6",
+            "targetId": "725ac021-311e-406a-a2e8-9c629b50cc6b",
+            "type": "contains",
+            "properties": null,
+            "confidence": null,
+            "notes": null,
+            "id": "673a510f-6442-4973-8ee5-aa0f4d38c26b",
+            "createdAt": "2026-02-09T12:30:56.111134"
+        },
+        "45ef57f4-5819-4672-8a9c-bb9abc1b67db": {
+            "sourceId": "ae4fc3f2-73fb-4d18-8baf-7a86d7345ccb",
+            "targetId": "f59bce5f-252d-42ce-9502-8b806274a635",
+            "type": "contains",
+            "properties": null,
+            "confidence": null,
+            "notes": null,
+            "id": "45ef57f4-5819-4672-8a9c-bb9abc1b67db",
+            "createdAt": "2026-02-09T12:32:44.995882"
+        },
+        "4c79e75f-944a-46a7-adfa-932c1f75e488": {
+            "sourceId": "83f79a0b-070f-405c-87b2-7e8228ee9af6",
+            "targetId": "c88be857-23a5-40c1-8dd1-611da903176f",
+            "type": "contains",
+            "properties": null,
+            "confidence": null,
+            "notes": null,
+            "id": "4c79e75f-944a-46a7-adfa-932c1f75e488",
+            "createdAt": "2026-02-09T12:34:42.978343"
+        }
+    }
+}

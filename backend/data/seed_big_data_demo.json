@@ -1,0 +1,176 @@
+{
+  "entities": {
+    "demo-domain-order-mgmt": {
+      "id": "demo-domain-order-mgmt",
+      "name": "Order Management",
+      "type": "domain",
+      "description": "Data domain covering order lifecycle and fulfillment",
+      "metadata": {},
+      "createdAt": "2026-06-06T00:00:00.000Z",
+      "updatedAt": "2026-06-06T00:00:00.000Z"
+    },
+    "demo-dp-orders": {
+      "id": "demo-dp-orders",
+      "name": "Orders",
+      "type": "data_product",
+      "description": "Customer order transactions and status",
+      "metadata": {},
+      "createdAt": "2026-06-06T00:00:00.000Z",
+      "updatedAt": "2026-06-06T00:00:00.000Z"
+    },
+    "demo-process-ltc": {
+      "id": "demo-process-ltc",
+      "name": "Lead to Cash Process",
+      "type": "process",
+      "description": "End-to-end sales and revenue process",
+      "metadata": {},
+      "createdAt": "2026-06-06T00:00:00.000Z",
+      "updatedAt": "2026-06-06T00:00:00.000Z"
+    },
+    "demo-person-finance": {
+      "id": "demo-person-finance",
+      "name": "Finance Team",
+      "type": "person",
+      "description": "Finance operations and reporting",
+      "metadata": {},
+      "createdAt": "2026-06-06T00:00:00.000Z",
+      "updatedAt": "2026-06-06T00:00:00.000Z"
+    },
+    "demo-tech-cpq": {
+      "id": "demo-tech-cpq",
+      "name": "CPQ",
+      "type": "technology",
+      "description": "Configure, price, and quote platform",
+      "metadata": {},
+      "createdAt": "2026-06-06T00:00:00.000Z",
+      "updatedAt": "2026-06-06T00:00:00.000Z"
+    },
+    "demo-person-agent": {
+      "id": "demo-person-agent",
+      "name": "Customer Support AI Agent",
+      "type": "ai_agent",
+      "description": "AI Agent supporting customer inquiries",
+      "metadata": {},
+      "createdAt": "2026-06-06T00:00:00.000Z",
+      "updatedAt": "2026-06-06T00:00:00.000Z"
+    }
+  },
+  "relationships": {
+    "demo-rel-domain-orders": {
+      "id": "demo-rel-domain-orders",
+      "sourceId": "demo-domain-order-mgmt",
+      "targetId": "demo-dp-orders",
+      "type": "has_data_product",
+      "properties": {
+        "perspectives": {
+          "demo-domain-order-mgmt": { "label": "has data product", "direction": "out" }
+        }
+      },
+      "createdAt": "2026-06-06T00:00:00.000Z"
+    },
+    "demo-rel-orders-process": {
+      "id": "demo-rel-orders-process",
+      "sourceId": "demo-dp-orders",
+      "targetId": "demo-process-ltc",
+      "type": "used_in",
+      "properties": {
+        "perspectives": {
+          "demo-dp-orders": { "label": "used in", "direction": "out" },
+          "demo-process-ltc": { "label": "creates", "direction": "out" }
+        }
+      },
+      "createdAt": "2026-06-06T00:00:00.000Z"
+    },
+    "demo-rel-orders-cpq": {
+      "id": "demo-rel-orders-cpq",
+      "sourceId": "demo-dp-orders",
+      "targetId": "demo-tech-cpq",
+      "type": "used_in",
+      "properties": {
+        "perspectives": {
+          "demo-dp-orders": { "label": "used in", "direction": "out" },
+          "demo-tech-cpq": { "label": "used in", "direction": "in" }
+        }
+      },
+      "createdAt": "2026-06-06T00:00:00.000Z"
+    },
+    "demo-rel-cpq-process": {
+      "id": "demo-rel-cpq-process",
+      "sourceId": "demo-tech-cpq",
+      "targetId": "demo-process-ltc",
+      "type": "enables_execution",
+      "properties": {
+        "perspectives": {
+          "demo-process-ltc": { "label": "enables execution", "direction": "in" },
+          "demo-tech-cpq": { "label": "enables execution", "direction": "out" }
+        }
+      },
+      "createdAt": "2026-06-06T00:00:00.000Z"
+    },
+    "demo-rel-orders-finance": {
+      "id": "demo-rel-orders-finance",
+      "sourceId": "demo-dp-orders",
+      "targetId": "demo-person-finance",
+      "type": "used_by",
+      "properties": {
+        "perspectives": {
+          "demo-dp-orders": { "label": "used by", "direction": "out" },
+          "demo-person-finance": { "label": "used by", "direction": "in" }
+        }
+      },
+      "createdAt": "2026-06-06T00:00:00.000Z"
+    },
+    "demo-rel-process-finance": {
+      "id": "demo-rel-process-finance",
+      "sourceId": "demo-process-ltc",
+      "targetId": "demo-person-finance",
+      "type": "used_by",
+      "properties": {
+        "perspectives": {
+          "demo-process-ltc": { "label": "used by", "direction": "out" },
+          "demo-person-finance": { "label": "used by", "direction": "in" }
+        }
+      },
+      "createdAt": "2026-06-06T00:00:00.000Z"
+    },
+    "demo-rel-orders-agent": {
+      "id": "demo-rel-orders-agent",
+      "sourceId": "demo-dp-orders",
+      "targetId": "demo-person-agent",
+      "type": "data_domain",
+      "properties": {
+        "perspectives": {
+          "demo-dp-orders": { "label": "data domain", "direction": "out" },
+          "demo-person-agent": { "label": "data domain", "direction": "in" }
+        }
+      },
+      "createdAt": "2026-06-06T00:00:00.000Z"
+    },
+    "demo-rel-process-agent": {
+      "id": "demo-rel-process-agent",
+      "sourceId": "demo-process-ltc",
+      "targetId": "demo-person-agent",
+      "type": "interacts_with",
+      "properties": {
+        "perspectives": {
+          "demo-process-ltc": { "label": "interacts with", "direction": "out" },
+          "demo-person-agent": { "label": "interacts with", "direction": "in" }
+        }
+      },
+      "createdAt": "2026-06-06T00:00:00.000Z"
+    },
+    "demo-rel-agent-cpq": {
+      "id": "demo-rel-agent-cpq",
+      "sourceId": "demo-person-agent",
+      "targetId": "demo-tech-cpq",
+      "type": "interacts_with",
+      "properties": {
+        "perspectives": {
+          "demo-person-agent": { "label": "interacts with", "direction": "out" },
+          "demo-tech-cpq": { "label": "interacts with", "direction": "in" }
+        }
+      },
+      "createdAt": "2026-06-06T00:00:00.000Z"
+    }
+  }
+}
