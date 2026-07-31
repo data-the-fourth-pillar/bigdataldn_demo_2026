@@ -119,18 +119,20 @@ class GraphService:
     def get_neighbors(self, entity_id: str, depth: int = 1) -> List[str]:
         if entity_id not in self.entities:
             return []
-        visited = set()
-        current_level = {entity_id}
+        visited = {entity_id}
+        queue = [entity_id]
         for _ in range(depth):
-            next_level = set()
-            for eid in current_level:
-                if eid in visited: continue
-                visited.add(eid)
+            next_queue = []
+            for node in queue:
                 for rel in self.relationships.values():
-                    if rel.sourceId == eid: next_level.add(rel.targetId)
-                    elif rel.targetId == eid: next_level.add(rel.sourceId)
-            current_level = next_level
-        return list(visited)
+                    if rel.sourceId == node and rel.targetId not in visited:
+                        visited.add(rel.targetId)
+                        next_queue.append(rel.targetId)
+                    elif rel.targetId == node and rel.sourceId not in visited:
+                        visited.add(rel.sourceId)
+                        next_queue.append(rel.sourceId)
+            queue = next_queue
+        return list(visited - {entity_id})
     
     def get_subgraph(self, entity_ids: List[str]) -> Dict[str, Any]:
         entity_id_set = set(entity_ids)

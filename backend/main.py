@@ -63,6 +63,7 @@ async def root():
         "docs": "/docs"
     }
 
+@app.get("/api/health")
 @app.get("/health")
 async def health_check():
     return {"status": "healthy"}
