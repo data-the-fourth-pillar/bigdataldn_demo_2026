@@ -1,0 +1,33 @@
+# Claude Code / local AI tooling (never commit)
+.claude/
+CLAUDE.md
+GEMINI.md
+MEMORY.md
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+*.egg-info/
+
+# Environment / secrets
+.env
+.env.*
+
+# Runtime artifacts (per CLAUDE.md Stage 2 convention)
+data/
+logs/
+output/
+cache/
+*.db
+*.log
+
+# Node
+node_modules/
+dist/
+
+# OS
+.DS_Store
