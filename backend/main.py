@@ -66,7 +66,16 @@ async def root():
 @app.get("/api/health")
 @app.get("/health")
 async def health_check():
-    return {"status": "healthy"}
+    import os
+    openai_key = os.getenv('OPENAI_API_KEY', '')
+    gemini_key = os.getenv('GEMINI_API_KEY', '')
+    return {
+        "status": "healthy",
+        "providers": {
+            "openai": bool(openai_key and openai_key != 'your_openai_api_key_here'),
+            "gemini": bool(gemini_key and gemini_key != 'your_gemini_api_key_here'),
+        }
+    }
 
 if __name__ == "__main__":
     import uvicorn

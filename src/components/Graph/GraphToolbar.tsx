@@ -79,13 +79,13 @@ export const GraphToolbar: React.FC = () => {
 
     const handleReloadDemo = async () => {
         try {
-            await graphApi.seedDemo();
+            await graphApi.seedMdsD2c();
             const data = await graphApi.getGraphData();
             setEntities(data.entities);
             setRelationships(data.relationships);
             clearFilter();
-            const defaultDomain = data.entities.find(e => e.type === 'domain');
-            setFocusEntity(defaultDomain?.id ?? null);
+            const defaultCategory = data.entities.find(e => e.type === 'product_category' || e.type === 'domain');
+            setFocusEntity(defaultCategory?.id ?? null);
         } catch (error) {
             console.error('Demo reload failed:', error);
         }

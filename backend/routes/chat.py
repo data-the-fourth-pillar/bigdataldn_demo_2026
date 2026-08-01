@@ -27,6 +27,7 @@ async def send_message(request: ChatRequest):
         request.message,
         request.groundingMode,
         request.focusEntityId,
+        persona_lens=request.personaLens,
     )
 
     llm_response = await llm_service.generate_response(
@@ -34,6 +35,9 @@ async def send_message(request: ChatRequest):
         context_data['context_string'],
         request.conversationHistory,
         grounding_mode=request.groundingMode,
+        provider=request.provider,
+        persona_lens=request.personaLens,
+        entity_count=len(context_data['used_entities']),
     )
 
     message = Message(
@@ -43,12 +47,15 @@ async def send_message(request: ChatRequest):
         timestamp=datetime.utcnow().isoformat(),
         citations=_build_citations(context_data),
         usedContext=_build_used_context(context_data),
+        reasoning=llm_response.get('reasoning'),
     )
 
     return ChatResponse(
         message=message,
         usedContext=_build_used_context(context_data),
         tokensUsed=llm_response.get('tokens_used', 0),
+        failoverTriggered=llm_response.get('failover_triggered', False),
+        failoverNotice=llm_response.get('failover_notice'),
     )
 
 @router.post("/stream")
@@ -59,6 +66,7 @@ async def stream_message(request: ChatRequest):
         request.message,
         request.groundingMode,
         request.focusEntityId,
+        persona_lens=request.personaLens,
     )
 
     async def generate():
@@ -69,6 +77,7 @@ async def stream_message(request: ChatRequest):
                     "relationships": context_data['used_relationships'],
                     "raw_context_string": context_data['context_string'],
                     "citations": context_data.get('citations', []),
+                    "persona_lens": context_data.get('persona_lens', 'ceo'),
                 },
                 "done": False,
             }
@@ -79,14 +88,23 @@ async def stream_message(request: ChatRequest):
                 context_data['context_string'],
                 request.conversationHistory,
                 grounding_mode=request.groundingMode,
+                provider=request.provider,
+                persona_lens=request.personaLens,
+                entity_count=len(context_data['used_entities']),
             ):
                 data = json.dumps({"delta": chunk, "done": False})
                 yield f"data: {data}\n\n"
 
-            yield f"data: [DONE]\n\n"
+            done_payload = json.dumps({
+                "done": True,
+                "failoverTriggered": False,
+                "failoverNotice": None,
+            })
+            yield f"data: {done_payload}\n\n"
 
-        except Exception as e:
-            error_data = json.dumps({"error": str(e), "done": True})
+        except Exception:
+            # S2 Security Rule — Suppress exception details in SSE response
+            error_data = json.dumps({"error": "Stream error — please retry.", "done": True})
             yield f"data: {error_data}\n\n"
 
     return StreamingResponse(

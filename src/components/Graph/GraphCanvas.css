@@ -303,3 +303,8 @@
 [data-theme="dark"] .graph-hint {
     background: rgba(30, 41, 59, 0.75);
 }
+
+/* VP Supply Chain node glow classes */
+.node-sc-ready   circle { filter: drop-shadow(0 0 6px #22c55e); }
+.node-sc-blocker circle { filter: drop-shadow(0 0 8px #ef4444); }
+.node-sc-partial circle { filter: drop-shadow(0 0 5px #f59e0b); }

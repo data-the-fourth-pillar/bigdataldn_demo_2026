@@ -40,8 +40,10 @@ export const chatApi = {
     async streamMessage(
         request: ChatRequest,
         onChunk: (chunk: string) => void,
-        onComplete: (message: Message) => void,
-        onError: (error: Error) => void
+        onContextInfo?: (entities: string[], relationships: string[], personaLens: string) => void,
+        onComplete?: (message: Message, reasoning: string) => void,
+        onError?: (error: Error) => void,
+        onStreamReset?: (notice: string) => void,
     ): Promise<void> {
         try {
             const response = await fetch(`${API_BASE_URL}/api/chat/stream`, {
@@ -84,29 +86,48 @@ export const chatApi = {
                             if (parsed.context) {
                                 usedContext = parsed.context;
                                 citations = parsed.context.citations;
+                                onContextInfo?.(
+                                    parsed.context.entities ?? [],
+                                    parsed.context.relationships ?? [],
+                                    parsed.context.persona_lens ?? 'ceo',
+                                );
                             }
                             if (parsed.delta) {
                                 fullMessage += parsed.delta;
                                 onChunk(parsed.delta);
                             }
+                            if (parsed.type === 'stream_reset') {
+                                fullMessage = '';
+                                onStreamReset?.(parsed.failoverNotice ?? '');
+                            }
+                            if (parsed.done === true) {
+                                // Structured done event received
+                            }
                         } catch {
-                            // Skip invalid JSON
+                            // Skip non-JSON or partial lines
                         }
                     }
                 }
             }
 
+            const reasoningMatch = fullMessage.match(/<reasoning>([\s\S]*?)<\/reasoning>/);
+            const reasoning = reasoningMatch ? reasoningMatch[1].trim() : '';
+            const answerContent = reasoningMatch
+                ? fullMessage.slice(fullMessage.indexOf('</reasoning>') + '</reasoning>'.length).trim()
+                : fullMessage;
+
             const message: Message = {
                 id: crypto.randomUUID(),
                 role: 'assistant',
-                content: fullMessage,
+                content: answerContent,
                 timestamp: new Date().toISOString(),
                 usedContext,
                 citations,
+                reasoning: reasoning || undefined,
             };
-            onComplete(message);
+            onComplete?.(message, reasoning);
         } catch (error) {
-            onError(error as Error);
+            onError?.(error as Error);
         }
     },
 

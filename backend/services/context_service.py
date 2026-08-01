@@ -10,6 +10,13 @@ CATEGORY_LABELS = {
     'technology': 'Technology',
     'ai_agent': 'AI Agent',
     'metadata_technical': 'Technology',
+    'product_category': 'Product Category',
+    'region': 'UK Region',
+    'supply_chain_node': 'Supply Chain Node',
+    'marketing_channel': 'Marketing Channel',
+    'kpi': 'KPI',
+    'legal_entity': 'Legal Entity',
+    'finance_entity': 'Finance',
 }
 
 class ContextService:
@@ -31,6 +38,13 @@ class ContextService:
             'person': ['people', 'person', 'team', 'finance'],
             'technology': ['technology', 'system', 'platform', 'cpq', 'crm', 'tool'],
             'ai_agent': ['ai agent', 'agent', 'support agent', 'bot'],
+            'kpi': ['kpi', 'eav', 'tav', 'rv', 'revenue', 'addressable'],
+            'product_category': ['product', 'category', 'nutrition', 'beauty', 'vitamin', 'pet', 'apparel'],
+            'region': ['region', 'uk', 'london', 'southeast', 'midlands', 'north', 'scotland', 'wales', 'ni', 'ireland'],
+            'supply_chain_node': ['supply chain', 'fulfillment', 'fulfilment', 'warehouse', '3pl', 'last-mile'],
+            'marketing_channel': ['channel', 'wholesale', 'retailer', 'd2c', 'amazon'],
+            'legal_entity': ['legal', 'contract', 'exclusivity', 'agreement'],
+            'finance_entity': ['capex', 'breakeven', 'margin', 'cost', 'cogs', 'opex', 'budget'],
         }
 
         rel_keywords = {
@@ -41,6 +55,11 @@ class ContextService:
             'enables_execution': ['enables', 'enable', 'execution'],
             'interacts_with': ['interacts', 'interact'],
             'data_domain': ['data domain'],
+            'measures': ['measures', 'kpi for', 'tracks'],
+            'fulfils_region': ['fulfils', 'serves', 'covers'],
+            'depends_on': ['depends on', 'requires', 'needs'],
+            'phases_in_year': ['phase', 'year 1', 'year 2', 'year 3', 'roadmap'],
+            'governs': ['governs', 'contract', 'exclusivity'],
         }
 
         relevant_types = []
@@ -125,11 +144,11 @@ class ContextService:
         relevant.sort(key=lambda x: x[1], reverse=True)
         return [e for e, _ in relevant[:self.max_entities]]
 
-    def expand_context(self, seed_entities: List[Entity]) -> Dict[str, Any]:
+    def expand_context(self, seed_entities: List[Entity], depth: int = 1) -> Dict[str, Any]:
         entity_ids = {e.id for e in seed_entities}
 
         for entity in seed_entities[:5]:
-            neighbors = graph_service.get_neighbors(entity.id, depth=1)
+            neighbors = graph_service.get_neighbors(entity.id, depth=depth)
             entity_ids.update(neighbors[:8])
 
         return graph_service.get_subgraph(list(entity_ids))
@@ -139,6 +158,7 @@ class ContextService:
         subgraph: Dict[str, Any],
         grounding_mode: str,
         focus_entity_id: Optional[str] = None,
+        persona_lens: str = 'ceo',
     ) -> str:
         if grounding_mode == 'generic':
             return ""
@@ -148,6 +168,11 @@ class ContextService:
 
         if not entities:
             return "No relevant information found in the knowledge graph."
+
+        if persona_lens == 'ceo':
+            entities = sorted(entities, key=lambda e: 0 if e.type in ('kpi', 'finance_entity') else 1)
+        elif persona_lens == 'vp_supply_chain':
+            entities = sorted(entities, key=lambda e: 0 if e.type == 'supply_chain_node' else 1)
 
         focus_entity = graph_service.get_entity(focus_entity_id) if focus_entity_id else None
         context_parts = ["# Knowledge Graph Context\n"]
@@ -162,6 +187,9 @@ class ContextService:
         for entity in entities:
             category = CATEGORY_LABELS.get(entity.type, entity.type.replace('_', ' '))
             desc = entity.description or "No description"
+            if persona_lens == 'vp_supply_chain' and entity.type == 'supply_chain_node':
+                status = (entity.metadata or {}).get('d2c_status', 'unknown')
+                desc = f"{desc} [D2C Status: {status}]"
             context_parts.append(f"- **{entity.name}** [{category}]: {desc}")
 
             if grounding_mode == 'kg_full' and entity.metadata and 'tabular_data' in entity.metadata:
@@ -214,11 +242,13 @@ class ContextService:
         query: str,
         grounding_mode: str,
         focus_entity_id: Optional[str] = None,
+        persona_lens: str = 'ceo',
     ) -> Dict[str, Any]:
         interpretation = self.interpret_query(query)
         relevant_entities = self.find_relevant_entities(interpretation, focus_entity_id)
-        subgraph = self.expand_context(relevant_entities)
-        context_string = self.package_context(subgraph, grounding_mode, focus_entity_id)
+        depth = 3 if grounding_mode != 'generic' else 1
+        subgraph = self.expand_context(relevant_entities, depth=depth)
+        context_string = self.package_context(subgraph, grounding_mode, focus_entity_id, persona_lens=persona_lens)
 
         return {
             'context_string': context_string,
@@ -226,6 +256,7 @@ class ContextService:
             'used_relationships': [r.id for r in subgraph.get('relationships', [])],
             'subgraph': subgraph,
             'citations': self.build_citations(subgraph),
+            'persona_lens': persona_lens,
         }
 
 context_service = ContextService()

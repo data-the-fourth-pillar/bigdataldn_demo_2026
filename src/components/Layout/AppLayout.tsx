@@ -1,5 +1,6 @@
 import React, { type ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { PersonaSelector } from '../Controls/PersonaSelector';
 import './AppLayout.css';
 
 interface AppLayoutProps {
@@ -45,9 +46,15 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                 </div>
             </aside>
 
-            <main className="main-content">
-                {children}
-            </main>
+            <div className="main-wrapper">
+                <header className="app-top-header">
+                    <PersonaSelector />
+                </header>
+
+                <main className="main-content">
+                    {children}
+                </main>
+            </div>
         </div>
     );
 };
