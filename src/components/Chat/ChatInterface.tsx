@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import ReactMarkdown from 'react-markdown';
 import { useChatStore } from '../../store/chatStore';
 import { useGraphStore } from '../../store/graphStore';
 import { chatApi } from '../../api/chatApi';
@@ -7,20 +8,24 @@ import type { GroundingMode } from '../../types/chat';
 import './ChatInterface.css';
 
 const EXAMPLE_QUESTIONS = [
-    'What data products are in the Order Management domain?',
-    'How does Lead to Cash Process relate to Orders?',
-    'Who uses the Orders data product?',
-    'What technology does Customer Support AI Agent interact with?',
+    'We want to launch D2C in the UK next quarter. Which categories and regions should we start with?',
+    'What are the main supply chain blockers for launching D2C?',
+    'Show me the EAV revenue projections across Year 1, Year 2, and Year 3.',
+    'Which legal contracts govern channel conflict between Wholesale and D2C?',
 ];
 
 export const ChatInterface: React.FC = () => {
     const {
         messages,
         groundingMode,
+        provider,
+        personaLens,
         isStreaming,
         currentStreamingMessage,
         addMessage,
         setGroundingMode,
+        setHighlightedPath,
+        clearHighlightedPath,
         startStreaming,
         appendStreamChunk,
         finishStreaming,
@@ -30,6 +35,7 @@ export const ChatInterface: React.FC = () => {
     const focusEntity = entities.find(e => e.id === focusEntityId);
 
     const [input, setInput] = useState('');
+    const [failoverNotice, setFailoverNotice] = useState<string | null>(null);
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -38,6 +44,8 @@ export const ChatInterface: React.FC = () => {
 
     const sendMessage = async (text: string) => {
         if (!text.trim() || isStreaming) return;
+
+        clearHighlightedPath();
 
         const userMessage = {
             id: crypto.randomUUID(),
@@ -57,9 +65,14 @@ export const ChatInterface: React.FC = () => {
                     groundingMode,
                     conversationHistory: messages,
                     focusEntityId,
+                    provider,
+                    personaLens,
                 },
                 (chunk) => appendStreamChunk(chunk),
-                (message) => finishStreaming(message),
+                (ctxEntities, ctxRelationships, _lens) => {
+                    setHighlightedPath(ctxEntities, ctxRelationships);
+                },
+                (message, _reasoning) => finishStreaming(message),
                 (error) => {
                     console.error('Streaming error:', error);
                     finishStreaming({
@@ -68,6 +81,10 @@ export const ChatInterface: React.FC = () => {
                         content: 'Sorry, I encountered an error processing your request. Make sure the backend is running on port 8000.',
                         timestamp: new Date().toISOString(),
                     });
+                },
+                (notice) => {
+                    setFailoverNotice(notice);
+                    setTimeout(() => setFailoverNotice(null), 3000);
                 }
             );
         } catch (error) {
@@ -82,17 +99,34 @@ export const ChatInterface: React.FC = () => {
 
     const groundingModes: { value: GroundingMode; label: string; description: string }[] = [
         { value: 'generic', label: 'Generic', description: 'No graph context — standard AI response' },
-        { value: 'kg_only', label: 'Knowledge Graph', description: 'Answers grounded in graph entities and relationships' },
-        { value: 'kg_full', label: 'KG + Data', description: 'Full context including data product tables' },
+        { value: 'kg_only', label: 'Enterprise Context (EC)', description: 'Answers grounded in graph entities and relationships' },
+        { value: 'kg_full', label: 'EC + Data', description: 'Full context including data product tables' },
     ];
 
     const isGraphGrounded = groundingMode !== 'generic';
 
     return (
         <div className="chat-interface">
+            {failoverNotice && (
+                <div className="failover-toast" style={{
+                    position: 'absolute',
+                    top: '12px',
+                    right: '12px',
+                    zIndex: 9999,
+                    background: 'var(--color-accent-600, #2563eb)',
+                    color: '#ffffff',
+                    padding: '8px 16px',
+                    borderRadius: '8px',
+                    fontSize: '13px',
+                    fontWeight: 600,
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                }}>
+                    ⚠️ {failoverNotice}
+                </div>
+            )}
+
             <div className="chat-header">
                 <div className="header-content">
-                    <h2>Knowledge Graph Chat</h2>
                     <div className="graph-stats">
                         <span className="stat">
                             <span className="stat-value">{entities.length}</span>
@@ -149,15 +183,15 @@ export const ChatInterface: React.FC = () => {
             <div className="messages-container">
                 {messages.length === 0 && (
                     <div className="welcome-message">
-                        <h3>👋 Ask your knowledge graph</h3>
+                        <h3>👋 Ask your Enterprise Context</h3>
                         <p>
-                            Chat is connected to your knowledge graph
+                            Chat is connected to your enterprise context
                             {entities.length > 0
                                 ? ` (${entities.length} entities, ${relationships.length} relationships).`
                                 : '. Loading graph data...'}
                             {isGraphGrounded
                                 ? ' Answers are grounded in your graph structure.'
-                                : ' Switch to Knowledge Graph mode to use graph context.'}
+                                : ' Switch to Enterprise Context mode to use graph context.'}
                         </p>
                         <div className="example-questions">
                             <p className="example-label">Try asking:</p>
@@ -177,7 +211,7 @@ export const ChatInterface: React.FC = () => {
 
                 {messages.map((message) => {
                     const reasoningMatch = message.content.match(/<reasoning>([\s\S]*?)<\/reasoning>/);
-                    const reasoning = reasoningMatch ? reasoningMatch[1].trim() : null;
+                    const reasoning = message.reasoning || (reasoningMatch ? reasoningMatch[1].trim() : null);
                     const cleanContent = message.content.replace(/<reasoning>[\s\S]*?<\/reasoning>/, '').trim();
                     const hasContext = message.usedContext?.raw_context_string;
                     const citations = message.citations ?? [];
@@ -188,14 +222,25 @@ export const ChatInterface: React.FC = () => {
                                 {message.role === 'user' ? '👤' : '🤖'}
                             </div>
                             <div className="message-content">
-                                {reasoning && (
-                                    <details className="reasoning-details">
-                                        <summary>🔍 Agent Reasoning</summary>
-                                        <div className="reasoning-text">{reasoning}</div>
-                                    </details>
+                                {message.role === 'assistant' && isGraphGrounded && (
+                                    reasoning ? (
+                                        <details className="reasoning-details" open>
+                                            <summary>🔍 Agent Reasoning</summary>
+                                            <div className="reasoning-text">{reasoning}</div>
+                                        </details>
+                                    ) : (
+                                        <details className="reasoning-details">
+                                            <summary>🔍 Agent Reasoning</summary>
+                                            <div className="reasoning-text" style={{ fontStyle: 'italic', opacity: 0.8 }}>
+                                                Direct EKG response generated — reasoning trace unavailable for this response.
+                                            </div>
+                                        </details>
+                                    )
                                 )}
                                 <div className="message-text">
-                                    {cleanContent || (message.role === 'assistant' && !isStreaming ? '...' : '')}
+                                    {message.role === 'assistant'
+                                        ? <ReactMarkdown>{cleanContent || (!isStreaming ? '...' : '')}</ReactMarkdown>
+                                        : cleanContent}
                                 </div>
 
                                 {citations.length > 0 && (
@@ -220,7 +265,7 @@ export const ChatInterface: React.FC = () => {
 
                                 {hasContext && (
                                     <details className="context-details">
-                                        <summary>💾 Knowledge Context Used</summary>
+                                        <summary>💾 Enterprise Context Used</summary>
                                         <pre className="context-text">{message.usedContext?.raw_context_string}</pre>
                                     </details>
                                 )}

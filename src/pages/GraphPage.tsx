@@ -30,7 +30,7 @@ export const GraphPage: React.FC = () => {
 
             if (data.entities.length === 0) {
                 try {
-                    await graphApi.seedDemo();
+                    await graphApi.seedMdsD2c();
                     data = await graphApi.getGraphData();
                 } catch {
                     await seedDemoLocally(setEntities, setRelationships, setFocusEntity);
@@ -41,8 +41,8 @@ export const GraphPage: React.FC = () => {
             setEntities(data.entities);
             setRelationships(data.relationships);
 
-            const defaultDomain = data.entities.find(e => e.type === 'domain');
-            setFocusEntity(defaultDomain?.id ?? DEMO_DOMAIN_ID);
+            const defaultFocus = data.entities.find(e => e.type === 'product_category' || e.type === 'domain');
+            setFocusEntity(defaultFocus?.id ?? null);
         } catch (error) {
             console.error('Failed to load graph data, using local demo:', error);
             await seedDemoLocally(setEntities, setRelationships, setFocusEntity);

@@ -27,6 +27,16 @@ The demo is a live web application with three persona views — **CEO**, **VP Su
 
 All Stage 0.A open items are now resolved.
 
+## Engineer feedback incorporated (pre-Stage 0.B), 2026-06-20
+
+Antigravity (Engineer) reviewed the confirmed brief and raised five points. Three resolve open design questions already deferred to Stage 0.B/1; one is a Stage 1 architecture recommendation; one is new scope requiring a MoSCoW decision.
+
+- **CDO lens graph-highlight-on-answer.** `context_service.py` already returns `used_entities`/`used_relationships` per response (verified in code, lines 225-226), threaded through `routes/chat.py` to the frontend. Resolves the CDO lens's lineage requirement concretely: the D3 canvas highlights the traversed node/edge path as the AI answer streams in. Pure frontend wiring against existing data — no new backend work. (Confirmed by Sujay, 2026-06-20.)
+- **Failover visibility resolved: visible, not silent.** Answers the open question on failover surfacing (line 25 above) — show a toast (e.g. "OpenAI request timed out. Auto-failing over to Gemini.") rather than switching silently. A visible failover reinforces the EKG-governance narrative and is a stage crowd-pleaser if it fires live. (Confirmed by Sujay, 2026-06-20.)
+- **Cross-provider `<reasoning>` tag parsing.** Answers the open cross-provider tag contract question (line 24 above). OpenAI is reliably compliant; Gemini may omit/warp the tag. Stage 1 must specify a fallback parser (regex-extract `<reasoning>...</reasoning>`, with a defined degrade path — e.g. treat the whole response as the answer with no reasoning panel — if the tag is missing) rather than assuming prompt compliance. (Confirmed by Sujay, 2026-06-20.)
+- **KPI-as-entity schema — promoted to Must.** KPIs (TAV/EAV/RV and any persona-defined KPI) must be modeled as `kpi`-typed entities linked via a `measures` relationship to the domain/region entity they apply to, reusing the existing EKG node/edge CRUD API instead of a separate KPI store. This is a Must independent of whether the runtime CRUD *feature* ships (that part stays Should, see below): even the fallback path of pre-seeded fixed KPIs must seed them as real EKG entities, not a hardcoded dict — otherwise the CEO/CDO lens KPIs aren't traceable/groundable like the rest of the graph, which breaks the core "AI reasoning grounded in specific graph nodes" narrative the whole demo depends on. Carries the same Vercel ephemeral-`/tmp` persistence caveat already documented in `VERCEL_STORAGE_FIX.md`, since KPI mutations go through the same `storage_service` path as the rest of the graph. (Confirmed by Sujay, 2026-06-20.)
+- **VP Supply Chain color-coded readiness/blocker styling — promoted to Must.** Green-glow (D2C-ready) / red-glow (blocker) semantic node styling on the D3 canvas when the VP Supply Chain persona is active. Was implied narratively (line 15) but not previously a named deliverable or MoSCoW item. Promoted to Must, not Should: without visual status coding the VP Supply Chain lens degrades to reading text descriptions, and the VP Supply Chain lens itself is already a Must. (Confirmed by Sujay, 2026-06-20.)
+
 ## Preliminary MoSCoW pass (full pass deferred to Stage 0.B)
 
 Done now to flag scope-vs-timeline risk ahead of the Sept 2026 conference date; formal Stage 0.B Functional Requirements will restate these properly.
@@ -36,9 +46,11 @@ Done now to flag scope-vs-timeline risk ahead of the Sept 2026 conference date; 
 - EKG fully seeded + before/after (`generic` vs. grounded) demo toggle
 - Roadmap/phased sequencing output (hero question part b)
 - Session-specific KPI emphasis (CEO lens for Business Execs session, CDO lens for CDO/Tech session)
+- VP Supply Chain color-coded readiness/blocker node styling (green = D2C-ready, red/orange = blocker) — added 2026-06-20
+- KPIs modeled as first-class EKG entities/relationships (`kpi` entity + `measures` relationship), not a separate store — added 2026-06-20
 
 **Should:**
-- Configurable KPI CRUD at runtime (per persona) — pre-seeded fixed KPIs are an acceptable fallback if time runs short
+- Configurable KPI CRUD *feature* at runtime (per persona) — the underlying schema (KPIs as EKG entities, above) is a Must regardless; what's still cuttable is the live add/edit/remove UI itself. Pre-seeded fixed KPIs (as real entities) are an acceptable fallback if time runs short
 - Multi-LLM provider UI selection (OpenAI + Gemini live, switchable) — a single working provider is sufficient to land the hero question if needed
 
 **Could:**

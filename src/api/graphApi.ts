@@ -117,4 +117,9 @@ export const graphApi = {
         const response = await api.post('/api/graph/seed/demo');
         return response.data;
     },
+
+    async seedMdsD2c(): Promise<any> {
+        const response = await api.post('/api/graph/seed/mds-d2c');
+        return response.data;
+    },
 };

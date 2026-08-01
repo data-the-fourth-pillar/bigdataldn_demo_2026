@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react';
 import * as d3 from 'd3';
 import { useGraphStore } from '../../store/graphStore';
+import { useChatStore } from '../../store/chatStore';
 import type { GraphNode, GraphLink, Entity } from '../../types/graph';
 import { getCategoryConfig, isDemoEntityType } from '../../constants/categories';
 import { getRelationshipDisplay } from '../../utils/relationshipPerspective';
@@ -12,6 +13,16 @@ interface DisplayGraphLink extends GraphLink {
 
 function truncateLabel(text: string, max = 20): string {
     return text.length > max ? `${text.slice(0, max - 1)}…` : text;
+}
+
+function getNodeFillColor(node: GraphNode, personaLens: string): string {
+    if (personaLens === 'vp_supply_chain' && node.type === 'supply_chain_node') {
+        const status = (node.metadata as any)?.d2c_status;
+        if (status === 'ready')   return '#22c55e';
+        if (status === 'blocker') return '#ef4444';
+        if (status === 'partial') return '#f59e0b';
+    }
+    return getCategoryConfig(node.type)?.color ?? 'var(--graph-node-default)';
 }
 
 function getEgoNetwork(
@@ -46,6 +57,11 @@ export const GraphCanvas: React.FC = () => {
     const relationships = useGraphStore(state => state.relationships);
     const focusEntityId = useGraphStore(state => state.focusEntityId);
     const { selectEntity, selectedEntityId, setFocusEntity, filter, setFilter, clearFilter } = useGraphStore();
+
+    const personaLens = useChatStore(state => state.personaLens);
+    const highlightedEntities = useChatStore(state => state.highlightedEntities);
+    const highlightedRelationships = useChatStore(state => state.highlightedRelationships);
+
     const nodesRef = useRef<GraphNode[]>([]);
     const prevFocusRef = useRef<string | null>(null);
 
@@ -97,6 +113,7 @@ export const GraphCanvas: React.FC = () => {
         return () => window.removeEventListener('resize', updateDimensions);
     }, []);
 
+    // 1. Structural Effect: rebuilds graph nodes/links and force simulation
     useEffect(() => {
         if (!svgRef.current || filteredEntities.length === 0) {
             return undefined;
@@ -258,7 +275,7 @@ export const GraphCanvas: React.FC = () => {
             const isSelected = d.id === selectedEntityId;
             const isFocus = d.id === focusEntityId;
             const category = getCategoryConfig(d.type);
-            const fillColor = category?.color ?? 'var(--graph-node-default)';
+            const fillColor = getNodeFillColor(d, personaLens);
             const strokeColor = isFocus
                 ? 'var(--color-accent-600)'
                 : isSelected
@@ -376,6 +393,47 @@ export const GraphCanvas: React.FC = () => {
         };
     }, [dimensions, filteredEntities, filteredRelationships, focusEntityId, selectEntity, selectedEntityId, setFocusEntity]);
 
+    // 2. Cosmetic Effect: mutates node colors, SC glow, and path highlight WITHOUT restarting simulation
+    useEffect(() => {
+        if (!svgRef.current) return;
+
+        // Node fill colours (persona lens) & VP SC glow classes
+        d3.select(svgRef.current)
+            .selectAll<SVGGElement, GraphNode>('.graph-node')
+            .each(function(d) {
+                const fill = getNodeFillColor(d, personaLens);
+                d3.select(this).select('circle').attr('fill', fill);
+
+                const el = d3.select(this);
+                const status = (d.metadata as any)?.d2c_status;
+                el.classed('node-sc-ready', personaLens === 'vp_supply_chain' && status === 'ready');
+                el.classed('node-sc-blocker', personaLens === 'vp_supply_chain' && status === 'blocker');
+                el.classed('node-sc-partial', personaLens === 'vp_supply_chain' && status === 'partial');
+            });
+
+        // Path highlighting (CDO lens & general context)
+        const entityHighlightSet = new Set(highlightedEntities);
+        const relHighlightSet = new Set(highlightedRelationships);
+        const hasHighlight = entityHighlightSet.size > 0;
+
+        d3.select(svgRef.current)
+            .selectAll<SVGGElement, GraphNode>('.graph-node')
+            .attr('opacity', d => hasHighlight ? (entityHighlightSet.has(d.id) ? 1 : 0.25) : 1)
+            .each(function(d) {
+                d3.select(this).select('circle')
+                    .attr('stroke-width', entityHighlightSet.has(d.id) ? 4 : null);
+            });
+
+        d3.select(svgRef.current)
+            .selectAll<SVGLineElement, DisplayGraphLink>('.graph-link')
+            .attr('stroke-opacity', d =>
+                hasHighlight ? (relHighlightSet.has(d.id) ? 1 : 0.1) : 0.5
+            )
+            .attr('stroke-width', d =>
+                relHighlightSet.has(d.id) ? 3 : 1.5
+            );
+    }, [personaLens, highlightedEntities, highlightedRelationships]);
+
     const handleManualZoom = (factor: number) => {
         if (!svgRef.current) return;
         const svg = d3.select(svgRef.current);
@@ -387,7 +445,7 @@ export const GraphCanvas: React.FC = () => {
 
     const focusLabel = focusEntity
         ? `${getCategoryConfig(focusEntity.type)?.label ?? focusEntity.type} in Focus`
-        : 'Knowledge Graph';
+        : 'Enterprise Context';
 
     return (
         <div className="graph-canvas-container">

@@ -189,3 +189,10 @@ async def seed_demo():
     from backend.services.seed_big_data_demo import seed_big_data_demo
     seed_big_data_demo()
     return {"message": "Big Data demo seed data applied"}
+
+@router.post("/graph/seed/mds-d2c")
+async def seed_mds_d2c():
+    """Seed the MDS D2C Launch Advisor knowledge graph"""
+    from backend.services.seed_mds_d2c import seed_mds_d2c_graph
+    entity_count, rel_count = seed_mds_d2c_graph()
+    return {"status": "ok", "entities": entity_count, "relationships": rel_count}
