@@ -66,10 +66,25 @@ class LLMService:
         messages = []
 
         if grounding_mode == 'generic':
-            system_message = "You are a helpful AI assistant."
+            system_message = (
+                "You are a helpful AI assistant. Answer based on general industry knowledge only. "
+                "You do NOT have access to any internal enterprise data, proprietary metrics, company-specific "
+                "systems, warehouses, contracts, or KPI values. Do not reference any specific internal entity "
+                "names, internal tools, or internal operational details. Give general best-practice advice only.\n\n"
+                "CRITICAL INSTRUCTIONS:\n"
+                "1. Keep your total response to 250 words or fewer. Be concise — use bullet points, not lengthy paragraphs.\n"
+                "2. At the very end of your answer, add exactly one line in this format: "
+                "FOLLOW_UPS: <question 1> | <question 2> | <question 3>. Make the questions specific and useful. Do not number them."
+            )
         else:
             persona_instructions = {
-                'ceo': "You are advising a CEO. Lead with TAV, EAV-by-year, and RV business impact first, then the recommendation.",
+                'ceo': (
+                    "You are advising a CEO. Structure your answer as: (1) Recommendation — 2-3 sentences naming the specific categories and regions to launch, and why. "
+                    "(2) KPIs & Financials — list every KPI and finance entity by name and value only (one line each, no prose description). "
+                    "(3) Supporting context — one brief sentence per relevant entity type (supply chain, marketing channel, legal). "
+                    "Keep each section concise. Do not write paragraph-length descriptions of individual entities. "
+                    "Give ONE unified answer: do not split the same information across sections or repeat any list."
+                ),
                 'vp_supply_chain': "You are advising a VP Supply Chain. Lead with readiness status and blockers. Name specific supply chain nodes and their D2C status.",
                 'cdo': "You are advising a CDO. Lead with which data products feed the recommendation and how the AI reasoning was grounded in specific graph nodes.",
             }
@@ -94,6 +109,11 @@ CRITICAL INSTRUCTIONS:
 2. The FIRST sentence of <reasoning> MUST be exactly: "Answering using {grounding_label} grounding with {entity_count} entities from the enterprise context.{data_note}"
 3. Then add 1 sentence naming the 1-2 key entities you are drawing on.
 4. Close the tag with </reasoning> then give the final answer.
+5. Never split the same list or topic across two sections. One answer, one pass — no repeated summaries at the end.
+6. When including entities in a list, use ALL entities of that type found in the context. Do not apply a stricter filter (e.g. "directly connected") that was not in the question.
+7. When describing a KPI, entity name, or metric, use ONLY the name and description as given in the enterprise context. Do NOT add qualifications, scope restrictions, or specificity (e.g. "specifically focusing on X category") that are not explicitly stated in that entity's own description.
+8. Keep your total response (excluding the <reasoning> block and the FOLLOW_UPS line) to 250 words or fewer. Be concise and structured — use bullet points, not paragraphs. If you are listing entities, name and value only (no description prose).
+9. At the very end of your answer (after all content), add exactly one line in this format: FOLLOW_UPS: <question 1> | <question 2> | <question 3>. Make the questions specific, grounded in the entities just discussed, and useful for the persona. Do not number them.
 
 Example Format:
 <reasoning>
@@ -200,7 +220,7 @@ Final answer goes here..."""
                 model=model,
                 messages=messages,
                 temperature=0.7,
-                max_tokens=3000,
+                max_tokens=10000,
             )
 
             raw_content = response.choices[0].message.content or ''
@@ -254,7 +274,7 @@ Final answer goes here..."""
                 model=model,
                 messages=messages,
                 temperature=0.7,
-                max_tokens=3000,
+                max_tokens=10000,
                 stream=True,
             )
 

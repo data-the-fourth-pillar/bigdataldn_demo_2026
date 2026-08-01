@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useGraphStore } from '../../store/graphStore';
 import type { EntityType, RelationshipType } from '../../types/graph';
 import { graphApi } from '../../api/graphApi';
@@ -18,8 +18,9 @@ export const EntityPanel: React.FC = () => {
 
     const visibleEntities = entities.filter(e => isDemoEntityType(e.type));
     const selectedEntity = visibleEntities.find(e => e.id === selectedEntityId);
-    const [isCollapsed, setIsCollapsed] = useState(false);
+    const [isCollapsed, setIsCollapsed] = useState(true);
     const [isCreating, setIsCreating] = useState(false);
+    const prevEntityIdRef = useRef<string | null | undefined>(undefined);
     const [isAddingRelationship, setIsAddingRelationship] = useState(false);
 
     const [formData, setFormData] = useState({
@@ -52,7 +53,13 @@ export const EntityPanel: React.FC = () => {
                 setKpiUnit('');
             }
             setIsCreating(false);
-            setIsCollapsed(false);
+            // Only expand when the entity selection actually changes (not on initial mount/navigation-back)
+            if (prevEntityIdRef.current !== undefined && prevEntityIdRef.current !== selectedEntity.id) {
+                setIsCollapsed(false);
+            }
+            prevEntityIdRef.current = selectedEntity.id;
+        } else {
+            prevEntityIdRef.current = null;
         }
     }, [selectedEntity]);
 

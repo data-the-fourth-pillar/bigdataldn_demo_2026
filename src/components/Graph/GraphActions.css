@@ -1,0 +1,41 @@
+.graph-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.ga-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 0 10px;
+    height: 30px;
+    background: transparent;
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+}
+
+.ga-btn:hover {
+    background: var(--bg-secondary);
+    border-color: var(--color-accent-400);
+    color: var(--text-primary);
+}
+
+.ga-btn-danger:hover {
+    border-color: var(--color-error-400);
+    color: var(--color-error-600);
+    background: var(--color-error-50);
+}
+
+.ga-divider {
+    width: 1px;
+    height: 18px;
+    background: var(--border-primary);
+    margin: 0 2px;
+}

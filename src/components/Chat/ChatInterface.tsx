@@ -1,18 +1,51 @@
 import React, { useState, useRef, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { useChatStore } from '../../store/chatStore';
 import { useGraphStore } from '../../store/graphStore';
 import { chatApi } from '../../api/chatApi';
-import { getCategoryConfig } from '../../constants/categories';
+import { LineagePanel } from './LineagePanel';
+import { DataUsedPanel } from './DataUsedPanel';
 import type { GroundingMode } from '../../types/chat';
 import './ChatInterface.css';
 
-const EXAMPLE_QUESTIONS = [
-    'We want to launch D2C in the UK next quarter. Which categories and regions should we start with?',
-    'What are the main supply chain blockers for launching D2C?',
-    'Show me the EAV revenue projections across Year 1, Year 2, and Year 3.',
-    'Which legal contracts govern channel conflict between Wholesale and D2C?',
-];
+function stripTabularData(contextStr: string): string {
+    // Remove "Data Product Content:" label and all subsequent table lines (| ... |)
+    return contextStr
+        .split('\n')
+        .filter(line => {
+            const t = line.trim();
+            return t !== 'Data Product Content:' && !(t.startsWith('|'));
+        })
+        .join('\n');
+}
+
+const PERSONA_LABELS: Record<string, string> = {
+    ceo: 'CEO',
+    vp_supply_chain: 'VP Supply Chain',
+    cdo: 'CDO',
+};
+
+const EXAMPLE_QUESTIONS: Record<string, string[]> = {
+    ceo: [
+        'We want to launch D2C in the UK next quarter. Which categories and regions should we start with?',
+        'What are the KPI targets and financial projections for the D2C launch?',
+        'What is the expected return on investment and break-even for the D2C channel?',
+        'Which legal contracts govern channel conflict between Wholesale and D2C?',
+    ],
+    vp_supply_chain: [
+        'Which supply chain nodes are ready for D2C fulfilment and which are blockers?',
+        'What is the capacity and lead time of each DC supporting D2C?',
+        'Which regions can we fulfil next-day D2C orders from today?',
+        'What 3PL partners do we need to activate for Year 2 D2C expansion?',
+    ],
+    cdo: [
+        'What does our data tell us about the D2C revenue opportunity by category?',
+        'Which data products support the D2C launch decision?',
+        'What customer insights do we have on D2C propensity by segment?',
+        'Which data domains govern the D2C product catalogue and customer data?',
+    ],
+};
 
 export const ChatInterface: React.FC = () => {
     const {
@@ -31,8 +64,7 @@ export const ChatInterface: React.FC = () => {
         finishStreaming,
     } = useChatStore();
 
-    const { entities, relationships, focusEntityId, setFocusEntity } = useGraphStore();
-    const focusEntity = entities.find(e => e.id === focusEntityId);
+    const { entities, relationships } = useGraphStore();
 
     const [input, setInput] = useState('');
     const [failoverNotice, setFailoverNotice] = useState<string | null>(null);
@@ -63,8 +95,8 @@ export const ChatInterface: React.FC = () => {
                 {
                     message: userMessage.content,
                     groundingMode,
-                    conversationHistory: messages,
-                    focusEntityId,
+                    // Don't send history in Generic mode — prevents EC entity names bleeding through
+                    conversationHistory: groundingMode !== 'generic' ? messages : undefined,
                     provider,
                     personaLens,
                 },
@@ -139,29 +171,6 @@ export const ChatInterface: React.FC = () => {
                     </div>
                 </div>
 
-                {isGraphGrounded && (
-                    <div className="focus-context-bar">
-                        <label htmlFor="chat-focus">Graph focus:</label>
-                        <select
-                            id="chat-focus"
-                            value={focusEntityId ?? ''}
-                            onChange={(e) => setFocusEntity(e.target.value || null)}
-                        >
-                            <option value="">All entities</option>
-                            {entities.map(entity => (
-                                <option key={entity.id} value={entity.id}>
-                                    {entity.name} ({getCategoryConfig(entity.type)?.label ?? entity.type})
-                                </option>
-                            ))}
-                        </select>
-                        {focusEntity && (
-                            <span className="focus-hint">
-                                Answers prioritize connections around <strong>{focusEntity.name}</strong>
-                            </span>
-                        )}
-                    </div>
-                )}
-
                 <div className="grounding-controls">
                     <label>Grounding Mode:</label>
                     <div className="mode-selector">
@@ -183,19 +192,23 @@ export const ChatInterface: React.FC = () => {
             <div className="messages-container">
                 {messages.length === 0 && (
                     <div className="welcome-message">
-                        <h3>👋 Ask your Enterprise Context</h3>
+                        {!isGraphGrounded ? (
+                            <h3>💬 Generic</h3>
+                        ) : groundingMode === 'kg_full' ? (
+                            <h3>👋 Leverage your Enterprise Context and Data</h3>
+                        ) : (
+                            <h3>👋 Leverage your Enterprise Context</h3>
+                        )}
                         <p>
-                            Chat is connected to your enterprise context
-                            {entities.length > 0
-                                ? ` (${entities.length} entities, ${relationships.length} relationships).`
-                                : '. Loading graph data...'}
-                            {isGraphGrounded
-                                ? ' Answers are grounded in your graph structure.'
-                                : ' Switch to Enterprise Context mode to use graph context.'}
+                            {!isGraphGrounded
+                                ? <>Does not use enterprise context.<br />Answers are based on general knowledge only.</>
+                                : groundingMode === 'kg_full'
+                                    ? 'Chat is grounded in your enterprise context and data.'
+                                    : 'Chat is grounded in your enterprise context.'}
                         </p>
                         <div className="example-questions">
                             <p className="example-label">Try asking:</p>
-                            {EXAMPLE_QUESTIONS.map((question) => (
+                            {(EXAMPLE_QUESTIONS[personaLens] ?? EXAMPLE_QUESTIONS.ceo).map((question) => (
                                 <button
                                     key={question}
                                     type="button"
@@ -214,14 +227,23 @@ export const ChatInterface: React.FC = () => {
                     const reasoning = message.reasoning || (reasoningMatch ? reasoningMatch[1].trim() : null);
                     const cleanContent = message.content.replace(/<reasoning>[\s\S]*?<\/reasoning>/, '').trim();
                     const hasContext = message.usedContext?.raw_context_string;
-                    const citations = message.citations ?? [];
+
+                    const isGenericResponse = message.role === 'assistant' && message.groundingMode === 'generic';
 
                     return (
                         <div key={message.id} className={`message ${message.role}`}>
                             <div className="message-avatar">
-                                {message.role === 'user' ? '👤' : '🤖'}
+                                <div className="message-avatar-icon">
+                                    {message.role === 'user' ? '👤' : '🤖'}
+                                </div>
+                                {message.role === 'user' && (
+                                    <span className="message-persona-label">{PERSONA_LABELS[personaLens] ?? personaLens}</span>
+                                )}
                             </div>
                             <div className="message-content">
+                                {message.role === 'assistant' && isGenericResponse && (
+                                    <div className="generic-mode-badge">⚡ Generic — no enterprise context used</div>
+                                )}
                                 {message.role === 'assistant' && isGraphGrounded && (
                                     reasoning ? (
                                         <details className="reasoning-details" open>
@@ -239,35 +261,50 @@ export const ChatInterface: React.FC = () => {
                                 )}
                                 <div className="message-text">
                                     {message.role === 'assistant'
-                                        ? <ReactMarkdown>{cleanContent || (!isStreaming ? '...' : '')}</ReactMarkdown>
+                                        ? <ReactMarkdown remarkPlugins={[remarkGfm]}>{cleanContent || (!isStreaming ? '...' : '')}</ReactMarkdown>
                                         : cleanContent}
                                 </div>
 
-                                {citations.length > 0 && (
-                                    <div className="citations">
-                                        <div className="citations-label">Graph sources:</div>
-                                        <div className="citation-chips">
-                                            {citations.map((citation) => (
-                                                <button
-                                                    key={citation.entityId}
-                                                    type="button"
-                                                    className="citation-chip"
-                                                    onClick={() => setFocusEntity(citation.entityId)}
-                                                    title="Set as graph focus"
-                                                >
-                                                    {citation.entityName}
-                                                    <span className="citation-type">{citation.entityType}</span>
-                                                </button>
-                                            ))}
-                                        </div>
-                                    </div>
-                                )}
 
                                 {hasContext && (
                                     <details className="context-details">
                                         <summary>💾 Enterprise Context Used</summary>
-                                        <pre className="context-text">{message.usedContext?.raw_context_string}</pre>
+                                        <div className="context-markdown">
+                                            <ReactMarkdown remarkPlugins={[remarkGfm]}>{stripTabularData(message.usedContext?.raw_context_string ?? '')}</ReactMarkdown>
+                                        </div>
                                     </details>
+                                )}
+
+                                {message.role === 'assistant' && message.groundingMode === 'kg_full' && (message.usedContext?.entities?.length ?? 0) > 0 && (
+                                    <DataUsedPanel entityIds={message.usedContext!.entities} />
+                                )}
+
+                                {message.role === 'assistant' && !isGenericResponse && (message.usedContext?.entities?.length ?? 0) > 0 && (
+                                    <details className="lineage-details">
+                                        <summary>🔗 Lineage</summary>
+                                        <LineagePanel
+                                            entityIds={message.usedContext!.entities}
+                                            relationshipIds={message.usedContext!.relationships}
+                                        />
+                                    </details>
+                                )}
+
+                                {message.role === 'assistant' && (message.followUpQuestions?.length ?? 0) > 0 && !isStreaming && (
+                                    <div className="follow-up-chips">
+                                        <div className="follow-up-label">Follow-up questions:</div>
+                                        <div className="follow-up-list">
+                                            {message.followUpQuestions!.map((q, i) => (
+                                                <button
+                                                    key={i}
+                                                    type="button"
+                                                    className="follow-up-chip"
+                                                    onClick={() => sendMessage(q)}
+                                                >
+                                                    {q}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
                                 )}
                             </div>
                         </div>

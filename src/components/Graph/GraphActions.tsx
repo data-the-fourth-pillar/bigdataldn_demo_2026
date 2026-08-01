@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
 import { graphApi } from '../../api/graphApi';
 import { useGraphStore } from '../../store/graphStore';
-import './GraphToolbar.css';
+import './GraphActions.css';
 
-export const GraphToolbar: React.FC = () => {
+export const GraphActions: React.FC = () => {
     const { setEntities, setRelationships, setFocusEntity, clearFilter, selectEntity } = useGraphStore();
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -19,8 +19,7 @@ export const GraphToolbar: React.FC = () => {
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
-        } catch (error) {
-            console.error('Export failed:', error);
+        } catch {
             alert('Export failed');
         }
     };
@@ -42,7 +41,7 @@ export const GraphToolbar: React.FC = () => {
                 selectEntity(null);
                 const defaultDomain = data.entities.find(ent => ent.type === 'domain');
                 setFocusEntity(defaultDomain?.id ?? null);
-                alert(`Graph imported (${result.entities} entities, ${result.relationships} relationships)`);
+                alert(`Imported ${result.entities} entities, ${result.relationships} relationships`);
             } catch (error: any) {
                 alert(`Import failed: ${error.response?.data?.detail || error.message}`);
             }
@@ -58,8 +57,8 @@ export const GraphToolbar: React.FC = () => {
             setEntities([]);
             setRelationships([]);
             setFocusEntity(null);
-        } catch (error) {
-            console.error('Reset failed:', error);
+        } catch {
+            console.error('Reset failed');
         }
     };
 
@@ -71,34 +70,21 @@ export const GraphToolbar: React.FC = () => {
             setRelationships(data.relationships);
             clearFilter();
             setFocusEntity(null);
-        } catch (error) {
-            console.error('Demo reload failed:', error);
+        } catch {
+            console.error('Demo reload failed');
         }
     };
 
     return (
-        <div className="graph-toolbar">
-            <button onClick={handleReloadDemo} className="btn-icon" title="Reload Demo Data">
-                <span>🌱</span>
-                <label>Reload Demo</label>
+        <div className="graph-actions">
+            <button onClick={handleReloadDemo} className="ga-btn" title="Reload Demo Data">
+                🌱 Reload Demo
             </button>
-            <div className="divider" />
-            <button onClick={handleExport} className="btn-icon" title="Export JSON">
-                <span>📤</span>
-            </button>
-            <button onClick={handleImportClick} className="btn-icon" title="Import JSON">
-                <span>📥</span>
-            </button>
-            <input
-                type="file"
-                ref={fileInputRef}
-                style={{ display: 'none' }}
-                accept=".json"
-                onChange={handleFileChange}
-            />
-            <button onClick={handleReset} className="btn-icon btn-danger-icon" title="Reset Graph">
-                <span>🗑️</span>
-            </button>
+            <div className="ga-divider" />
+            <button onClick={handleExport} className="ga-btn" title="Export JSON">📤</button>
+            <button onClick={handleImportClick} className="ga-btn" title="Import JSON">📥</button>
+            <input type="file" ref={fileInputRef} style={{ display: 'none' }} accept=".json" onChange={handleFileChange} />
+            <button onClick={handleReset} className="ga-btn ga-btn-danger" title="Reset Graph">🗑️</button>
         </div>
     );
 };

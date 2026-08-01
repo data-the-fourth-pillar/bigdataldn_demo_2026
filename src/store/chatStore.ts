@@ -1,8 +1,48 @@
 import { create } from 'zustand';
 import type { Message, GroundingMode, PersonaLens, LLMProvider } from '../types/chat';
 
+export interface ChatSession {
+    id: string;
+    title: string;
+    createdAt: string;
+    messages: Message[];
+}
+
+const SESSIONS_KEY = 'ec-chat-sessions';
+const MAX_SESSIONS = 20;
+
+function loadSessions(): ChatSession[] {
+    try {
+        const raw = localStorage.getItem(SESSIONS_KEY);
+        return raw ? JSON.parse(raw) : [];
+    } catch {
+        return [];
+    }
+}
+
+function saveSessions(sessions: ChatSession[]): void {
+    try {
+        localStorage.setItem(SESSIONS_KEY, JSON.stringify(sessions.slice(0, MAX_SESSIONS)));
+    } catch {}
+}
+
+function makeSession(messages: Message[]): ChatSession {
+    const firstUser = messages.find(m => m.role === 'user');
+    const title = firstUser
+        ? firstUser.content.slice(0, 60) + (firstUser.content.length > 60 ? '…' : '')
+        : 'Chat session';
+    return {
+        id: crypto.randomUUID(),
+        title,
+        createdAt: new Date().toISOString(),
+        messages,
+    };
+}
+
 interface ChatState {
     messages: Message[];
+    sessions: ChatSession[];
+    activeSessionId: string | null;
     groundingMode: GroundingMode;
     isStreaming: boolean;
     currentStreamingMessage: string;
@@ -18,6 +58,12 @@ interface ChatState {
     addMessage: (message: Message) => void;
     setMessages: (messages: Message[]) => void;
     clearMessages: () => void;
+    newChat: () => void;
+
+    // Session actions
+    loadSession: (id: string) => void;
+    deleteSession: (id: string) => void;
+    clearAllSessions: () => void;
 
     setGroundingMode: (mode: GroundingMode) => void;
     setPersonaLens: (lens: PersonaLens) => void;
@@ -36,6 +82,8 @@ interface ChatState {
 
 export const useChatStore = create<ChatState>((set) => ({
     messages: [],
+    sessions: loadSessions(),
+    activeSessionId: null,
     groundingMode: 'kg_full',
     isStreaming: false,
     currentStreamingMessage: '',
@@ -55,8 +103,80 @@ export const useChatStore = create<ChatState>((set) => ({
 
     clearMessages: () => set({
         messages: [],
+        activeSessionId: null,
         highlightedEntities: [],
         highlightedRelationships: [],
+    }),
+
+    newChat: () => set((state) => {
+        if (state.messages.length === 0) return { activeSessionId: null };
+
+        let sessions = state.sessions;
+        if (state.activeSessionId) {
+            // Update the active session with latest messages
+            sessions = sessions.map(s =>
+                s.id === state.activeSessionId ? { ...s, messages: state.messages } : s
+            );
+        } else {
+            // Unsaved conversation — create a new session entry
+            const session = makeSession(state.messages);
+            sessions = [session, ...sessions];
+        }
+        saveSessions(sessions);
+
+        return {
+            sessions,
+            activeSessionId: null,
+            messages: [],
+            highlightedEntities: [],
+            highlightedRelationships: [],
+        };
+    }),
+
+    loadSession: (id) => set((state) => {
+        // Already viewing this session — no-op
+        if (state.activeSessionId === id) return {};
+
+        const session = state.sessions.find(s => s.id === id);
+        if (!session) return {};
+
+        let sessions = state.sessions;
+        if (state.messages.length > 0) {
+            if (state.activeSessionId) {
+                // Persist any new messages back to the session we're leaving
+                sessions = sessions.map(s =>
+                    s.id === state.activeSessionId ? { ...s, messages: state.messages } : s
+                );
+            } else {
+                // Save the current unsaved conversation before switching
+                const current = makeSession(state.messages);
+                sessions = [current, ...sessions];
+            }
+            saveSessions(sessions);
+        }
+
+        return {
+            sessions,
+            activeSessionId: id,
+            messages: session.messages,
+            highlightedEntities: [],
+            highlightedRelationships: [],
+        };
+    }),
+
+    deleteSession: (id) => set((state) => {
+        const sessions = state.sessions.filter(s => s.id !== id);
+        saveSessions(sessions);
+        const wasActive = state.activeSessionId === id;
+        return {
+            sessions,
+            ...(wasActive ? { activeSessionId: null, messages: [], highlightedEntities: [], highlightedRelationships: [] } : {}),
+        };
+    }),
+
+    clearAllSessions: () => set(() => {
+        saveSessions([]);
+        return { sessions: [], activeSessionId: null, messages: [], highlightedEntities: [], highlightedRelationships: [] };
     }),
 
     setGroundingMode: (mode) => set({ groundingMode: mode }),
@@ -82,11 +202,23 @@ export const useChatStore = create<ChatState>((set) => ({
         currentStreamingMessage: state.currentStreamingMessage + chunk
     })),
 
-    finishStreaming: (message) => set((state) => ({
-        isStreaming: false,
-        currentStreamingMessage: '',
-        messages: [...state.messages, message]
-    })),
+    // Write new messages back to the active session immediately so history stays current
+    finishStreaming: (message) => set((state) => {
+        const newMessages = [...state.messages, message];
+        let sessions = state.sessions;
+        if (state.activeSessionId) {
+            sessions = sessions.map(s =>
+                s.id === state.activeSessionId ? { ...s, messages: newMessages } : s
+            );
+            saveSessions(sessions);
+        }
+        return {
+            isStreaming: false,
+            currentStreamingMessage: '',
+            messages: newMessages,
+            sessions,
+        };
+    }),
 
     toggleExplainability: () => set((state) => ({
         showExplainability: !state.showExplainability

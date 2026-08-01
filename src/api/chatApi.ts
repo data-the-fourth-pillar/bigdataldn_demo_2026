@@ -112,9 +112,23 @@ export const chatApi = {
 
             const reasoningMatch = fullMessage.match(/<reasoning>([\s\S]*?)<\/reasoning>/);
             const reasoning = reasoningMatch ? reasoningMatch[1].trim() : '';
-            const answerContent = reasoningMatch
+            let answerContent = reasoningMatch
                 ? fullMessage.slice(fullMessage.indexOf('</reasoning>') + '</reasoning>'.length).trim()
                 : fullMessage;
+
+            // Strip FOLLOW_UPS: only when it is truly the final line of the response.
+            // Use lastIndexOf and verify the remaining text has no paragraph breaks
+            // (if it does, the marker appeared mid-response and we should leave it untouched).
+            let followUpQuestions: string[] | undefined;
+            const FU_MARKER = '\nFOLLOW_UPS:';
+            const fuLastIdx = answerContent.lastIndexOf(FU_MARKER);
+            if (fuLastIdx !== -1) {
+                const afterMarker = answerContent.slice(fuLastIdx + FU_MARKER.length).trim();
+                if (!afterMarker.includes('\n\n') && afterMarker.length < 500) {
+                    followUpQuestions = afterMarker.split('|').map(s => s.trim()).filter(Boolean).slice(0, 3);
+                    answerContent = answerContent.slice(0, fuLastIdx).trim();
+                }
+            }
 
             const message: Message = {
                 id: crypto.randomUUID(),
@@ -124,6 +138,8 @@ export const chatApi = {
                 usedContext,
                 citations,
                 reasoning: reasoning || undefined,
+                followUpQuestions,
+                groundingMode: request.groundingMode,
             };
             onComplete?.(message, reasoning);
         } catch (error) {

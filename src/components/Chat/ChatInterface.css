@@ -201,6 +201,15 @@
 }
 
 .message-avatar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+    width: 40px;
+}
+
+.message-avatar-icon {
     width: 40px;
     height: 40px;
     border-radius: var(--radius-full);
@@ -209,10 +218,9 @@
     align-items: center;
     justify-content: center;
     font-size: var(--font-size-xl);
-    flex-shrink: 0;
 }
 
-.message.assistant .message-avatar {
+.message.assistant .message-avatar-icon {
     background: var(--color-accent-100);
 }
 
@@ -377,7 +385,8 @@
 
 /* Explainability Styles */
 .reasoning-details,
-.context-details {
+.context-details,
+.lineage-details {
     margin-bottom: 12px;
     font-size: 0.85rem;
     border: 1px solid var(--border-primary);
@@ -386,7 +395,8 @@
 }
 
 .reasoning-details summary,
-.context-details summary {
+.context-details summary,
+.lineage-details summary {
     padding: 8px 12px;
     background-color: var(--bg-secondary);
     cursor: pointer;
@@ -397,7 +407,8 @@
 }
 
 .reasoning-details summary:hover,
-.context-details summary:hover {
+.context-details summary:hover,
+.lineage-details summary:hover {
     background-color: var(--bg-tertiary);
 }
 
@@ -432,4 +443,155 @@
 [data-theme="dark"] .context-text {
     background-color: #0f172a;
     color: #94a3b8;
+}
+.context-markdown {
+    padding: 12px 16px;
+    font-size: 12px;
+    line-height: 1.5;
+    max-height: 400px;
+    overflow-y: auto;
+    color: var(--text-primary);
+}
+
+.context-markdown h1 {
+    font-size: 13px;
+    font-weight: 700;
+    margin: 0 0 8px;
+    color: var(--text-primary);
+}
+
+.context-markdown h2 {
+    font-size: 12px;
+    font-weight: 600;
+    margin: 10px 0 4px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.context-markdown ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.context-markdown li {
+    padding: 2px 0;
+    border-bottom: 1px solid var(--border-primary);
+    color: var(--text-secondary);
+}
+
+.context-markdown li:last-child {
+    border-bottom: none;
+}
+
+.context-markdown strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.context-markdown p {
+    margin: 4px 0;
+    color: var(--text-secondary);
+}
+
+.context-markdown table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 6px 0;
+    font-size: 11px;
+}
+
+.context-markdown th {
+    background: var(--bg-tertiary);
+    padding: 4px 8px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-primary);
+}
+
+.context-markdown td {
+    padding: 3px 8px;
+    border: 1px solid var(--border-primary);
+    color: var(--text-primary);
+}
+
+.context-markdown tr:nth-child(even) td {
+    background: var(--bg-secondary);
+}
+
+.message-persona-label {
+    font-size: 9px;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    line-height: 1;
+}
+
+.generic-mode-badge {
+    display: inline-block;
+    margin-bottom: var(--space-2);
+    padding: 3px 10px;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    color: var(--text-tertiary);
+    font-weight: var(--font-weight-medium);
+}
+
+.follow-up-chips {
+    margin-top: var(--space-3);
+    padding: var(--space-3);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+}
+
+.follow-up-label {
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-2);
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.follow-up-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.follow-up-chip {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 7px 12px;
+    background: var(--surface);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    color: var(--color-accent-600);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.follow-up-chip:hover {
+    border-color: var(--color-accent-500);
+    background: var(--color-accent-50);
+    color: var(--color-accent-700);
+}
+
+[data-theme="dark"] .follow-up-chip {
+    color: var(--color-accent-400);
+}
+
+[data-theme="dark"] .follow-up-chip:hover {
+    background: rgba(37, 99, 235, 0.12);
 }

@@ -34,6 +34,7 @@ export type EntityType =
     | 'kpi'
     | 'legal_entity'
     | 'finance_entity'
+    | 'policy'
     | string;
 export type RelationshipType = string;
 

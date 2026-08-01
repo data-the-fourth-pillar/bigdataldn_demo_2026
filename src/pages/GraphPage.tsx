@@ -4,7 +4,6 @@ import { EntityPanel } from '../components/Graph/EntityPanel';
 import { useGraphStore } from '../store/graphStore';
 import { graphApi } from '../api/graphApi';
 import { DEMO_GRAPH, DEMO_DOMAIN_ID } from '../data/demoGraph';
-import { GraphToolbar } from '../components/Graph/GraphToolbar';
 import './GraphPage.css';
 
 async function seedDemoLocally(
@@ -40,9 +39,7 @@ export const GraphPage: React.FC = () => {
 
             setEntities(data.entities);
             setRelationships(data.relationships);
-
-            const defaultFocus = data.entities.find(e => e.type === 'product_category' || e.type === 'domain');
-            setFocusEntity(defaultFocus?.id ?? null);
+            setFocusEntity(null);
         } catch (error) {
             console.error('Failed to load graph data, using local demo:', error);
             await seedDemoLocally(setEntities, setRelationships, setFocusEntity);
@@ -51,7 +48,6 @@ export const GraphPage: React.FC = () => {
 
     return (
         <div className="graph-page">
-            <GraphToolbar />
             <div className="graph-content">
                 <GraphCanvas />
                 <EntityPanel />

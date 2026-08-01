@@ -1,0 +1,78 @@
+import React from 'react';
+import { useChatStore } from '../../store/chatStore';
+import './ChatHistoryPanel.css';
+
+export const ChatHistoryPanel: React.FC = () => {
+    const { sessions, messages, activeSessionId, newChat, loadSession, deleteSession, clearAllSessions } = useChatStore();
+
+    const formatTime = (iso: string) => {
+        const d = new Date(iso);
+        const now = new Date();
+        const diffMs = now.getTime() - d.getTime();
+        const diffMins = Math.floor(diffMs / 60000);
+        const diffHours = Math.floor(diffMins / 60);
+        const diffDays = Math.floor(diffHours / 24);
+        if (diffMins < 1) return 'just now';
+        if (diffMins < 60) return `${diffMins}m ago`;
+        if (diffHours < 24) return `${diffHours}h ago`;
+        return `${diffDays}d ago`;
+    };
+
+    return (
+        <div className="chat-history-panel">
+            <div className="chp-header">
+                <span className="chp-title">Chats</span>
+                <div className="chp-header-actions">
+                    {sessions.length > 0 && (
+                        <button
+                            type="button"
+                            className="chp-clear-btn"
+                            onClick={clearAllSessions}
+                            title="Delete all saved chats"
+                        >
+                            Clear All
+                        </button>
+                    )}
+                    <button
+                        type="button"
+                        className="chp-new-btn"
+                        onClick={newChat}
+                        disabled={messages.length === 0}
+                        title="Save current chat and start new"
+                    >
+                        + New
+                    </button>
+                </div>
+            </div>
+
+            {sessions.length === 0 ? (
+                <div className="chp-empty">No previous chats</div>
+            ) : (
+                <ul className="chp-list">
+                    {sessions.map(session => (
+                        <li key={session.id} className={`chp-item${activeSessionId === session.id ? ' active' : ''}`}>
+                            <button
+                                type="button"
+                                className="chp-session-btn"
+                                onClick={() => loadSession(session.id)}
+                                title={session.title}
+                                disabled={activeSessionId === session.id}
+                            >
+                                <span className="chp-session-title">{session.title}</span>
+                                <span className="chp-session-time">{formatTime(session.createdAt)}</span>
+                            </button>
+                            <button
+                                type="button"
+                                className="chp-delete-btn"
+                                onClick={(e) => { e.stopPropagation(); deleteSession(session.id); }}
+                                title="Delete session"
+                            >
+                                ×
+                            </button>
+                        </li>
+                    ))}
+                </ul>
+            )}
+        </div>
+    );
+};

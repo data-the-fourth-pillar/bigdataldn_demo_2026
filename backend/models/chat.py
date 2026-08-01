@@ -21,6 +21,7 @@ class Message(BaseModel):
     citations: Optional[List[Citation]] = None
     usedContext: Optional[UsedContext] = None
     reasoning: Optional[str] = None
+    followUpQuestions: Optional[List[str]] = None
 
 class ChatRequest(BaseModel):
     message: str

@@ -1,8 +1,13 @@
-import React, { type ReactNode } from 'react';
+import React, { type ReactNode, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { PersonaSelector } from '../Controls/PersonaSelector';
 import { ProviderSelector } from '../Controls/ProviderSelector';
+import { GraphControlsPanel } from '../Graph/GraphControlsPanel';
+import { GraphActions } from '../Graph/GraphActions';
+import { ThemeToggle } from '../Controls/ThemeToggle';
+import { ChatHistoryPanel } from '../Chat/ChatHistoryPanel';
 import './AppLayout.css';
+
 
 interface AppLayoutProps {
     children: ReactNode;
@@ -10,6 +15,7 @@ interface AppLayoutProps {
 
 export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     const location = useLocation();
+    const [settingsOpen, setSettingsOpen] = useState(false);
 
     const navItems = [
         { path: '/', label: 'Graph', icon: '🕸️' },
@@ -21,7 +27,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
             <aside className="sidebar">
                 <div className="sidebar-header">
                     <h1 className="logo">
-                        <span className="logo-icon">🔗</span>
+                        <span className="logo-icon">MDS</span>
                         <span className="logo-text">Enterprise Context</span>
                     </h1>
                 </div>
@@ -39,18 +45,36 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                     ))}
                 </nav>
 
+                {location.pathname === '/' && <GraphControlsPanel />}
+                {location.pathname === '/chat' && <ChatHistoryPanel />}
+
                 <div className="sidebar-footer">
                     <div className="workspace-info">
                         <div className="workspace-name">Enterprise Workspace</div>
                         <div className="workspace-meta">Default</div>
                     </div>
+                    <button
+                        type="button"
+                        className="settings-toggle"
+                        onClick={() => setSettingsOpen(o => !o)}
+                    >
+                        ⚙ Settings
+                    </button>
+                    {settingsOpen && (
+                        <div className="settings-panel">
+                            <ProviderSelector />
+                        </div>
+                    )}
                 </div>
             </aside>
 
             <div className="main-wrapper">
-                <header className="app-top-header" style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                <header className="app-top-header">
                     <PersonaSelector />
-                    <ProviderSelector />
+                    <div className="header-right">
+                        {location.pathname === '/' && <GraphActions />}
+                        <ThemeToggle />
+                    </div>
                 </header>
 
                 <main className="main-content">

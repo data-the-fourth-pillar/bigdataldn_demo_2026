@@ -6,6 +6,8 @@ export interface Message {
     citations?: Citation[];
     usedContext?: UsedContext;
     reasoning?: string;
+    followUpQuestions?: string[];
+    groundingMode?: GroundingMode;
 }
 
 export interface Citation {

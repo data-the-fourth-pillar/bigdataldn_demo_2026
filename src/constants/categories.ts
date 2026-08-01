@@ -20,7 +20,8 @@ export const DEMO_CATEGORIES: CategoryConfig[] = [
     { id: 'marketing_channel', label: 'Marketing Channel', icon: '📢', color: '#a855f7' },
     { id: 'kpi', label: 'KPI', icon: '💰', color: '#22c55e' },
     { id: 'legal_entity', label: 'Legal Entity', icon: '⚖️', color: '#ef4444' },
-    { id: 'finance_entity', label: 'Finance', icon: '💹', color: '#eab308' },
+    { id: 'finance_entity', label: 'Cost & Budget', icon: '💹', color: '#eab308' },
+    { id: 'policy', label: 'Policy', icon: '📋', color: '#dc2626' },
 ];
 
 export const DEMO_ENTITY_TYPES = DEMO_CATEGORIES.map(c => c.id);
@@ -42,6 +43,15 @@ export const DEMO_RELATIONSHIP_TYPES = [
     'governs',
     'funds',
     'phases_in_year',
+    'launched_in',
+    'sold_via',
+    'managed_by',
+    'enabled_by',
+    'powered_by',
+    'generates',
+    'uses_domain',
+    'applies_to',
+    'enforced_by',
 ] as const;
 
 export function getCategoryConfig(type: EntityType): CategoryConfig | undefined {

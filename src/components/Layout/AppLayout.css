@@ -28,7 +28,18 @@
 }
 
 .logo-icon {
-    font-size: var(--font-size-3xl);
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-primary-600), var(--color-accent-500));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
 }
 
 .logo-text {
@@ -39,11 +50,11 @@
 }
 
 .nav {
-    flex: 1;
     padding: var(--space-4);
     display: flex;
     flex-direction: column;
     gap: var(--space-2);
+    flex-shrink: 0;
 }
 
 .nav-item {
@@ -84,6 +95,7 @@
 }
 
 .sidebar-footer {
+    margin-top: auto;
     padding: var(--space-4);
     border-top: 1px solid var(--border-primary);
 }
@@ -137,6 +149,12 @@
     border-radius: var(--radius-md);
 }
 
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
 .main-wrapper {
     flex: 1;
     display: flex;
@@ -150,7 +168,7 @@
     border-bottom: 1px solid var(--border-primary);
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: space-between;
     padding: 0 24px;
     flex-shrink: 0;
     z-index: 15;
