@@ -445,7 +445,7 @@ export const GraphCanvas: React.FC = () => {
 
     const focusLabel = focusEntity
         ? `${getCategoryConfig(focusEntity.type)?.label ?? focusEntity.type} in Focus`
-        : 'Knowledge Graph';
+        : 'Enterprise Context';
 
     return (
         <div className="graph-canvas-container">

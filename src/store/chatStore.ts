@@ -43,7 +43,7 @@ export const useChatStore = create<ChatState>((set) => ({
     selectedMessageId: null,
 
     personaLens: 'ceo',
-    provider: 'openai',
+    provider: 'gemini',
     highlightedEntities: [],
     highlightedRelationships: [],
 

@@ -167,7 +167,7 @@ class ContextService:
         relationships = subgraph.get('relationships', [])
 
         if not entities:
-            return "No relevant information found in the knowledge graph."
+            return "No relevant information found in the enterprise context."
 
         if persona_lens == 'ceo':
             entities = sorted(entities, key=lambda e: 0 if e.type in ('kpi', 'finance_entity') else 1)
@@ -175,7 +175,7 @@ class ContextService:
             entities = sorted(entities, key=lambda e: 0 if e.type == 'supply_chain_node' else 1)
 
         focus_entity = graph_service.get_entity(focus_entity_id) if focus_entity_id else None
-        context_parts = ["# Knowledge Graph Context\n"]
+        context_parts = ["# Enterprise Context\n"]
 
         if focus_entity:
             category = CATEGORY_LABELS.get(focus_entity.type, focus_entity.type)
@@ -221,7 +221,7 @@ class ContextService:
                 context_parts.append(f"- {source_name} **{label}** {target_name}")
 
         context_parts.append("\n## Instructions:")
-        context_parts.append("- Answer using ONLY the knowledge graph information above")
+        context_parts.append("- Answer using ONLY the enterprise context information above")
         context_parts.append("- Reference specific entities and relationships when relevant")
         context_parts.append("- If the answer is not in the context, say so explicitly")
 

@@ -1,6 +1,7 @@
 import React, { type ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { PersonaSelector } from '../Controls/PersonaSelector';
+import { ProviderSelector } from '../Controls/ProviderSelector';
 import './AppLayout.css';
 
 interface AppLayoutProps {
@@ -20,8 +21,8 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
             <aside className="sidebar">
                 <div className="sidebar-header">
                     <h1 className="logo">
-                        <span className="logo-icon">🧠</span>
-                        <span className="logo-text">KnowledgeGraph</span>
+                        <span className="logo-icon">🔗</span>
+                        <span className="logo-text">Enterprise Context</span>
                     </h1>
                 </div>
 
@@ -47,8 +48,9 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
             </aside>
 
             <div className="main-wrapper">
-                <header className="app-top-header">
+                <header className="app-top-header" style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                     <PersonaSelector />
+                    <ProviderSelector />
                 </header>
 
                 <main className="main-content">

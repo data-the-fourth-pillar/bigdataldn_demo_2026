@@ -76,12 +76,12 @@ class LLMService:
             persona_instruction = persona_instructions.get(persona_lens, persona_instructions['ceo'])
 
             grounding_label = {
-                'kg_only': 'Knowledge Graph',
-                'kg_full': 'Knowledge Graph + Data',
+                'kg_only': 'Enterprise Context (EC)',
+                'kg_full': 'Enterprise Context + Data (EC+Data)',
             }.get(grounding_mode, grounding_mode)
             data_note = " Tabular data from entity metadata was included in context." if grounding_mode == 'kg_full' else ""
 
-            system_message = f"""You are a helpful AI assistant that answers questions based on an enterprise knowledge graph.
+            system_message = f"""You are a helpful AI assistant that answers questions based on an enterprise context graph.
 
 {context}
 
@@ -91,13 +91,13 @@ Provide clear, accurate answers based on the context provided.
 
 CRITICAL INSTRUCTIONS:
 1. Always start your response with a <reasoning> section (2-3 sentences max).
-2. The FIRST sentence of <reasoning> MUST be exactly: "Answering using {grounding_label} grounding with {entity_count} entities from the knowledge graph.{data_note}"
+2. The FIRST sentence of <reasoning> MUST be exactly: "Answering using {grounding_label} grounding with {entity_count} entities from the enterprise context.{data_note}"
 3. Then add 1 sentence naming the 1-2 key entities you are drawing on.
 4. Close the tag with </reasoning> then give the final answer.
 
 Example Format:
 <reasoning>
-Answering using {grounding_label} grounding with {entity_count} entities from the knowledge graph.{data_note} I am drawing on TAV UK D2C Market (KPI) and its measures relationship to Sports Nutrition.
+Answering using {grounding_label} grounding with {entity_count} entities from the enterprise context.{data_note} I am drawing on TAV UK D2C Market (KPI) and its measures relationship to Sports Nutrition.
 </reasoning>
 Final answer goes here..."""
 
@@ -117,16 +117,16 @@ Final answer goes here..."""
         if not context or context.startswith("No relevant"):
             return (
                 "<reasoning>\n"
-                "The knowledge graph has no matching entities for this question.\n"
+                "The enterprise context has no matching entities for this question.\n"
                 "</reasoning>\n"
-                "I don't have enough information in the knowledge graph to answer that question. "
+                "I don't have enough information in the enterprise context to answer that question. "
                 "Try asking about entities like Orders, Lead to Cash Process, CPQ, or Customer Support AI Agent."
             )
 
         entities = re.findall(r'\*\*(.+?)\*\* \[(.+?)\]:', context)
         relationships = re.findall(r'- (.+?) \*\*(.+?)\*\* (.+)', context)
 
-        reasoning_parts = ["I searched the knowledge graph for information relevant to your question."]
+        reasoning_parts = ["I searched the enterprise context for information relevant to your question."]
         if entities:
             reasoning_parts.append(
                 "Relevant entities: " + ", ".join(f"{name} ({cat})" for name, cat in entities[:6])
@@ -138,7 +138,7 @@ Final answer goes here..."""
                 )
             )
 
-        answer_parts = ["Based on the knowledge graph:\n"]
+        answer_parts = ["Based on the enterprise context:\n"]
         for name, category in entities[:8]:
             desc_match = re.search(
                 rf'\*\*{re.escape(name)}\*\* \[{re.escape(category)}\]: (.+)',
@@ -154,7 +154,7 @@ Final answer goes here..."""
 
         answer_parts.append(
             "\n_Note: Configure OPENAI_API_KEY for full AI-powered answers. "
-            "This response was generated directly from the knowledge graph._"
+            "This response was generated directly from the enterprise context._"
         )
 
         return (
@@ -178,7 +178,7 @@ Final answer goes here..."""
             return {
                 'content': (
                     'LLM service is not available. Please configure OPENAI_API_KEY or GEMINI_API_KEY in your .env file, '
-                    'or switch to a Knowledge Graph grounding mode for graph-based answers.'
+                    'or switch to an Enterprise Context grounding mode for graph-based answers.'
                 ),
                 'tokens_used': 0,
                 'reasoning': None,
@@ -236,7 +236,7 @@ Final answer goes here..."""
         if grounding_mode == 'generic' and not client:
             yield (
                 'LLM service is not available. Please configure OPENAI_API_KEY or GEMINI_API_KEY, '
-                'or switch to a Knowledge Graph grounding mode.'
+                'or switch to an Enterprise Context grounding mode.'
             )
             return
 

@@ -28,6 +28,9 @@ export const EntityPanel: React.FC = () => {
         description: '',
     });
 
+    const [kpiValue, setKpiValue] = useState<string>('');
+    const [kpiUnit, setKpiUnit] = useState<string>('');
+
     const [relationshipData, setRelationshipData] = useState({
         targetId: '',
         type: 'used_in' as RelationshipType | string,
@@ -41,6 +44,13 @@ export const EntityPanel: React.FC = () => {
                 type: selectedEntity.type,
                 description: selectedEntity.description || '',
             });
+            if (selectedEntity.type === 'kpi') {
+                setKpiValue(String(selectedEntity.metadata?.value ?? ''));
+                setKpiUnit(String(selectedEntity.metadata?.unit ?? ''));
+            } else {
+                setKpiValue('');
+                setKpiUnit('');
+            }
             setIsCreating(false);
             setIsCollapsed(false);
         }
@@ -51,7 +61,15 @@ export const EntityPanel: React.FC = () => {
 
         try {
             if (selectedEntity) {
-                const updated = await graphApi.updateEntity(selectedEntity.id, formData);
+                const payload: Record<string, unknown> = { ...formData };
+                if (selectedEntity.type === 'kpi') {
+                    payload.metadata = {
+                        ...(selectedEntity.metadata ?? {}),
+                        ...(kpiValue !== '' ? { value: parseFloat(kpiValue) } : {}),
+                        ...(kpiUnit !== '' ? { unit: kpiUnit } : {}),
+                    };
+                }
+                const updated = await graphApi.updateEntity(selectedEntity.id, payload);
                 updateEntity(selectedEntity.id, updated);
             } else {
                 const newEntity = await graphApi.createEntity({
@@ -61,6 +79,8 @@ export const EntityPanel: React.FC = () => {
                 addEntity(newEntity);
                 setIsCreating(false);
                 setFormData({ name: '', type: 'domain', description: '' });
+                setKpiValue('');
+                setKpiUnit('');
             }
         } catch (error: any) {
             alert(`Failed to save entity: ${error.response?.data?.detail || error.message}`);
@@ -192,6 +212,32 @@ export const EntityPanel: React.FC = () => {
                             />
                         </div>
 
+                        {(selectedEntity?.type === 'kpi' || (isCreating && formData.type === 'kpi')) && (
+                            <>
+                                <div className="form-group">
+                                    <label htmlFor="kpi-value">Value</label>
+                                    <input
+                                        id="kpi-value"
+                                        type="number"
+                                        step="any"
+                                        value={kpiValue}
+                                        onChange={(e) => setKpiValue(e.target.value)}
+                                        placeholder="e.g. 2000000"
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="kpi-unit">Unit</label>
+                                    <input
+                                        id="kpi-unit"
+                                        type="text"
+                                        value={kpiUnit}
+                                        onChange={(e) => setKpiUnit(e.target.value)}
+                                        placeholder="e.g. GBP"
+                                    />
+                                </div>
+                            </>
+                        )}
+
                         <div className="form-actions">
                             <button type="submit" className="btn btn-primary">
                                 {selectedEntity ? 'Save' : 'Create'}
@@ -217,6 +263,8 @@ export const EntityPanel: React.FC = () => {
                                     onClick={() => {
                                         setIsCreating(false);
                                         setFormData({ name: '', type: 'domain', description: '' });
+                                        setKpiValue('');
+                                        setKpiUnit('');
                                     }}
                                 >
                                     Cancel

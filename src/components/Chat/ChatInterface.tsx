@@ -99,8 +99,8 @@ export const ChatInterface: React.FC = () => {
 
     const groundingModes: { value: GroundingMode; label: string; description: string }[] = [
         { value: 'generic', label: 'Generic', description: 'No graph context — standard AI response' },
-        { value: 'kg_only', label: 'Knowledge Graph', description: 'Answers grounded in graph entities and relationships' },
-        { value: 'kg_full', label: 'KG + Data', description: 'Full context including data product tables' },
+        { value: 'kg_only', label: 'Enterprise Context (EC)', description: 'Answers grounded in graph entities and relationships' },
+        { value: 'kg_full', label: 'EC + Data', description: 'Full context including data product tables' },
     ];
 
     const isGraphGrounded = groundingMode !== 'generic';
@@ -127,7 +127,6 @@ export const ChatInterface: React.FC = () => {
 
             <div className="chat-header">
                 <div className="header-content">
-                    <h2>Knowledge Graph Chat</h2>
                     <div className="graph-stats">
                         <span className="stat">
                             <span className="stat-value">{entities.length}</span>
@@ -184,15 +183,15 @@ export const ChatInterface: React.FC = () => {
             <div className="messages-container">
                 {messages.length === 0 && (
                     <div className="welcome-message">
-                        <h3>👋 Ask your knowledge graph</h3>
+                        <h3>👋 Ask your Enterprise Context</h3>
                         <p>
-                            Chat is connected to your knowledge graph
+                            Chat is connected to your enterprise context
                             {entities.length > 0
                                 ? ` (${entities.length} entities, ${relationships.length} relationships).`
                                 : '. Loading graph data...'}
                             {isGraphGrounded
                                 ? ' Answers are grounded in your graph structure.'
-                                : ' Switch to Knowledge Graph mode to use graph context.'}
+                                : ' Switch to Enterprise Context mode to use graph context.'}
                         </p>
                         <div className="example-questions">
                             <p className="example-label">Try asking:</p>
@@ -266,7 +265,7 @@ export const ChatInterface: React.FC = () => {
 
                                 {hasContext && (
                                     <details className="context-details">
-                                        <summary>💾 Knowledge Context Used</summary>
+                                        <summary>💾 Enterprise Context Used</summary>
                                         <pre className="context-text">{message.usedContext?.raw_context_string}</pre>
                                     </details>
                                 )}

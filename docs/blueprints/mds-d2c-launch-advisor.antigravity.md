@@ -622,3 +622,181 @@ Complete these checks before handing off for Stage 3 review. Do not mark Phase 1
 - **FR-10 KPI inline edit** (Should) — do not build the `contentEditable` UI. Pre-seeded KPI values are the Phase 1 fallback.
 - **Multi-user / session isolation** — single presenter, no session state beyond what exists today.
 - **Any new npm or pip package.**
+
+---
+
+## Phase 2 Amendment — Should FRs (branch: `feature/mds-d2c-phase2`)
+
+**Phase 2 scope:** FR-6 (ProviderSelector UI) and FR-10 (KPI value editing). Both are frontend-only — no backend changes required. No new npm or pip packages.
+
+**Implementation order:** Batch A (FR-6) then Batch B (FR-10). They are independent and can be verified separately.
+
+---
+
+### Batch A — FR-6: `ProviderSelector` component
+
+**Files to create:**
+- `src/components/Controls/ProviderSelector.tsx`
+- `src/components/Controls/ProviderSelector.css`
+
+**Files to edit:**
+- `src/components/Layout/AppLayout.tsx` — mount alongside `PersonaSelector`
+
+#### `ProviderSelector.tsx`
+
+Model exactly on the existing `PersonaSelector.tsx` — same file structure, same store access pattern, same CSS class naming convention.
+
+```tsx
+import React from 'react';
+import { useChatStore } from '../../store/chatStore';
+import type { LLMProvider } from '../../types/chat';
+import './ProviderSelector.css';
+
+const PROVIDER_OPTIONS: { value: LLMProvider; label: string }[] = [
+    { value: 'openai', label: 'OpenAI' },
+    { value: 'gemini', label: 'Gemini' },
+];
+
+export const ProviderSelector: React.FC = () => {
+    const provider = useChatStore(state => state.provider);
+    const setProvider = useChatStore(state => state.setProvider);
+
+    return (
+        <div className="provider-selector">
+            <span className="provider-label">Provider:</span>
+            <div className="provider-segmented-control">
+                {PROVIDER_OPTIONS.map((option) => (
+                    <button
+                        key={option.value}
+                        type="button"
+                        className={`provider-btn ${provider === option.value ? 'active' : ''}`}
+                        onClick={() => setProvider(option.value)}
+                    >
+                        {option.label}
+                    </button>
+                ))}
+            </div>
+        </div>
+    );
+};
+```
+
+**Do not** call `clearMessages()` or `clearHighlightedPath()` on provider switch — the provider is a request parameter, not a conversation reset.
+
+#### `ProviderSelector.css`
+
+Copy the `.persona-selector` / `.persona-segmented-control` / `.persona-btn` pattern from `PersonaSelector.css` verbatim, renaming the classes to `.provider-selector` / `.provider-segmented-control` / `.provider-btn`. Do not share CSS classes between the two components.
+
+#### `AppLayout.tsx` change
+
+Import `ProviderSelector` and mount it in `.app-top-header` immediately after `PersonaSelector`:
+
+```tsx
+import { ProviderSelector } from '../Controls/ProviderSelector';
+
+// In JSX:
+<header className="app-top-header">
+    <PersonaSelector />
+    <ProviderSelector />
+</header>
+```
+
+No other change to `AppLayout.tsx`.
+
+#### Batch A exit check
+- [ ] Toggling "Gemini" → "OpenAI" in the header updates `chatStore.provider`
+- [ ] Sending a chat message in "Gemini" mode hits Gemini (check backend log: no `NotFoundError`, no fallback message)
+- [ ] Sending a chat message in "OpenAI" mode with no OpenAI key set falls back to Gemini silently (existing `_get_client()` fallback — no UI error)
+- [ ] No layout breakage at 1280px or 1920px width
+
+---
+
+### Batch B — FR-10: KPI value editing in `EntityPanel.tsx`
+
+**File to edit:** `src/components/Graph/EntityPanel.tsx` only. No other file changes.
+
+**What to build:** When the selected entity is of type `kpi`, show two additional fields below the Description textarea — `Value` (number) and `Unit` (text). On save, merge these into the `metadata` field of the PUT request. For all other entity types, render nothing extra.
+
+**State additions** (local to `EntityPanel` — do not touch `graphStore` or `chatStore`):
+
+Add to the existing `formData` state or as separate local state. Separate state is cleaner here to avoid polluting the existing `formData` shape:
+
+```typescript
+const [kpiValue, setKpiValue] = useState<string>('');
+const [kpiUnit, setKpiUnit]   = useState<string>('');
+```
+
+**Populate on entity select** — inside the existing `useEffect` that sets `formData`, add:
+
+```typescript
+if (selectedEntity?.type === 'kpi') {
+    setKpiValue(String(selectedEntity.metadata?.value ?? ''));
+    setKpiUnit(String(selectedEntity.metadata?.unit ?? ''));
+}
+```
+
+**Render** — insert after the Description `<div className="form-group">` and before `<div className="form-actions">`, guarded by entity type:
+
+```tsx
+{(selectedEntity?.type === 'kpi' || (isCreating && formData.type === 'kpi')) && (
+    <>
+        <div className="form-group">
+            <label htmlFor="kpi-value">Value</label>
+            <input
+                id="kpi-value"
+                type="number"
+                step="any"
+                value={kpiValue}
+                onChange={(e) => setKpiValue(e.target.value)}
+                placeholder="e.g. 2000000"
+            />
+        </div>
+        <div className="form-group">
+            <label htmlFor="kpi-unit">Unit</label>
+            <input
+                id="kpi-unit"
+                type="text"
+                value={kpiUnit}
+                onChange={(e) => setKpiUnit(e.target.value)}
+                placeholder="e.g. GBP"
+            />
+        </div>
+    </>
+)}
+```
+
+**Save** — in `handleSubmit`, when `selectedEntity.type === 'kpi'` (or `formData.type === 'kpi'` when creating), merge the KPI fields into the update payload:
+
+```typescript
+const payload: any = { ...formData };
+if (selectedEntity?.type === 'kpi' || formData.type === 'kpi') {
+    payload.metadata = {
+        ...(selectedEntity?.metadata ?? {}),
+        ...(kpiValue !== '' ? { value: parseFloat(kpiValue) } : {}),
+        ...(kpiUnit  !== '' ? { unit: kpiUnit } : {}),
+    };
+}
+const updated = await graphApi.updateEntity(selectedEntity.id, payload);
+```
+
+The `EntityUpdate.metadata` field already exists in the backend model — no backend change needed.
+
+**Reset KPI state** — when `isCreating` is cancelled or a non-KPI entity is selected, reset `kpiValue` and `kpiUnit` to `''`. Add resets alongside the existing `setFormData` calls.
+
+**Do not** change the visual layout of the existing Name / Category / Description fields. Do not add a `contentEditable` span — use a plain `<input type="number">`. Do not add any validation beyond what the backend already enforces.
+
+#### Batch B exit check
+- [ ] Select a KPI entity (e.g. "TAV UK D2C Market") — Value and Unit fields appear pre-populated
+- [ ] Edit Value to a new number, click Save — value updates in the graph store and persists (verify via Export JSON or page refresh)
+- [ ] Select a non-KPI entity (e.g. a region) — Value and Unit fields are not visible
+- [ ] Saving a non-KPI entity after having viewed a KPI entity does not accidentally include metadata in the payload
+
+---
+
+## Phase 2 Exit Checklist
+
+- [ ] All Batch A checks pass
+- [ ] All Batch B checks pass
+- [ ] No new npm or pip packages introduced
+- [ ] No regressions to Phase 1 functionality (persona selector, glow, reasoning drawer, grounding modes)
+- [ ] `npm run build` completes without TypeScript errors
