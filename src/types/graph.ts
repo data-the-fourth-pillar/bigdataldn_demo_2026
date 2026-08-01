@@ -19,7 +19,22 @@ export interface Relationship {
     createdAt: string;
 }
 
-export type EntityType = string;
+export type EntityType =
+    | 'domain'
+    | 'data_product'
+    | 'process'
+    | 'person'
+    | 'technology'
+    | 'ai_agent'
+    | 'metadata_technical'
+    | 'product_category'
+    | 'region'
+    | 'supply_chain_node'
+    | 'marketing_channel'
+    | 'kpi'
+    | 'legal_entity'
+    | 'finance_entity'
+    | string;
 export type RelationshipType = string;
 
 export interface GraphData {

@@ -27,11 +27,15 @@ class ChatRequest(BaseModel):
     groundingMode: str  # 'generic' | 'kg_only' | 'kg_full'
     conversationHistory: Optional[List[Message]] = None
     focusEntityId: Optional[str] = None
+    provider: str = 'openai'
+    personaLens: str = 'ceo'
 
 class ChatResponse(BaseModel):
     message: Message
     usedContext: UsedContext
     tokensUsed: Optional[int] = None
+    failoverTriggered: Optional[bool] = None
+    failoverNotice: Optional[str] = None
 
 class StreamChunk(BaseModel):
     delta: str
