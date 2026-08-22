@@ -259,13 +259,6 @@ export const EntityPanel: React.FC = () => {
                             </button>
                             {selectedEntity && (
                                 <>
-                                    <button
-                                        type="button"
-                                        className="btn btn-secondary"
-                                        onClick={() => setFocusEntity(selectedEntity.id)}
-                                    >
-                                        Focus
-                                    </button>
                                     <button type="button" className="btn btn-danger" onClick={handleDelete}>
                                         Delete
                                     </button>

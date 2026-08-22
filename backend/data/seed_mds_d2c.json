@@ -1,0 +1,4267 @@
+{
+  "entities": {
+    "mds-cat-sports-nutrition": {
+      "id": "mds-cat-sports-nutrition",
+      "name": "Sports Nutrition",
+      "type": "product_category",
+      "description": "High-performance sports protein powders, gels, and hydration products",
+      "metadata": {
+        "d2c_potential": "high",
+        "sku_count": 140,
+        "current_channel": "Wholesale"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-cat-vitamins": {
+      "id": "mds-cat-vitamins",
+      "name": "Vitamins",
+      "type": "product_category",
+      "description": "Daily health supplements, multivitamin packs, and recovery capsules",
+      "metadata": {
+        "d2c_potential": "high",
+        "sku_count": 95,
+        "current_channel": "Wholesale"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-cat-beauty": {
+      "id": "mds-cat-beauty",
+      "name": "Beauty",
+      "type": "product_category",
+      "description": "Athletic skincare, anti-chafing treatments, and sport recovery lotions",
+      "metadata": {
+        "d2c_potential": "medium",
+        "sku_count": 60,
+        "current_channel": "Retail Exclusive"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-cat-pet": {
+      "id": "mds-cat-pet",
+      "name": "Pet Nutrition",
+      "type": "product_category",
+      "description": "Canine endurance supplements and joint health products for active dogs",
+      "metadata": {
+        "d2c_potential": "low",
+        "sku_count": 40,
+        "current_channel": "Wholesale"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-cat-apparel": {
+      "id": "mds-cat-apparel",
+      "name": "Apparel",
+      "type": "product_category",
+      "description": "Performance socks, compression gear, and athletic footwear care accessories",
+      "metadata": {
+        "d2c_potential": "medium",
+        "sku_count": 110,
+        "current_channel": "Wholesale"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-region-london-se": {
+      "id": "mds-region-london-se",
+      "name": "London South East",
+      "type": "region",
+      "description": "Greater London metropolitan area and South East England counties",
+      "metadata": {
+        "demand_index": 95,
+        "d2c_penetration_pct": 34.5,
+        "uk_sub_region": "Greater London & SE"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-region-midlands": {
+      "id": "mds-region-midlands",
+      "name": "Midlands",
+      "type": "region",
+      "description": "East and West Midlands metropolitan centers and surrounding areas",
+      "metadata": {
+        "demand_index": 78,
+        "d2c_penetration_pct": 22.0,
+        "uk_sub_region": "Midlands"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-region-north": {
+      "id": "mds-region-north",
+      "name": "North England",
+      "type": "region",
+      "description": "North West, Yorkshire, and North East England region",
+      "metadata": {
+        "demand_index": 70,
+        "d2c_penetration_pct": 18.5,
+        "uk_sub_region": "North"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-region-scotland": {
+      "id": "mds-region-scotland",
+      "name": "Scotland",
+      "type": "region",
+      "description": "Central Belt, Highlands, and Scottish Islands region",
+      "metadata": {
+        "demand_index": 62,
+        "d2c_penetration_pct": 15.0,
+        "uk_sub_region": "Scotland"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-region-wales": {
+      "id": "mds-region-wales",
+      "name": "Wales",
+      "type": "region",
+      "description": "South Wales urban corridor and rural Wales region",
+      "metadata": {
+        "demand_index": 55,
+        "d2c_penetration_pct": 12.0,
+        "uk_sub_region": "Wales"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-region-ni": {
+      "id": "mds-region-ni",
+      "name": "Northern Ireland",
+      "type": "region",
+      "description": "Greater Belfast and Northern Ireland regional market",
+      "metadata": {
+        "demand_index": 48,
+        "d2c_penetration_pct": 10.0,
+        "uk_sub_region": "Northern Ireland"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-sc-lutterworth": {
+      "id": "mds-sc-lutterworth",
+      "name": "MDS Lutterworth DC",
+      "type": "supply_chain_node",
+      "description": "Primary central fulfillment warehouse with confirmed D2C pick/pack capability",
+      "metadata": {
+        "d2c_status": "ready",
+        "node_type": "warehouse",
+        "blocker_reason": null
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-sc-lastmile-se": {
+      "id": "mds-sc-lastmile-se",
+      "name": "Last-Mile SE Courier",
+      "type": "supply_chain_node",
+      "description": "Contracted premium next-day courier service serving London and South East",
+      "metadata": {
+        "d2c_status": "ready",
+        "node_type": "fulfilment_centre",
+        "blocker_reason": null
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-sc-3pl-north": {
+      "id": "mds-sc-3pl-north",
+      "name": "3PL Partner North",
+      "type": "supply_chain_node",
+      "description": "Regional northern 3PL warehouse facility",
+      "metadata": {
+        "d2c_status": "blocker",
+        "node_type": "3pl",
+        "blocker_reason": "No D2C pick/pack agreement in current MSA"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-sc-lastmile-scotland": {
+      "id": "mds-sc-lastmile-scotland",
+      "name": "Last-Mile Scotland Carrier",
+      "type": "supply_chain_node",
+      "description": "Scottish regional courier logistics provider",
+      "metadata": {
+        "d2c_status": "blocker",
+        "node_type": "fulfilment_centre",
+        "blocker_reason": "No last-mile coverage contract north of Edinburgh"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-sc-midlands-3pl": {
+      "id": "mds-sc-midlands-3pl",
+      "name": "Midlands 3PL Facility",
+      "type": "supply_chain_node",
+      "description": "Secondary distribution center serving Midlands regional orders",
+      "metadata": {
+        "d2c_status": "partial",
+        "node_type": "3pl",
+        "blocker_reason": "Capable but needs D2C SLA addendum"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-sc-beauty-hub": {
+      "id": "mds-sc-beauty-hub",
+      "name": "Central Beauty Hub",
+      "type": "supply_chain_node",
+      "description": "Specialized skincare and cosmetic storage facility",
+      "metadata": {
+        "d2c_status": "partial",
+        "node_type": "warehouse",
+        "blocker_reason": "Awaiting temperature-controlled packing validation"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-sc-ni-hub": {
+      "id": "mds-sc-ni-hub",
+      "name": "Belfast Regional Hub",
+      "type": "supply_chain_node",
+      "description": "Northern Ireland sea-freight and regional logistics node",
+      "metadata": {
+        "d2c_status": "partial",
+        "node_type": "3pl",
+        "blocker_reason": "Requires sea-freight transit SLA addendum"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-chan-trade": {
+      "id": "mds-chan-trade",
+      "name": "MDS Trade Wholesale",
+      "type": "marketing_channel",
+      "description": "Existing UK B2B wholesale distribution partner network (JD Sports, Decathlon, Foot Locker)",
+      "metadata": {
+        "channel_type": "B2B Wholesale",
+        "conflict_risk": "high"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-chan-amazon": {
+      "id": "mds-chan-amazon",
+      "name": "Amazon UK Brand Store",
+      "type": "marketing_channel",
+      "description": "Managed Amazon Marketplace storefront for non-exclusive catalog",
+      "metadata": {
+        "channel_type": "Marketplace",
+        "conflict_risk": "low"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-chan-d2c": {
+      "id": "mds-chan-d2c",
+      "name": "MDS D2C Direct Store",
+      "type": "marketing_channel",
+      "description": "Proposed web and mobile direct consumer eCommerce platform",
+      "metadata": {
+        "channel_type": "D2C eCommerce",
+        "conflict_risk": "high"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-kpi-tav": {
+      "id": "mds-kpi-tav",
+      "name": "TAV UK D2C Market",
+      "type": "kpi",
+      "description": "Total Addressable Value of UK Direct-to-Consumer market opportunity",
+      "metadata": {
+        "value": 15000000,
+        "unit": "GBP",
+        "lens": "ceo"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-kpi-eav-yr1": {
+      "id": "mds-kpi-eav-yr1",
+      "name": "EAV Year 1 Rollout",
+      "type": "kpi",
+      "description": "Expected Addressable Value in Year 1 launching Sports Nutrition + Vitamins in London & SE",
+      "metadata": {
+        "value": 2000000,
+        "unit": "GBP",
+        "year": 1,
+        "lens": "ceo"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-kpi-eav-yr2": {
+      "id": "mds-kpi-eav-yr2",
+      "name": "EAV Year 2 Expansion",
+      "type": "kpi",
+      "description": "Cumulative EAV Year 2 adding Beauty & Personal Care + Midlands & North regions",
+      "metadata": {
+        "value": 5000000,
+        "unit": "GBP",
+        "year": 2,
+        "lens": "ceo"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-kpi-eav-yr3": {
+      "id": "mds-kpi-eav-yr3",
+      "name": "EAV Year 3 Full Rollout",
+      "type": "kpi",
+      "description": "Cumulative EAV Year 3 adding Pet Nutrition + Scotland & Wales nationwide footprint",
+      "metadata": {
+        "value": 9000000,
+        "unit": "GBP",
+        "year": 3,
+        "lens": "ceo"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-kpi-rv-baseline": {
+      "id": "mds-kpi-rv-baseline",
+      "name": "RV Wholesale Baseline",
+      "type": "kpi",
+      "description": "Realized Value baseline from existing UK wholesale retail operations",
+      "metadata": {
+        "value": 45000000,
+        "unit": "GBP",
+        "lens": "ceo"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-kpi-d2c-margin": {
+      "id": "mds-kpi-d2c-margin",
+      "name": "D2C Target Gross Margin",
+      "type": "kpi",
+      "description": "Target gross margin percentage for direct consumer channel sales",
+      "metadata": {
+        "value": 62,
+        "unit": "PCT",
+        "lens": "ceo"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-kpi-roi": {
+      "id": "mds-kpi-roi",
+      "name": "D2C Target Return on Investment",
+      "type": "kpi",
+      "description": "Target ROI percentage for capital invested in D2C infrastructure",
+      "metadata": {
+        "value": 28,
+        "unit": "PCT",
+        "lens": "ceo"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-kpi-capex-target": {
+      "id": "mds-kpi-capex-target",
+      "name": "Initial D2C Capex Target",
+      "type": "kpi",
+      "description": "Approved capital expenditure budget for Phase 1 D2C launch",
+      "metadata": {
+        "value": 850000,
+        "unit": "GBP",
+        "lens": "ceo"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-legal-retailer-agreement": {
+      "id": "mds-legal-retailer-agreement",
+      "name": "Retailer Channel Agreement",
+      "type": "policy",
+      "description": "Master commercial contract governing UK retail partner wholesale distribution",
+      "metadata": {
+        "contract_type": "Wholesale Exclusive",
+        "exclusivity_clause": "Beauty & Personal Care 18-month retail exclusivity"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-legal-3pl-msa": {
+      "id": "mds-legal-3pl-msa",
+      "name": "3PL Master Services Agreement",
+      "type": "policy",
+      "description": "Logistics contract governing third-party warehouse warehousing and B2B freight",
+      "metadata": {
+        "contract_type": "Logistics MSA",
+        "exclusivity_clause": null
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-legal-carrier-terms": {
+      "id": "mds-legal-carrier-terms",
+      "name": "National Courier Terms",
+      "type": "policy",
+      "description": "Standard service agreement for last-mile small parcel delivery",
+      "metadata": {
+        "contract_type": "Courier Services",
+        "exclusivity_clause": null
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-fin-capex": {
+      "id": "mds-fin-capex",
+      "name": "D2C Launch Capex Estimate",
+      "type": "finance_entity",
+      "description": "Estimated capital expenditure required for platform implementation and DC integration",
+      "metadata": {
+        "value": 750000,
+        "currency": "GBP",
+        "metric_type": "Capital Expenditure"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-fin-breakeven": {
+      "id": "mds-fin-breakeven",
+      "name": "Expected D2C Break-Even",
+      "type": "finance_entity",
+      "description": "Projected months from launch to achieving positive channel contribution margin",
+      "metadata": {
+        "value": 9,
+        "currency": "MONTHS",
+        "metric_type": "Payback Period"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-fin-cogs": {
+      "id": "mds-fin-cogs",
+      "name": "D2C COGS Per Order",
+      "type": "finance_entity",
+      "description": "Average cost of goods, packaging, and pick/pack fulfillment per D2C order",
+      "metadata": {
+        "value": 14.5,
+        "currency": "GBP",
+        "metric_type": "Unit Cost"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-fin-marketing": {
+      "id": "mds-fin-marketing",
+      "name": "D2C Launch Marketing Budget",
+      "type": "finance_entity",
+      "description": "Operational budget allocated for digital acquisition and brand launch marketing",
+      "metadata": {
+        "value": 350000,
+        "currency": "GBP",
+        "metric_type": "Operational Expenditure"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-fin-wholesale-margin": {
+      "id": "mds-fin-wholesale-margin",
+      "name": "Wholesale Operating Margin",
+      "type": "finance_entity",
+      "description": "Current operating margin percentage achieved across wholesale retail partners",
+      "metadata": {
+        "value": 24.5,
+        "currency": "PCT",
+        "metric_type": "Margin"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-person-cat-manager": {
+      "id": "mds-person-cat-manager",
+      "name": "D2C Category Manager",
+      "type": "person",
+      "description": "Owns P&L and launch decisions per product category for the D2C channel.",
+      "metadata": {
+        "pillar": "People"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-person-digital-lead": {
+      "id": "mds-person-digital-lead",
+      "name": "Digital Commerce Lead",
+      "type": "person",
+      "description": "Leads digital shelf, UX, and online trading for MDS D2C Direct Store.",
+      "metadata": {
+        "pillar": "People"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-person-sc-planner": {
+      "id": "mds-person-sc-planner",
+      "name": "Supply Chain Planner",
+      "type": "person",
+      "description": "Plans fulfilment capacity, DC allocation and carrier SLAs across D2C categories.",
+      "metadata": {
+        "pillar": "People"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-person-data-lead": {
+      "id": "mds-person-data-lead",
+      "name": "Data Analytics Lead",
+      "type": "person",
+      "description": "Owns the enterprise knowledge graph, data products and BI reporting for the D2C programme.",
+      "metadata": {
+        "pillar": "People"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-proc-order-fulfil": {
+      "id": "mds-proc-order-fulfil",
+      "name": "D2C Order Fulfilment",
+      "type": "process",
+      "description": "End-to-end process from customer order placement to last-mile delivery for D2C.",
+      "metadata": {
+        "pillar": "Process"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-proc-channel-conflict": {
+      "id": "mds-proc-channel-conflict",
+      "name": "Channel Conflict Management",
+      "type": "process",
+      "description": "Governance process to manage price and assortment conflicts between D2C and Wholesale.",
+      "metadata": {
+        "pillar": "Process"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-proc-cust-acq": {
+      "id": "mds-proc-cust-acq",
+      "name": "Customer Acquisition",
+      "type": "process",
+      "description": "Performance marketing and CRM flows to acquire and retain D2C customers.",
+      "metadata": {
+        "pillar": "Process"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-proc-demand-forecast": {
+      "id": "mds-proc-demand-forecast",
+      "name": "Demand Forecasting",
+      "type": "process",
+      "description": "Statistical and ML-driven demand planning to size D2C inventory by category.",
+      "metadata": {
+        "pillar": "Process"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-tech-ecommerce": {
+      "id": "mds-tech-ecommerce",
+      "name": "MDS E-commerce Platform",
+      "type": "technology",
+      "description": "Headless commerce platform powering the MDS D2C Direct Store storefront and checkout.",
+      "metadata": {
+        "pillar": "Technology"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-tech-crm": {
+      "id": "mds-tech-crm",
+      "name": "CRM",
+      "type": "technology",
+      "description": "Customer relationship management system for D2C customer records, loyalty and service.",
+      "metadata": {
+        "pillar": "Technology"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-tech-cdp": {
+      "id": "mds-tech-cdp",
+      "name": "CDP",
+      "type": "technology",
+      "description": "Customer data platform that unifies behavioural, transactional and CRM signals for D2C personalisation.",
+      "metadata": {
+        "pillar": "Technology"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-tech-inventory": {
+      "id": "mds-tech-inventory",
+      "name": "Inventory System",
+      "type": "technology",
+      "description": "Real-time inventory management and allocation system across MDS DC network.",
+      "metadata": {
+        "pillar": "Technology"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-tech-mktg-analytics": {
+      "id": "mds-tech-mktg-analytics",
+      "name": "Marketing Analytics Platform",
+      "type": "technology",
+      "description": "Attribution, media mix modelling and campaign analytics for D2C paid and owned channels.",
+      "metadata": {
+        "pillar": "Technology"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-dp-product-catalogue": {
+      "id": "mds-dp-product-catalogue",
+      "name": "Product Catalogue Data",
+      "type": "data_product",
+      "description": "Master data for SKUs, pricing, content and product hierarchy across all D2C categories.",
+      "metadata": {
+        "pillar": "Data",
+        "domain": "Product",
+        "tabular_data": {
+          "headers": [
+            "Category",
+            "SKU Count",
+            "D2C Ready",
+            "Target Margin"
+          ],
+          "rows": [
+            [
+              "Sports Nutrition",
+              47,
+              "Yes",
+              "62%"
+            ],
+            [
+              "Vitamins, Supplements",
+              38,
+              "Yes",
+              "58%"
+            ],
+            [
+              "Beauty, Personal Care",
+              52,
+              "Partial",
+              "55%"
+            ],
+            [
+              "Pet Nutrition",
+              23,
+              "No",
+              "48%"
+            ]
+          ]
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-dp-customer-insights": {
+      "id": "mds-dp-customer-insights",
+      "name": "Customer Insights Data",
+      "type": "data_product",
+      "description": "Unified customer profiles, purchase history, CLV and churn signals from CDP and CRM.",
+      "metadata": {
+        "pillar": "Data",
+        "domain": "Customer",
+        "tabular_data": {
+          "headers": [
+            "Segment",
+            "UK Size",
+            "Avg Order Value",
+            "Lifetime Value",
+            "D2C Propensity"
+          ],
+          "rows": [
+            [
+              "Health Enthusiasts",
+              "450K",
+              "\u00a368",
+              "\u00a3320",
+              "High"
+            ],
+            [
+              "Wellness Beginners",
+              "1.2M",
+              "\u00a342",
+              "\u00a3180",
+              "Medium"
+            ],
+            [
+              "Pet Owners",
+              "380K",
+              "\u00a355",
+              "\u00a3240",
+              "Medium"
+            ],
+            [
+              "Beauty Loyalists",
+              "620K",
+              "\u00a372",
+              "\u00a3410",
+              "High"
+            ]
+          ]
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-dp-supply-chain-data": {
+      "id": "mds-dp-supply-chain-data",
+      "name": "Supply Chain Data",
+      "type": "data_product",
+      "description": "DC throughput, carrier SLA performance, stock levels and D2C fulfilment metrics.",
+      "metadata": {
+        "pillar": "Data",
+        "domain": "Supply Chain",
+        "tabular_data": {
+          "headers": [
+            "Node",
+            "D2C Status",
+            "Annual Capacity",
+            "Region",
+            "Lead Time"
+          ],
+          "rows": [
+            [
+              "MDS Lutterworth DC",
+              "Ready",
+              "500K orders",
+              "Midlands",
+              "Next Day"
+            ],
+            [
+              "Central Beauty Hub",
+              "Partial",
+              "200K orders",
+              "South East",
+              "2 Days"
+            ],
+            [
+              "3PL Partner North",
+              "Partial",
+              "300K orders",
+              "North West",
+              "2 Days"
+            ],
+            [
+              "Midlands 3PL Facility",
+              "Partial",
+              "150K orders",
+              "Midlands",
+              "Next Day"
+            ],
+            [
+              "Last-Mile SE Courier",
+              "Ready",
+              "1M deliveries",
+              "South East",
+              "Next Day"
+            ]
+          ]
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-dp-sales-revenue": {
+      "id": "mds-dp-sales-revenue",
+      "name": "Sales Revenue Data",
+      "type": "data_product",
+      "description": "D2C and wholesale revenue, margin, returns and channel contribution by category.",
+      "metadata": {
+        "pillar": "Data",
+        "domain": "Sales",
+        "tabular_data": {
+          "headers": [
+            "Category",
+            "Wholesale Revenue",
+            "EAV Year 1",
+            "EAV Year 3"
+          ],
+          "rows": [
+            [
+              "Sports Nutrition",
+              "\u00a318M",
+              "\u00a3800K",
+              "\u00a33.6M"
+            ],
+            [
+              "Vitamins, Supplements",
+              "\u00a312M",
+              "\u00a3600K",
+              "\u00a32.7M"
+            ],
+            [
+              "Beauty, Personal Care",
+              "\u00a38M",
+              "\u00a3400K",
+              "\u00a31.8M"
+            ],
+            [
+              "Pet Nutrition",
+              "\u00a37M",
+              "\u00a3200K",
+              "\u00a3900K"
+            ]
+          ]
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-domain-product": {
+      "id": "mds-domain-product",
+      "name": "Product Domain",
+      "type": "domain",
+      "description": "Data domain governing product master data, catalogue integrity and pricing rules.",
+      "metadata": {
+        "pillar": "Data"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-domain-customer": {
+      "id": "mds-domain-customer",
+      "name": "Customer Domain",
+      "type": "domain",
+      "description": "Data domain owning customer identity, consent, behavioural data and lifetime value.",
+      "metadata": {
+        "pillar": "Data"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-domain-supply-chain": {
+      "id": "mds-domain-supply-chain",
+      "name": "Supply Chain Domain",
+      "type": "domain",
+      "description": "Data domain covering inventory, logistics, fulfilment and supplier data.",
+      "metadata": {
+        "pillar": "Data"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-domain-sales": {
+      "id": "mds-domain-sales",
+      "name": "Sales Domain",
+      "type": "domain",
+      "description": "Data domain for revenue, margin, returns and commercial performance data.",
+      "metadata": {
+        "pillar": "Data"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-policy-pricing": {
+      "id": "mds-policy-pricing",
+      "name": "D2C Pricing Policy",
+      "type": "policy",
+      "description": "Minimum advertised price (MAP) rules, D2C/wholesale price parity guardrails, across all MDS product categories.",
+      "metadata": {
+        "owner": "D2C Category Manager",
+        "status": "active",
+        "review_cycle": "Annual"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-policy-data-privacy": {
+      "id": "mds-policy-data-privacy",
+      "name": "Customer Data Privacy Policy",
+      "type": "policy",
+      "description": "GDPR-compliant rules governing collection, retention, processing of customer personal data across all D2C touchpoints.",
+      "metadata": {
+        "owner": "Data & Analytics Lead",
+        "status": "active",
+        "review_cycle": "Annual",
+        "regulation": "GDPR / UK GDPR"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-policy-channel-exclusivity": {
+      "id": "mds-policy-channel-exclusivity",
+      "name": "Channel Exclusivity Policy",
+      "type": "policy",
+      "description": "Defines which SKUs are exclusive to MDS D2C Direct Store vs available on Amazon or Wholesale, protecting channel margin, brand positioning.",
+      "metadata": {
+        "owner": "Digital Commerce Lead",
+        "status": "active",
+        "review_cycle": "Bi-annual"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-policy-supplier-ethics": {
+      "id": "mds-policy-supplier-ethics",
+      "name": "Supplier Code of Conduct",
+      "type": "policy",
+      "description": "Ethical sourcing, labour standards, environmental requirements mandatory for all 3PL, carrier, supplier partners in MDS DC network.",
+      "metadata": {
+        "owner": "Supply Chain Planner",
+        "status": "active",
+        "review_cycle": "Annual"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-policy-consent": {
+      "id": "mds-policy-consent",
+      "name": "Customer Consent Personalisation Policy",
+      "type": "policy",
+      "description": "Governs opt-in consent flows, cookie preferences, permissible use of behavioural data for D2C personalisation, retargeting.",
+      "metadata": {
+        "owner": "Data & Analytics Lead",
+        "status": "active",
+        "regulation": "UK GDPR / PECR"
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-dp-financial-perf": {
+      "id": "mds-dp-financial-perf",
+      "type": "data_product",
+      "name": "D2C Financial Performance Data",
+      "description": "Consolidates D2C revenue, CAPEX investment, operating costs, gross margin to calculate ROI vs wholesale baseline",
+      "metadata": {},
+      "createdAt": "2026-08-02T00:00:00.000Z",
+      "updatedAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-legal-group": {
+      "id": "mds-legal-group",
+      "type": "legal_entity",
+      "name": "MDS Group Ltd",
+      "description": "UK parent holding company; owns all MDS brands, IP, regulatory registrations",
+      "metadata": {
+        "entity_type": "Holding Company",
+        "jurisdiction": "England & Wales"
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z",
+      "updatedAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-legal-d2c-opco": {
+      "id": "mds-legal-d2c-opco",
+      "type": "legal_entity",
+      "name": "MDS D2C OpCo Ltd",
+      "description": "D2C operating subsidiary; runs the direct-to-consumer channel and holds e-commerce platform contracts",
+      "metadata": {
+        "entity_type": "Operating Subsidiary",
+        "jurisdiction": "England & Wales"
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z",
+      "updatedAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-legal-wholesale": {
+      "id": "mds-legal-wholesale",
+      "type": "legal_entity",
+      "name": "MDS Wholesale Trading Ltd",
+      "description": "Existing B2B wholesale trading entity; holds key account retailer relationships",
+      "metadata": {
+        "entity_type": "Trading Company",
+        "jurisdiction": "England & Wales"
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z",
+      "updatedAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-policy-data-quality": {
+      "id": "mds-policy-data-quality",
+      "type": "policy",
+      "name": "Product Data Quality Standard",
+      "description": "Minimum data completeness, accuracy thresholds for SKU attributes, imagery, content required before a product category is marked D2C ready.",
+      "metadata": {
+        "owner": "D2C Category Manager",
+        "status": "active",
+        "review_cycle": "Quarterly"
+      },
+      "createdAt": "2026-08-22T00:00:00.000Z",
+      "updatedAt": "2026-08-22T00:00:00.000Z"
+    },
+    "mds-policy-npi": {
+      "id": "mds-policy-npi",
+      "type": "policy",
+      "name": "New Product Introduction Policy",
+      "description": "Sign-off criteria, minimum margin thresholds a new SKU or category must meet before launch into any D2C channel.",
+      "metadata": {
+        "owner": "D2C Category Manager",
+        "status": "active",
+        "review_cycle": "Annual"
+      },
+      "createdAt": "2026-08-22T00:00:00.000Z",
+      "updatedAt": "2026-08-22T00:00:00.000Z"
+    },
+    "mds-policy-lifecycle": {
+      "id": "mds-policy-lifecycle",
+      "type": "policy",
+      "name": "Product Discontinuation Policy",
+      "description": "Rules for phasing out underperforming SKUs, categories from D2C channels, including wind-down timelines, wholesale fallback.",
+      "metadata": {
+        "owner": "D2C Category Manager",
+        "status": "active",
+        "review_cycle": "Annual"
+      },
+      "createdAt": "2026-08-22T00:00:00.000Z",
+      "updatedAt": "2026-08-22T00:00:00.000Z"
+    }
+  },
+  "relationships": {
+    "mds-rel-measures-tav-cat": {
+      "id": "mds-rel-measures-tav-cat",
+      "sourceId": "mds-kpi-tav",
+      "targetId": "mds-cat-sports-nutrition",
+      "type": "measures",
+      "properties": {
+        "perspectives": {
+          "mds-kpi-tav": {
+            "label": "measures opportunity for",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-measures-tav-reg": {
+      "id": "mds-rel-measures-tav-reg",
+      "sourceId": "mds-kpi-tav",
+      "targetId": "mds-region-london-se",
+      "type": "measures",
+      "properties": {
+        "perspectives": {
+          "mds-kpi-tav": {
+            "label": "measures region",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-measures-yr1-cat": {
+      "id": "mds-rel-measures-yr1-cat",
+      "sourceId": "mds-kpi-eav-yr1",
+      "targetId": "mds-cat-sports-nutrition",
+      "type": "measures",
+      "properties": {
+        "perspectives": {
+          "mds-kpi-eav-yr1": {
+            "label": "measures target category",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-measures-yr1-reg": {
+      "id": "mds-rel-measures-yr1-reg",
+      "sourceId": "mds-kpi-eav-yr1",
+      "targetId": "mds-region-london-se",
+      "type": "measures",
+      "properties": {
+        "perspectives": {
+          "mds-kpi-eav-yr1": {
+            "label": "measures target region",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-measures-yr2-cat": {
+      "id": "mds-rel-measures-yr2-cat",
+      "sourceId": "mds-kpi-eav-yr2",
+      "targetId": "mds-cat-beauty",
+      "type": "measures",
+      "properties": {
+        "perspectives": {
+          "mds-kpi-eav-yr2": {
+            "label": "measures expansion category",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-measures-yr2-reg": {
+      "id": "mds-rel-measures-yr2-reg",
+      "sourceId": "mds-kpi-eav-yr2",
+      "targetId": "mds-region-midlands",
+      "type": "measures",
+      "properties": {
+        "perspectives": {
+          "mds-kpi-eav-yr2": {
+            "label": "measures expansion region",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-measures-yr3-cat": {
+      "id": "mds-rel-measures-yr3-cat",
+      "sourceId": "mds-kpi-eav-yr3",
+      "targetId": "mds-cat-pet",
+      "type": "measures",
+      "properties": {
+        "perspectives": {
+          "mds-kpi-eav-yr3": {
+            "label": "measures final rollout category",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-measures-yr3-reg": {
+      "id": "mds-rel-measures-yr3-reg",
+      "sourceId": "mds-kpi-eav-yr3",
+      "targetId": "mds-region-scotland",
+      "type": "measures",
+      "properties": {
+        "perspectives": {
+          "mds-kpi-eav-yr3": {
+            "label": "measures final rollout region",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-measures-roi-d2c": {
+      "id": "mds-rel-measures-roi-d2c",
+      "sourceId": "mds-kpi-roi",
+      "targetId": "mds-chan-d2c",
+      "type": "measures",
+      "properties": {
+        "perspectives": {
+          "mds-kpi-roi": {
+            "label": "measures channel ROI",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-phase-sports-yr1": {
+      "id": "mds-rel-phase-sports-yr1",
+      "sourceId": "mds-cat-sports-nutrition",
+      "targetId": "mds-kpi-eav-yr1",
+      "type": "rollout_in",
+      "properties": {
+        "perspectives": {
+          "mds-cat-sports-nutrition": {
+            "label": "phases in Year 1",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-phase-vitamins-yr1": {
+      "id": "mds-rel-phase-vitamins-yr1",
+      "sourceId": "mds-cat-vitamins",
+      "targetId": "mds-kpi-eav-yr1",
+      "type": "rollout_in",
+      "properties": {
+        "perspectives": {
+          "mds-cat-vitamins": {
+            "label": "phases in Year 1",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-phase-beauty-yr2": {
+      "id": "mds-rel-phase-beauty-yr2",
+      "sourceId": "mds-cat-beauty",
+      "targetId": "mds-kpi-eav-yr2",
+      "type": "rollout_in",
+      "properties": {
+        "perspectives": {
+          "mds-cat-beauty": {
+            "label": "phases in Year 2",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-phase-pet-yr3": {
+      "id": "mds-rel-phase-pet-yr3",
+      "sourceId": "mds-cat-pet",
+      "targetId": "mds-kpi-eav-yr3",
+      "type": "rollout_in",
+      "properties": {
+        "perspectives": {
+          "mds-cat-pet": {
+            "label": "phases in Year 3",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-phase-apparel-yr2": {
+      "id": "mds-rel-phase-apparel-yr2",
+      "sourceId": "mds-cat-apparel",
+      "targetId": "mds-kpi-eav-yr2",
+      "type": "rollout_in",
+      "properties": {
+        "perspectives": {
+          "mds-cat-apparel": {
+            "label": "phases in Year 2",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-dep-sports-lut": {
+      "id": "mds-rel-dep-sports-lut",
+      "sourceId": "mds-cat-sports-nutrition",
+      "targetId": "mds-sc-lutterworth",
+      "type": "depends_on",
+      "properties": {
+        "perspectives": {
+          "mds-cat-sports-nutrition": {
+            "label": "depends on",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-dep-vitamins-lut": {
+      "id": "mds-rel-dep-vitamins-lut",
+      "sourceId": "mds-cat-vitamins",
+      "targetId": "mds-sc-lutterworth",
+      "type": "depends_on",
+      "properties": {
+        "perspectives": {
+          "mds-cat-vitamins": {
+            "label": "depends on",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-dep-beauty-hub": {
+      "id": "mds-rel-dep-beauty-hub",
+      "sourceId": "mds-cat-beauty",
+      "targetId": "mds-sc-beauty-hub",
+      "type": "depends_on",
+      "properties": {
+        "perspectives": {
+          "mds-cat-beauty": {
+            "label": "depends on hub",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-dep-beauty-3pl": {
+      "id": "mds-rel-dep-beauty-3pl",
+      "sourceId": "mds-cat-beauty",
+      "targetId": "mds-sc-3pl-north",
+      "type": "depends_on",
+      "properties": {
+        "perspectives": {
+          "mds-cat-beauty": {
+            "label": "depends on regional 3PL",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-dep-pet-scotland": {
+      "id": "mds-rel-dep-pet-scotland",
+      "sourceId": "mds-cat-pet",
+      "targetId": "mds-sc-lastmile-scotland",
+      "type": "depends_on",
+      "properties": {
+        "perspectives": {
+          "mds-cat-pet": {
+            "label": "depends on carrier",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-dep-apparel-midlands": {
+      "id": "mds-rel-dep-apparel-midlands",
+      "sourceId": "mds-cat-apparel",
+      "targetId": "mds-sc-midlands-3pl",
+      "type": "depends_on",
+      "properties": {
+        "perspectives": {
+          "mds-cat-apparel": {
+            "label": "depends on 3PL",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-fulfils-lut-london": {
+      "id": "mds-rel-fulfils-lut-london",
+      "sourceId": "mds-sc-lutterworth",
+      "targetId": "mds-region-london-se",
+      "type": "fulfils_region",
+      "properties": {
+        "perspectives": {
+          "mds-sc-lutterworth": {
+            "label": "fulfils region",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-fulfils-lastmile-london": {
+      "id": "mds-rel-fulfils-lastmile-london",
+      "sourceId": "mds-sc-lastmile-se",
+      "targetId": "mds-region-london-se",
+      "type": "fulfils_region",
+      "properties": {
+        "perspectives": {
+          "mds-sc-lastmile-se": {
+            "label": "delivers to region",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-fulfils-midlands-3pl": {
+      "id": "mds-rel-fulfils-midlands-3pl",
+      "sourceId": "mds-sc-midlands-3pl",
+      "targetId": "mds-region-midlands",
+      "type": "fulfils_region",
+      "properties": {
+        "perspectives": {
+          "mds-sc-midlands-3pl": {
+            "label": "fulfils region",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-fulfils-3pl-north": {
+      "id": "mds-rel-fulfils-3pl-north",
+      "sourceId": "mds-sc-3pl-north",
+      "targetId": "mds-region-north",
+      "type": "fulfils_region",
+      "properties": {
+        "perspectives": {
+          "mds-sc-3pl-north": {
+            "label": "fulfils region",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-fulfils-scotland-carrier": {
+      "id": "mds-rel-fulfils-scotland-carrier",
+      "sourceId": "mds-sc-lastmile-scotland",
+      "targetId": "mds-region-scotland",
+      "type": "fulfils_region",
+      "properties": {
+        "perspectives": {
+          "mds-sc-lastmile-scotland": {
+            "label": "fulfils region",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-fulfils-lastmile-wales": {
+      "id": "mds-rel-fulfils-lastmile-wales",
+      "sourceId": "mds-sc-lastmile-se",
+      "targetId": "mds-region-wales",
+      "type": "fulfils_region",
+      "properties": {
+        "perspectives": {
+          "mds-sc-lastmile-se": {
+            "label": "delivers to region",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-fulfils-ni-hub": {
+      "id": "mds-rel-fulfils-ni-hub",
+      "sourceId": "mds-sc-ni-hub",
+      "targetId": "mds-region-ni",
+      "type": "fulfils_region",
+      "properties": {
+        "perspectives": {
+          "mds-sc-ni-hub": {
+            "label": "fulfils region",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-serves-lut-sports": {
+      "id": "mds-rel-serves-lut-sports",
+      "sourceId": "mds-sc-lutterworth",
+      "targetId": "mds-cat-sports-nutrition",
+      "type": "serves_category",
+      "properties": {
+        "perspectives": {
+          "mds-sc-lutterworth": {
+            "label": "serves category",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-serves-lut-vitamins": {
+      "id": "mds-rel-serves-lut-vitamins",
+      "sourceId": "mds-sc-lutterworth",
+      "targetId": "mds-cat-vitamins",
+      "type": "serves_category",
+      "properties": {
+        "perspectives": {
+          "mds-sc-lutterworth": {
+            "label": "serves category",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-serves-beauty-hub": {
+      "id": "mds-rel-serves-beauty-hub",
+      "sourceId": "mds-sc-beauty-hub",
+      "targetId": "mds-cat-beauty",
+      "type": "serves_category",
+      "properties": {
+        "perspectives": {
+          "mds-sc-beauty-hub": {
+            "label": "serves category",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-serves-3pl-beauty": {
+      "id": "mds-rel-serves-3pl-beauty",
+      "sourceId": "mds-sc-3pl-north",
+      "targetId": "mds-cat-beauty",
+      "type": "serves_category",
+      "properties": {
+        "perspectives": {
+          "mds-sc-3pl-north": {
+            "label": "serves category",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-serves-3pl-pet": {
+      "id": "mds-rel-serves-3pl-pet",
+      "sourceId": "mds-sc-3pl-north",
+      "targetId": "mds-cat-pet",
+      "type": "serves_category",
+      "properties": {
+        "perspectives": {
+          "mds-sc-3pl-north": {
+            "label": "serves category",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-serves-scotland-pet": {
+      "id": "mds-rel-serves-scotland-pet",
+      "sourceId": "mds-sc-lastmile-scotland",
+      "targetId": "mds-cat-pet",
+      "type": "serves_category",
+      "properties": {
+        "perspectives": {
+          "mds-sc-lastmile-scotland": {
+            "label": "delivers category",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-serves-midlands-apparel": {
+      "id": "mds-rel-serves-midlands-apparel",
+      "sourceId": "mds-sc-midlands-3pl",
+      "targetId": "mds-cat-apparel",
+      "type": "serves_category",
+      "properties": {
+        "perspectives": {
+          "mds-sc-midlands-3pl": {
+            "label": "serves category",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-governs-retailer-trade": {
+      "id": "mds-rel-governs-retailer-trade",
+      "sourceId": "mds-legal-retailer-agreement",
+      "targetId": "mds-chan-trade",
+      "type": "governs",
+      "properties": {
+        "perspectives": {
+          "mds-legal-retailer-agreement": {
+            "label": "governs channel",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-governs-retailer-d2c": {
+      "id": "mds-rel-governs-retailer-d2c",
+      "sourceId": "mds-legal-retailer-agreement",
+      "targetId": "mds-chan-d2c",
+      "type": "governs",
+      "properties": {
+        "perspectives": {
+          "mds-legal-retailer-agreement": {
+            "label": "constrains channel",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-governs-3pl-node": {
+      "id": "mds-rel-governs-3pl-node",
+      "sourceId": "mds-legal-3pl-msa",
+      "targetId": "mds-sc-3pl-north",
+      "type": "governs",
+      "properties": {
+        "perspectives": {
+          "mds-legal-3pl-msa": {
+            "label": "governs node",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-competes-d2c-trade": {
+      "id": "mds-rel-competes-d2c-trade",
+      "sourceId": "mds-chan-d2c",
+      "targetId": "mds-chan-trade",
+      "type": "competes_with",
+      "properties": {
+        "perspectives": {
+          "mds-chan-d2c": {
+            "label": "competes with channel",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-funds-capex-d2c": {
+      "id": "mds-rel-funds-capex-d2c",
+      "sourceId": "mds-fin-capex",
+      "targetId": "mds-chan-d2c",
+      "type": "funds",
+      "properties": {
+        "perspectives": {
+          "mds-fin-capex": {
+            "label": "funds channel launch",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-funds-cogs-lut": {
+      "id": "mds-rel-funds-cogs-lut",
+      "sourceId": "mds-fin-cogs",
+      "targetId": "mds-sc-lutterworth",
+      "type": "funds",
+      "properties": {
+        "perspectives": {
+          "mds-fin-cogs": {
+            "label": "funds warehouse operations",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-funds-breakeven-yr1": {
+      "id": "mds-rel-funds-breakeven-yr1",
+      "sourceId": "mds-fin-breakeven",
+      "targetId": "mds-kpi-eav-yr1",
+      "type": "funds",
+      "properties": {
+        "perspectives": {
+          "mds-fin-breakeven": {
+            "label": "supports target payback",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-funds-marketing-d2c": {
+      "id": "mds-rel-funds-marketing-d2c",
+      "sourceId": "mds-fin-marketing",
+      "targetId": "mds-chan-d2c",
+      "type": "funds",
+      "properties": {
+        "perspectives": {
+          "mds-fin-marketing": {
+            "label": "funds channel marketing",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-measures-rv-trade": {
+      "id": "mds-rel-measures-rv-trade",
+      "sourceId": "mds-kpi-rv-baseline",
+      "targetId": "mds-chan-trade",
+      "type": "measures",
+      "properties": {
+        "perspectives": {
+          "mds-kpi-rv-baseline": {
+            "label": "measures channel revenue",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-measures-margin-d2c": {
+      "id": "mds-rel-measures-margin-d2c",
+      "sourceId": "mds-kpi-d2c-margin",
+      "targetId": "mds-chan-d2c",
+      "type": "measures",
+      "properties": {
+        "perspectives": {
+          "mds-kpi-d2c-margin": {
+            "label": "measures channel margin",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-dom-prod-dp": {
+      "id": "r-dom-prod-dp",
+      "sourceId": "mds-domain-product",
+      "type": "has_data_product",
+      "targetId": "mds-dp-product-catalogue",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-dom-cust-dp": {
+      "id": "r-dom-cust-dp",
+      "sourceId": "mds-domain-customer",
+      "type": "has_data_product",
+      "targetId": "mds-dp-customer-insights",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-dom-sc-dp": {
+      "id": "r-dom-sc-dp",
+      "sourceId": "mds-domain-supply-chain",
+      "type": "has_data_product",
+      "targetId": "mds-dp-supply-chain-data",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-dom-sales-dp": {
+      "id": "r-dom-sales-dp",
+      "sourceId": "mds-domain-sales",
+      "type": "has_data_product",
+      "targetId": "mds-dp-sales-revenue",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-sn-lse": {
+      "id": "r-sn-lse",
+      "sourceId": "mds-cat-sports-nutrition",
+      "type": "launched_in",
+      "targetId": "mds-region-london-se",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-sn-mid": {
+      "id": "r-sn-mid",
+      "sourceId": "mds-cat-sports-nutrition",
+      "type": "launched_in",
+      "targetId": "mds-region-midlands",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-vit-lse": {
+      "id": "r-vit-lse",
+      "sourceId": "mds-cat-vitamins",
+      "type": "launched_in",
+      "targetId": "mds-region-london-se",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-bpc-lse": {
+      "id": "r-bpc-lse",
+      "sourceId": "mds-cat-beauty",
+      "type": "launched_in",
+      "targetId": "mds-region-london-se",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-bpc-nth": {
+      "id": "r-bpc-nth",
+      "sourceId": "mds-cat-beauty",
+      "type": "launched_in",
+      "targetId": "mds-region-north",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pet-sco": {
+      "id": "r-pet-sco",
+      "sourceId": "mds-cat-pet",
+      "type": "launched_in",
+      "targetId": "mds-region-scotland",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pet-wal": {
+      "id": "r-pet-wal",
+      "sourceId": "mds-cat-pet",
+      "type": "launched_in",
+      "targetId": "mds-region-wales",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-app-mid": {
+      "id": "r-app-mid",
+      "sourceId": "mds-cat-apparel",
+      "type": "launched_in",
+      "targetId": "mds-region-midlands",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-sn-d2c": {
+      "id": "r-sn-d2c",
+      "sourceId": "mds-cat-sports-nutrition",
+      "type": "sold_via",
+      "targetId": "mds-chan-d2c",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-sn-amz": {
+      "id": "r-sn-amz",
+      "sourceId": "mds-cat-sports-nutrition",
+      "type": "sold_via",
+      "targetId": "mds-chan-amazon",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-vit-d2c": {
+      "id": "r-vit-d2c",
+      "sourceId": "mds-cat-vitamins",
+      "type": "sold_via",
+      "targetId": "mds-chan-d2c",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-bpc-d2c": {
+      "id": "r-bpc-d2c",
+      "sourceId": "mds-cat-beauty",
+      "type": "sold_via",
+      "targetId": "mds-chan-d2c",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-bpc-amz": {
+      "id": "r-bpc-amz",
+      "sourceId": "mds-cat-beauty",
+      "type": "sold_via",
+      "targetId": "mds-chan-amazon",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pet-d2c": {
+      "id": "r-pet-d2c",
+      "sourceId": "mds-cat-pet",
+      "type": "sold_via",
+      "targetId": "mds-chan-d2c",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-app-amz": {
+      "id": "r-app-amz",
+      "sourceId": "mds-cat-apparel",
+      "type": "sold_via",
+      "targetId": "mds-chan-amazon",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-leg-sn": {
+      "id": "r-leg-sn",
+      "sourceId": "mds-legal-retailer-agreement",
+      "type": "governs",
+      "targetId": "mds-cat-sports-nutrition",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-leg-vit": {
+      "id": "r-leg-vit",
+      "sourceId": "mds-legal-retailer-agreement",
+      "type": "governs",
+      "targetId": "mds-cat-vitamins",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-leg-bpc": {
+      "id": "r-leg-bpc",
+      "sourceId": "mds-legal-retailer-agreement",
+      "type": "governs",
+      "targetId": "mds-cat-beauty",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-leg-pet": {
+      "id": "r-leg-pet",
+      "sourceId": "mds-legal-retailer-agreement",
+      "type": "governs",
+      "targetId": "mds-cat-pet",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-leg-app": {
+      "id": "r-leg-app",
+      "sourceId": "mds-legal-retailer-agreement",
+      "type": "governs",
+      "targetId": "mds-cat-apparel",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-sn-catmgr": {
+      "id": "r-sn-catmgr",
+      "sourceId": "mds-cat-sports-nutrition",
+      "type": "managed_by",
+      "targetId": "mds-person-cat-manager",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-vit-catmgr": {
+      "id": "r-vit-catmgr",
+      "sourceId": "mds-cat-vitamins",
+      "type": "managed_by",
+      "targetId": "mds-person-cat-manager",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-bpc-catmgr": {
+      "id": "r-bpc-catmgr",
+      "sourceId": "mds-cat-beauty",
+      "type": "managed_by",
+      "targetId": "mds-person-cat-manager",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pet-catmgr": {
+      "id": "r-pet-catmgr",
+      "sourceId": "mds-cat-pet",
+      "type": "managed_by",
+      "targetId": "mds-person-cat-manager",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-app-catmgr": {
+      "id": "r-app-catmgr",
+      "sourceId": "mds-cat-apparel",
+      "type": "managed_by",
+      "targetId": "mds-person-cat-manager",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-sn-dlead": {
+      "id": "r-sn-dlead",
+      "sourceId": "mds-cat-sports-nutrition",
+      "type": "managed_by",
+      "targetId": "mds-person-data-lead",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-vit-dlead": {
+      "id": "r-vit-dlead",
+      "sourceId": "mds-cat-vitamins",
+      "type": "managed_by",
+      "targetId": "mds-person-data-lead",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-bpc-dlead": {
+      "id": "r-bpc-dlead",
+      "sourceId": "mds-cat-beauty",
+      "type": "managed_by",
+      "targetId": "mds-person-data-lead",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pet-dlead": {
+      "id": "r-pet-dlead",
+      "sourceId": "mds-cat-pet",
+      "type": "managed_by",
+      "targetId": "mds-person-data-lead",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-app-dlead": {
+      "id": "r-app-dlead",
+      "sourceId": "mds-cat-apparel",
+      "type": "managed_by",
+      "targetId": "mds-person-data-lead",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-sn-diglead": {
+      "id": "r-sn-diglead",
+      "sourceId": "mds-cat-sports-nutrition",
+      "type": "managed_by",
+      "targetId": "mds-person-digital-lead",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-vit-diglead": {
+      "id": "r-vit-diglead",
+      "sourceId": "mds-cat-vitamins",
+      "type": "managed_by",
+      "targetId": "mds-person-digital-lead",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-bpc-diglead": {
+      "id": "r-bpc-diglead",
+      "sourceId": "mds-cat-beauty",
+      "type": "managed_by",
+      "targetId": "mds-person-digital-lead",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-sn-scplan": {
+      "id": "r-sn-scplan",
+      "sourceId": "mds-cat-sports-nutrition",
+      "type": "managed_by",
+      "targetId": "mds-person-sc-planner",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pet-scplan": {
+      "id": "r-pet-scplan",
+      "sourceId": "mds-cat-pet",
+      "type": "managed_by",
+      "targetId": "mds-person-sc-planner",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-bpc-scplan": {
+      "id": "r-bpc-scplan",
+      "sourceId": "mds-cat-beauty",
+      "type": "managed_by",
+      "targetId": "mds-person-sc-planner",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-sn-fulfil": {
+      "id": "r-sn-fulfil",
+      "sourceId": "mds-cat-sports-nutrition",
+      "type": "enabled_by",
+      "targetId": "mds-proc-order-fulfil",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-vit-fulfil": {
+      "id": "r-vit-fulfil",
+      "sourceId": "mds-cat-vitamins",
+      "type": "enabled_by",
+      "targetId": "mds-proc-order-fulfil",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-bpc-fulfil": {
+      "id": "r-bpc-fulfil",
+      "sourceId": "mds-cat-beauty",
+      "type": "enabled_by",
+      "targetId": "mds-proc-order-fulfil",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pet-fulfil": {
+      "id": "r-pet-fulfil",
+      "sourceId": "mds-cat-pet",
+      "type": "enabled_by",
+      "targetId": "mds-proc-order-fulfil",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-app-fulfil": {
+      "id": "r-app-fulfil",
+      "sourceId": "mds-cat-apparel",
+      "type": "enabled_by",
+      "targetId": "mds-proc-order-fulfil",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-sn-forecast": {
+      "id": "r-sn-forecast",
+      "sourceId": "mds-cat-sports-nutrition",
+      "type": "enabled_by",
+      "targetId": "mds-proc-demand-forecast",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-vit-forecast": {
+      "id": "r-vit-forecast",
+      "sourceId": "mds-cat-vitamins",
+      "type": "enabled_by",
+      "targetId": "mds-proc-demand-forecast",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-bpc-forecast": {
+      "id": "r-bpc-forecast",
+      "sourceId": "mds-cat-beauty",
+      "type": "enabled_by",
+      "targetId": "mds-proc-demand-forecast",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pet-forecast": {
+      "id": "r-pet-forecast",
+      "sourceId": "mds-cat-pet",
+      "type": "enabled_by",
+      "targetId": "mds-proc-demand-forecast",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-app-forecast": {
+      "id": "r-app-forecast",
+      "sourceId": "mds-cat-apparel",
+      "type": "enabled_by",
+      "targetId": "mds-proc-demand-forecast",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-sn-chconf": {
+      "id": "r-sn-chconf",
+      "sourceId": "mds-cat-sports-nutrition",
+      "type": "enabled_by",
+      "targetId": "mds-proc-channel-conflict",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-vit-chconf": {
+      "id": "r-vit-chconf",
+      "sourceId": "mds-cat-vitamins",
+      "type": "enabled_by",
+      "targetId": "mds-proc-channel-conflict",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-bpc-chconf": {
+      "id": "r-bpc-chconf",
+      "sourceId": "mds-cat-beauty",
+      "type": "enabled_by",
+      "targetId": "mds-proc-channel-conflict",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-sn-custacq": {
+      "id": "r-sn-custacq",
+      "sourceId": "mds-cat-sports-nutrition",
+      "type": "enabled_by",
+      "targetId": "mds-proc-cust-acq",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-bpc-custacq": {
+      "id": "r-bpc-custacq",
+      "sourceId": "mds-cat-beauty",
+      "type": "enabled_by",
+      "targetId": "mds-proc-cust-acq",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-sn-ecom": {
+      "id": "r-sn-ecom",
+      "sourceId": "mds-cat-sports-nutrition",
+      "type": "powered_by",
+      "targetId": "mds-tech-ecommerce",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-vit-ecom": {
+      "id": "r-vit-ecom",
+      "sourceId": "mds-cat-vitamins",
+      "type": "powered_by",
+      "targetId": "mds-tech-ecommerce",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-bpc-ecom": {
+      "id": "r-bpc-ecom",
+      "sourceId": "mds-cat-beauty",
+      "type": "powered_by",
+      "targetId": "mds-tech-ecommerce",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pet-ecom": {
+      "id": "r-pet-ecom",
+      "sourceId": "mds-cat-pet",
+      "type": "powered_by",
+      "targetId": "mds-tech-ecommerce",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-app-ecom": {
+      "id": "r-app-ecom",
+      "sourceId": "mds-cat-apparel",
+      "type": "powered_by",
+      "targetId": "mds-tech-ecommerce",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-sn-inv": {
+      "id": "r-sn-inv",
+      "sourceId": "mds-cat-sports-nutrition",
+      "type": "powered_by",
+      "targetId": "mds-tech-inventory",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-vit-inv": {
+      "id": "r-vit-inv",
+      "sourceId": "mds-cat-vitamins",
+      "type": "powered_by",
+      "targetId": "mds-tech-inventory",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-bpc-inv": {
+      "id": "r-bpc-inv",
+      "sourceId": "mds-cat-beauty",
+      "type": "powered_by",
+      "targetId": "mds-tech-inventory",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pet-inv": {
+      "id": "r-pet-inv",
+      "sourceId": "mds-cat-pet",
+      "type": "powered_by",
+      "targetId": "mds-tech-inventory",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-app-inv": {
+      "id": "r-app-inv",
+      "sourceId": "mds-cat-apparel",
+      "type": "powered_by",
+      "targetId": "mds-tech-inventory",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-sn-crm": {
+      "id": "r-sn-crm",
+      "sourceId": "mds-cat-sports-nutrition",
+      "type": "powered_by",
+      "targetId": "mds-tech-crm",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-bpc-crm": {
+      "id": "r-bpc-crm",
+      "sourceId": "mds-cat-beauty",
+      "type": "powered_by",
+      "targetId": "mds-tech-crm",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-sn-cdp": {
+      "id": "r-sn-cdp",
+      "sourceId": "mds-cat-sports-nutrition",
+      "type": "powered_by",
+      "targetId": "mds-tech-cdp",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-vit-cdp": {
+      "id": "r-vit-cdp",
+      "sourceId": "mds-cat-vitamins",
+      "type": "powered_by",
+      "targetId": "mds-tech-cdp",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-bpc-cdp": {
+      "id": "r-bpc-cdp",
+      "sourceId": "mds-cat-beauty",
+      "type": "powered_by",
+      "targetId": "mds-tech-cdp",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-sn-mktg": {
+      "id": "r-sn-mktg",
+      "sourceId": "mds-cat-sports-nutrition",
+      "type": "powered_by",
+      "targetId": "mds-tech-mktg-analytics",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-bpc-mktg": {
+      "id": "r-bpc-mktg",
+      "sourceId": "mds-cat-beauty",
+      "type": "powered_by",
+      "targetId": "mds-tech-mktg-analytics",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pet-mktg": {
+      "id": "r-pet-mktg",
+      "sourceId": "mds-cat-pet",
+      "type": "powered_by",
+      "targetId": "mds-tech-mktg-analytics",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-sn-sales": {
+      "id": "r-sn-sales",
+      "sourceId": "mds-cat-sports-nutrition",
+      "type": "generates",
+      "targetId": "mds-dp-sales-revenue",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-vit-sales": {
+      "id": "r-vit-sales",
+      "sourceId": "mds-cat-vitamins",
+      "type": "generates",
+      "targetId": "mds-dp-sales-revenue",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-bpc-sales": {
+      "id": "r-bpc-sales",
+      "sourceId": "mds-cat-beauty",
+      "type": "generates",
+      "targetId": "mds-dp-sales-revenue",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pet-sales": {
+      "id": "r-pet-sales",
+      "sourceId": "mds-cat-pet",
+      "type": "generates",
+      "targetId": "mds-dp-sales-revenue",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-app-sales": {
+      "id": "r-app-sales",
+      "sourceId": "mds-cat-apparel",
+      "type": "generates",
+      "targetId": "mds-dp-sales-revenue",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-sn-pcat": {
+      "id": "r-sn-pcat",
+      "sourceId": "mds-cat-sports-nutrition",
+      "type": "generates",
+      "targetId": "mds-dp-product-catalogue",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-vit-pcat": {
+      "id": "r-vit-pcat",
+      "sourceId": "mds-cat-vitamins",
+      "type": "generates",
+      "targetId": "mds-dp-product-catalogue",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-bpc-pcat": {
+      "id": "r-bpc-pcat",
+      "sourceId": "mds-cat-beauty",
+      "type": "generates",
+      "targetId": "mds-dp-product-catalogue",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pet-pcat": {
+      "id": "r-pet-pcat",
+      "sourceId": "mds-cat-pet",
+      "type": "generates",
+      "targetId": "mds-dp-product-catalogue",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-app-pcat": {
+      "id": "r-app-pcat",
+      "sourceId": "mds-cat-apparel",
+      "type": "generates",
+      "targetId": "mds-dp-product-catalogue",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-sn-scdata": {
+      "id": "r-sn-scdata",
+      "sourceId": "mds-cat-sports-nutrition",
+      "type": "generates",
+      "targetId": "mds-dp-supply-chain-data",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-bpc-scdata": {
+      "id": "r-bpc-scdata",
+      "sourceId": "mds-cat-beauty",
+      "type": "generates",
+      "targetId": "mds-dp-supply-chain-data",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pet-scdata": {
+      "id": "r-pet-scdata",
+      "sourceId": "mds-cat-pet",
+      "type": "generates",
+      "targetId": "mds-dp-supply-chain-data",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-sn-custdata": {
+      "id": "r-sn-custdata",
+      "sourceId": "mds-cat-sports-nutrition",
+      "type": "generates",
+      "targetId": "mds-dp-customer-insights",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-bpc-custdata": {
+      "id": "r-bpc-custdata",
+      "sourceId": "mds-cat-beauty",
+      "type": "generates",
+      "targetId": "mds-dp-customer-insights",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-sn-dom-prod": {
+      "id": "r-sn-dom-prod",
+      "sourceId": "mds-cat-sports-nutrition",
+      "type": "uses_domain",
+      "targetId": "mds-domain-product",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-vit-dom-prod": {
+      "id": "r-vit-dom-prod",
+      "sourceId": "mds-cat-vitamins",
+      "type": "uses_domain",
+      "targetId": "mds-domain-product",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-bpc-dom-prod": {
+      "id": "r-bpc-dom-prod",
+      "sourceId": "mds-cat-beauty",
+      "type": "uses_domain",
+      "targetId": "mds-domain-product",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pet-dom-prod": {
+      "id": "r-pet-dom-prod",
+      "sourceId": "mds-cat-pet",
+      "type": "uses_domain",
+      "targetId": "mds-domain-product",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-app-dom-prod": {
+      "id": "r-app-dom-prod",
+      "sourceId": "mds-cat-apparel",
+      "type": "uses_domain",
+      "targetId": "mds-domain-product",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-sn-dom-cust": {
+      "id": "r-sn-dom-cust",
+      "sourceId": "mds-cat-sports-nutrition",
+      "type": "uses_domain",
+      "targetId": "mds-domain-customer",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-bpc-dom-cust": {
+      "id": "r-bpc-dom-cust",
+      "sourceId": "mds-cat-beauty",
+      "type": "uses_domain",
+      "targetId": "mds-domain-customer",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-sn-dom-sc": {
+      "id": "r-sn-dom-sc",
+      "sourceId": "mds-cat-sports-nutrition",
+      "type": "uses_domain",
+      "targetId": "mds-domain-supply-chain",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-vit-dom-sc": {
+      "id": "r-vit-dom-sc",
+      "sourceId": "mds-cat-vitamins",
+      "type": "uses_domain",
+      "targetId": "mds-domain-supply-chain",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-bpc-dom-sc": {
+      "id": "r-bpc-dom-sc",
+      "sourceId": "mds-cat-beauty",
+      "type": "uses_domain",
+      "targetId": "mds-domain-supply-chain",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pet-dom-sc": {
+      "id": "r-pet-dom-sc",
+      "sourceId": "mds-cat-pet",
+      "type": "uses_domain",
+      "targetId": "mds-domain-supply-chain",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-sn-dom-sales": {
+      "id": "r-sn-dom-sales",
+      "sourceId": "mds-cat-sports-nutrition",
+      "type": "uses_domain",
+      "targetId": "mds-domain-sales",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-vit-dom-sales": {
+      "id": "r-vit-dom-sales",
+      "sourceId": "mds-cat-vitamins",
+      "type": "uses_domain",
+      "targetId": "mds-domain-sales",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-bpc-dom-sales": {
+      "id": "r-bpc-dom-sales",
+      "sourceId": "mds-cat-beauty",
+      "type": "uses_domain",
+      "targetId": "mds-domain-sales",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pet-dom-sales": {
+      "id": "r-pet-dom-sales",
+      "sourceId": "mds-cat-pet",
+      "type": "uses_domain",
+      "targetId": "mds-domain-sales",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-app-dom-sales": {
+      "id": "r-app-dom-sales",
+      "sourceId": "mds-cat-apparel",
+      "type": "uses_domain",
+      "targetId": "mds-domain-sales",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pol-price-sn": {
+      "id": "r-pol-price-sn",
+      "sourceId": "mds-policy-pricing",
+      "type": "applies_to",
+      "targetId": "mds-cat-sports-nutrition",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pol-price-vit": {
+      "id": "r-pol-price-vit",
+      "sourceId": "mds-policy-pricing",
+      "type": "applies_to",
+      "targetId": "mds-cat-vitamins",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pol-price-bpc": {
+      "id": "r-pol-price-bpc",
+      "sourceId": "mds-policy-pricing",
+      "type": "applies_to",
+      "targetId": "mds-cat-beauty",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pol-price-pet": {
+      "id": "r-pol-price-pet",
+      "sourceId": "mds-policy-pricing",
+      "type": "applies_to",
+      "targetId": "mds-cat-pet",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pol-price-app": {
+      "id": "r-pol-price-app",
+      "sourceId": "mds-policy-pricing",
+      "type": "applies_to",
+      "targetId": "mds-cat-apparel",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pol-price-d2c": {
+      "id": "r-pol-price-d2c",
+      "sourceId": "mds-policy-pricing",
+      "type": "applies_to",
+      "targetId": "mds-chan-d2c",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pol-price-amz": {
+      "id": "r-pol-price-amz",
+      "sourceId": "mds-policy-pricing",
+      "type": "applies_to",
+      "targetId": "mds-chan-amazon",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pol-price-enf": {
+      "id": "r-pol-price-enf",
+      "sourceId": "mds-person-cat-manager",
+      "type": "enforced_by",
+      "targetId": "mds-policy-pricing",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pol-priv-cdp": {
+      "id": "r-pol-priv-cdp",
+      "sourceId": "mds-policy-data-privacy",
+      "type": "applies_to",
+      "targetId": "mds-tech-cdp",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pol-priv-crm": {
+      "id": "r-pol-priv-crm",
+      "sourceId": "mds-policy-data-privacy",
+      "type": "applies_to",
+      "targetId": "mds-tech-crm",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pol-priv-dp": {
+      "id": "r-pol-priv-dp",
+      "sourceId": "mds-policy-data-privacy",
+      "type": "applies_to",
+      "targetId": "mds-dp-customer-insights",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pol-priv-dom": {
+      "id": "r-pol-priv-dom",
+      "sourceId": "mds-policy-data-privacy",
+      "type": "applies_to",
+      "targetId": "mds-domain-customer",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pol-priv-enf": {
+      "id": "r-pol-priv-enf",
+      "sourceId": "mds-person-data-lead",
+      "type": "enforced_by",
+      "targetId": "mds-policy-data-privacy",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pol-excl-d2c": {
+      "id": "r-pol-excl-d2c",
+      "sourceId": "mds-policy-channel-exclusivity",
+      "type": "applies_to",
+      "targetId": "mds-chan-d2c",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pol-excl-amz": {
+      "id": "r-pol-excl-amz",
+      "sourceId": "mds-policy-channel-exclusivity",
+      "type": "applies_to",
+      "targetId": "mds-chan-amazon",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pol-excl-trade": {
+      "id": "r-pol-excl-trade",
+      "sourceId": "mds-policy-channel-exclusivity",
+      "type": "applies_to",
+      "targetId": "mds-chan-trade",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pol-excl-sn": {
+      "id": "r-pol-excl-sn",
+      "sourceId": "mds-policy-channel-exclusivity",
+      "type": "applies_to",
+      "targetId": "mds-cat-sports-nutrition",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pol-excl-vit": {
+      "id": "r-pol-excl-vit",
+      "sourceId": "mds-policy-channel-exclusivity",
+      "type": "applies_to",
+      "targetId": "mds-cat-vitamins",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pol-excl-enf": {
+      "id": "r-pol-excl-enf",
+      "sourceId": "mds-person-digital-lead",
+      "type": "enforced_by",
+      "targetId": "mds-policy-channel-exclusivity",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pol-sup-lutt": {
+      "id": "r-pol-sup-lutt",
+      "sourceId": "mds-policy-supplier-ethics",
+      "type": "applies_to",
+      "targetId": "mds-sc-lutterworth",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pol-sup-3pl-n": {
+      "id": "r-pol-sup-3pl-n",
+      "sourceId": "mds-policy-supplier-ethics",
+      "type": "applies_to",
+      "targetId": "mds-sc-3pl-north",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pol-sup-3pl-m": {
+      "id": "r-pol-sup-3pl-m",
+      "sourceId": "mds-policy-supplier-ethics",
+      "type": "applies_to",
+      "targetId": "mds-sc-midlands-3pl",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pol-sup-hub": {
+      "id": "r-pol-sup-hub",
+      "sourceId": "mds-policy-supplier-ethics",
+      "type": "applies_to",
+      "targetId": "mds-sc-beauty-hub",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pol-sup-enf": {
+      "id": "r-pol-sup-enf",
+      "sourceId": "mds-person-sc-planner",
+      "type": "enforced_by",
+      "targetId": "mds-policy-supplier-ethics",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pol-cons-cdp": {
+      "id": "r-pol-cons-cdp",
+      "sourceId": "mds-policy-consent",
+      "type": "applies_to",
+      "targetId": "mds-tech-cdp",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pol-cons-mktg": {
+      "id": "r-pol-cons-mktg",
+      "sourceId": "mds-policy-consent",
+      "type": "applies_to",
+      "targetId": "mds-tech-mktg-analytics",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pol-cons-dp": {
+      "id": "r-pol-cons-dp",
+      "sourceId": "mds-policy-consent",
+      "type": "applies_to",
+      "targetId": "mds-dp-customer-insights",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pol-cons-enf": {
+      "id": "r-pol-cons-enf",
+      "sourceId": "mds-person-data-lead",
+      "type": "enforced_by",
+      "targetId": "mds-policy-consent",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "r-pol-cons-proc": {
+      "id": "r-pol-cons-proc",
+      "sourceId": "mds-policy-consent",
+      "type": "applies_to",
+      "targetId": "mds-proc-cust-acq",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    "mds-rel-measures-capex-target-capex": {
+      "id": "mds-rel-measures-capex-target-capex",
+      "sourceId": "mds-kpi-capex-target",
+      "targetId": "mds-fin-capex",
+      "type": "measures",
+      "properties": {
+        "perspectives": {
+          "mds-kpi-capex-target": {
+            "label": "benchmarks against",
+            "direction": "out"
+          },
+          "mds-fin-capex": {
+            "label": "benchmarked by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-governs-carrier-terms-se": {
+      "id": "mds-rel-governs-carrier-terms-se",
+      "sourceId": "mds-legal-carrier-terms",
+      "targetId": "mds-sc-lastmile-se",
+      "type": "governs",
+      "properties": {
+        "perspectives": {
+          "mds-legal-carrier-terms": {
+            "label": "governs",
+            "direction": "out"
+          },
+          "mds-sc-lastmile-se": {
+            "label": "governed by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-governs-carrier-terms-scotland": {
+      "id": "mds-rel-governs-carrier-terms-scotland",
+      "sourceId": "mds-legal-carrier-terms",
+      "targetId": "mds-sc-lastmile-scotland",
+      "type": "governs",
+      "properties": {
+        "perspectives": {
+          "mds-legal-carrier-terms": {
+            "label": "governs",
+            "direction": "out"
+          },
+          "mds-sc-lastmile-scotland": {
+            "label": "governed by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-depends-trade-wholesale-margin": {
+      "id": "mds-rel-depends-trade-wholesale-margin",
+      "sourceId": "mds-chan-trade",
+      "targetId": "mds-fin-wholesale-margin",
+      "type": "depends_on",
+      "properties": {
+        "perspectives": {
+          "mds-chan-trade": {
+            "label": "depends on margin from",
+            "direction": "out"
+          },
+          "mds-fin-wholesale-margin": {
+            "label": "sustains",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-depends-ni-hub-lutterworth": {
+      "id": "mds-rel-depends-ni-hub-lutterworth",
+      "sourceId": "mds-sc-ni-hub",
+      "targetId": "mds-sc-lutterworth",
+      "type": "depends_on",
+      "properties": {
+        "perspectives": {
+          "mds-sc-ni-hub": {
+            "label": "replenished from",
+            "direction": "out"
+          },
+          "mds-sc-lutterworth": {
+            "label": "replenishes",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-governs-carrier-terms-ni-hub": {
+      "id": "mds-rel-governs-carrier-terms-ni-hub",
+      "sourceId": "mds-legal-carrier-terms",
+      "targetId": "mds-sc-ni-hub",
+      "type": "governs",
+      "properties": {
+        "perspectives": {
+          "mds-legal-carrier-terms": {
+            "label": "governs",
+            "direction": "out"
+          },
+          "mds-sc-ni-hub": {
+            "label": "governed by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-domain-product-owner": {
+      "id": "mds-rel-domain-product-owner",
+      "sourceId": "mds-domain-product",
+      "targetId": "mds-person-cat-manager",
+      "type": "has_owner",
+      "properties": {
+        "perspectives": {
+          "mds-domain-product": {
+            "label": "owned by",
+            "direction": "out"
+          },
+          "mds-person-cat-manager": {
+            "label": "owns domain",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-domain-sales-owner": {
+      "id": "mds-rel-domain-sales-owner",
+      "sourceId": "mds-domain-sales",
+      "targetId": "mds-person-digital-lead",
+      "type": "has_owner",
+      "properties": {
+        "perspectives": {
+          "mds-domain-sales": {
+            "label": "owned by",
+            "direction": "out"
+          },
+          "mds-person-digital-lead": {
+            "label": "owns domain",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-domain-sc-owner": {
+      "id": "mds-rel-domain-sc-owner",
+      "sourceId": "mds-domain-supply-chain",
+      "targetId": "mds-person-sc-planner",
+      "type": "has_owner",
+      "properties": {
+        "perspectives": {
+          "mds-domain-supply-chain": {
+            "label": "owned by",
+            "direction": "out"
+          },
+          "mds-person-sc-planner": {
+            "label": "owns domain",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-domain-customer-owner": {
+      "id": "mds-rel-domain-customer-owner",
+      "sourceId": "mds-domain-customer",
+      "targetId": "mds-person-data-lead",
+      "type": "has_owner",
+      "properties": {
+        "perspectives": {
+          "mds-domain-customer": {
+            "label": "owned by",
+            "direction": "out"
+          },
+          "mds-person-data-lead": {
+            "label": "owns domain",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-domain-sc-order-fulfil": {
+      "id": "mds-rel-domain-sc-order-fulfil",
+      "sourceId": "mds-domain-supply-chain",
+      "targetId": "mds-proc-order-fulfil",
+      "type": "has_process",
+      "properties": {
+        "perspectives": {
+          "mds-domain-supply-chain": {
+            "label": "contains process",
+            "direction": "out"
+          },
+          "mds-proc-order-fulfil": {
+            "label": "belongs to domain",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-domain-sales-channel-conf": {
+      "id": "mds-rel-domain-sales-channel-conf",
+      "sourceId": "mds-domain-sales",
+      "targetId": "mds-proc-channel-conflict",
+      "type": "has_process",
+      "properties": {
+        "perspectives": {
+          "mds-domain-sales": {
+            "label": "contains process",
+            "direction": "out"
+          },
+          "mds-proc-channel-conflict": {
+            "label": "belongs to domain",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-domain-customer-cust-acq": {
+      "id": "mds-rel-domain-customer-cust-acq",
+      "sourceId": "mds-domain-customer",
+      "targetId": "mds-proc-cust-acq",
+      "type": "has_process",
+      "properties": {
+        "perspectives": {
+          "mds-domain-customer": {
+            "label": "contains process",
+            "direction": "out"
+          },
+          "mds-proc-cust-acq": {
+            "label": "belongs to domain",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-domain-sc-demand-forecast": {
+      "id": "mds-rel-domain-sc-demand-forecast",
+      "sourceId": "mds-domain-supply-chain",
+      "targetId": "mds-proc-demand-forecast",
+      "type": "has_process",
+      "properties": {
+        "perspectives": {
+          "mds-domain-supply-chain": {
+            "label": "contains process",
+            "direction": "out"
+          },
+          "mds-proc-demand-forecast": {
+            "label": "belongs to domain",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-domain-sales-ecommerce": {
+      "id": "mds-rel-domain-sales-ecommerce",
+      "sourceId": "mds-domain-sales",
+      "targetId": "mds-tech-ecommerce",
+      "type": "has_technology",
+      "properties": {
+        "perspectives": {
+          "mds-domain-sales": {
+            "label": "uses system",
+            "direction": "out"
+          },
+          "mds-tech-ecommerce": {
+            "label": "owned by domain",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-domain-customer-crm": {
+      "id": "mds-rel-domain-customer-crm",
+      "sourceId": "mds-domain-customer",
+      "targetId": "mds-tech-crm",
+      "type": "has_technology",
+      "properties": {
+        "perspectives": {
+          "mds-domain-customer": {
+            "label": "uses system",
+            "direction": "out"
+          },
+          "mds-tech-crm": {
+            "label": "owned by domain",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-domain-customer-cdp": {
+      "id": "mds-rel-domain-customer-cdp",
+      "sourceId": "mds-domain-customer",
+      "targetId": "mds-tech-cdp",
+      "type": "has_technology",
+      "properties": {
+        "perspectives": {
+          "mds-domain-customer": {
+            "label": "uses system",
+            "direction": "out"
+          },
+          "mds-tech-cdp": {
+            "label": "owned by domain",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-domain-sc-inventory": {
+      "id": "mds-rel-domain-sc-inventory",
+      "sourceId": "mds-domain-supply-chain",
+      "targetId": "mds-tech-inventory",
+      "type": "has_technology",
+      "properties": {
+        "perspectives": {
+          "mds-domain-supply-chain": {
+            "label": "uses system",
+            "direction": "out"
+          },
+          "mds-tech-inventory": {
+            "label": "owned by domain",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-domain-sales-mktg-analytics": {
+      "id": "mds-rel-domain-sales-mktg-analytics",
+      "sourceId": "mds-domain-sales",
+      "targetId": "mds-tech-mktg-analytics",
+      "type": "has_technology",
+      "properties": {
+        "perspectives": {
+          "mds-domain-sales": {
+            "label": "uses system",
+            "direction": "out"
+          },
+          "mds-tech-mktg-analytics": {
+            "label": "owned by domain",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-person-sc-planner-order-fulfil": {
+      "id": "mds-rel-person-sc-planner-order-fulfil",
+      "sourceId": "mds-person-sc-planner",
+      "targetId": "mds-proc-order-fulfil",
+      "type": "manages",
+      "properties": {
+        "perspectives": {
+          "mds-person-sc-planner": {
+            "label": "managed by",
+            "direction": "out"
+          },
+          "mds-proc-order-fulfil": {
+            "label": "managed by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-person-digital-lead-cust-acq": {
+      "id": "mds-rel-person-digital-lead-cust-acq",
+      "sourceId": "mds-person-digital-lead",
+      "targetId": "mds-proc-cust-acq",
+      "type": "manages",
+      "properties": {
+        "perspectives": {
+          "mds-person-digital-lead": {
+            "label": "managed by",
+            "direction": "out"
+          },
+          "mds-proc-cust-acq": {
+            "label": "managed by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-person-sc-planner-demand-forecast": {
+      "id": "mds-rel-person-sc-planner-demand-forecast",
+      "sourceId": "mds-person-sc-planner",
+      "targetId": "mds-proc-demand-forecast",
+      "type": "manages",
+      "properties": {
+        "perspectives": {
+          "mds-person-sc-planner": {
+            "label": "managed by",
+            "direction": "out"
+          },
+          "mds-proc-demand-forecast": {
+            "label": "managed by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-person-cat-manager-channel-conflict": {
+      "id": "mds-rel-person-cat-manager-channel-conflict",
+      "sourceId": "mds-person-cat-manager",
+      "targetId": "mds-proc-channel-conflict",
+      "type": "manages",
+      "properties": {
+        "perspectives": {
+          "mds-person-cat-manager": {
+            "label": "managed by",
+            "direction": "out"
+          },
+          "mds-proc-channel-conflict": {
+            "label": "managed by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-person-digital-lead-ecommerce": {
+      "id": "mds-rel-person-digital-lead-ecommerce",
+      "sourceId": "mds-person-digital-lead",
+      "targetId": "mds-tech-ecommerce",
+      "type": "manages",
+      "properties": {
+        "perspectives": {
+          "mds-person-digital-lead": {
+            "label": "managed by",
+            "direction": "out"
+          },
+          "mds-tech-ecommerce": {
+            "label": "managed by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-person-data-lead-crm": {
+      "id": "mds-rel-person-data-lead-crm",
+      "sourceId": "mds-person-data-lead",
+      "targetId": "mds-tech-crm",
+      "type": "manages",
+      "properties": {
+        "perspectives": {
+          "mds-person-data-lead": {
+            "label": "managed by",
+            "direction": "out"
+          },
+          "mds-tech-crm": {
+            "label": "managed by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-person-data-lead-cdp": {
+      "id": "mds-rel-person-data-lead-cdp",
+      "sourceId": "mds-person-data-lead",
+      "targetId": "mds-tech-cdp",
+      "type": "manages",
+      "properties": {
+        "perspectives": {
+          "mds-person-data-lead": {
+            "label": "managed by",
+            "direction": "out"
+          },
+          "mds-tech-cdp": {
+            "label": "managed by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-person-sc-planner-inventory": {
+      "id": "mds-rel-person-sc-planner-inventory",
+      "sourceId": "mds-person-sc-planner",
+      "targetId": "mds-tech-inventory",
+      "type": "manages",
+      "properties": {
+        "perspectives": {
+          "mds-person-sc-planner": {
+            "label": "managed by",
+            "direction": "out"
+          },
+          "mds-tech-inventory": {
+            "label": "managed by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-person-data-lead-mktg-analytics": {
+      "id": "mds-rel-person-data-lead-mktg-analytics",
+      "sourceId": "mds-person-data-lead",
+      "targetId": "mds-tech-mktg-analytics",
+      "type": "manages",
+      "properties": {
+        "perspectives": {
+          "mds-person-data-lead": {
+            "label": "managed by",
+            "direction": "out"
+          },
+          "mds-tech-mktg-analytics": {
+            "label": "managed by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-person-cat-manager-dp-product": {
+      "id": "mds-rel-person-cat-manager-dp-product",
+      "sourceId": "mds-person-cat-manager",
+      "targetId": "mds-dp-product-catalogue",
+      "type": "manages",
+      "properties": {
+        "perspectives": {
+          "mds-person-cat-manager": {
+            "label": "managed by",
+            "direction": "out"
+          },
+          "mds-dp-product-catalogue": {
+            "label": "managed by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-person-data-lead-dp-customer": {
+      "id": "mds-rel-person-data-lead-dp-customer",
+      "sourceId": "mds-person-data-lead",
+      "targetId": "mds-dp-customer-insights",
+      "type": "manages",
+      "properties": {
+        "perspectives": {
+          "mds-person-data-lead": {
+            "label": "managed by",
+            "direction": "out"
+          },
+          "mds-dp-customer-insights": {
+            "label": "managed by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-person-sc-planner-dp-sc": {
+      "id": "mds-rel-person-sc-planner-dp-sc",
+      "sourceId": "mds-person-sc-planner",
+      "targetId": "mds-dp-supply-chain-data",
+      "type": "manages",
+      "properties": {
+        "perspectives": {
+          "mds-person-sc-planner": {
+            "label": "managed by",
+            "direction": "out"
+          },
+          "mds-dp-supply-chain-data": {
+            "label": "managed by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-person-digital-lead-dp-sales": {
+      "id": "mds-rel-person-digital-lead-dp-sales",
+      "sourceId": "mds-person-digital-lead",
+      "targetId": "mds-dp-sales-revenue",
+      "type": "manages",
+      "properties": {
+        "perspectives": {
+          "mds-person-digital-lead": {
+            "label": "managed by",
+            "direction": "out"
+          },
+          "mds-dp-sales-revenue": {
+            "label": "managed by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-proc-order-fulfil-ecommerce": {
+      "id": "mds-rel-proc-order-fulfil-ecommerce",
+      "sourceId": "mds-proc-order-fulfil",
+      "targetId": "mds-tech-ecommerce",
+      "type": "powered_by",
+      "properties": {
+        "perspectives": {
+          "mds-proc-order-fulfil": {
+            "label": "powers",
+            "direction": "out"
+          },
+          "mds-tech-ecommerce": {
+            "label": "powered by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-proc-order-fulfil-inventory": {
+      "id": "mds-rel-proc-order-fulfil-inventory",
+      "sourceId": "mds-proc-order-fulfil",
+      "targetId": "mds-tech-inventory",
+      "type": "powered_by",
+      "properties": {
+        "perspectives": {
+          "mds-proc-order-fulfil": {
+            "label": "powers",
+            "direction": "out"
+          },
+          "mds-tech-inventory": {
+            "label": "powered by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-proc-cust-acq-crm": {
+      "id": "mds-rel-proc-cust-acq-crm",
+      "sourceId": "mds-proc-cust-acq",
+      "targetId": "mds-tech-crm",
+      "type": "powered_by",
+      "properties": {
+        "perspectives": {
+          "mds-proc-cust-acq": {
+            "label": "powers",
+            "direction": "out"
+          },
+          "mds-tech-crm": {
+            "label": "powered by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-proc-cust-acq-cdp": {
+      "id": "mds-rel-proc-cust-acq-cdp",
+      "sourceId": "mds-proc-cust-acq",
+      "targetId": "mds-tech-cdp",
+      "type": "powered_by",
+      "properties": {
+        "perspectives": {
+          "mds-proc-cust-acq": {
+            "label": "powers",
+            "direction": "out"
+          },
+          "mds-tech-cdp": {
+            "label": "powered by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-proc-cust-acq-mktg": {
+      "id": "mds-rel-proc-cust-acq-mktg",
+      "sourceId": "mds-proc-cust-acq",
+      "targetId": "mds-tech-mktg-analytics",
+      "type": "powered_by",
+      "properties": {
+        "perspectives": {
+          "mds-proc-cust-acq": {
+            "label": "powers",
+            "direction": "out"
+          },
+          "mds-tech-mktg-analytics": {
+            "label": "powered by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-proc-demand-forecast-inventory": {
+      "id": "mds-rel-proc-demand-forecast-inventory",
+      "sourceId": "mds-proc-demand-forecast",
+      "targetId": "mds-tech-inventory",
+      "type": "powered_by",
+      "properties": {
+        "perspectives": {
+          "mds-proc-demand-forecast": {
+            "label": "powers",
+            "direction": "out"
+          },
+          "mds-tech-inventory": {
+            "label": "powered by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-proc-channel-conflict-ecommerce": {
+      "id": "mds-rel-proc-channel-conflict-ecommerce",
+      "sourceId": "mds-proc-channel-conflict",
+      "targetId": "mds-tech-ecommerce",
+      "type": "powered_by",
+      "properties": {
+        "perspectives": {
+          "mds-proc-channel-conflict": {
+            "label": "powers",
+            "direction": "out"
+          },
+          "mds-tech-ecommerce": {
+            "label": "powered by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-proc-order-fulfil-dp-sc": {
+      "id": "mds-rel-proc-order-fulfil-dp-sc",
+      "sourceId": "mds-proc-order-fulfil",
+      "targetId": "mds-dp-supply-chain-data",
+      "type": "generates",
+      "properties": {
+        "perspectives": {
+          "mds-proc-order-fulfil": {
+            "label": "generated by",
+            "direction": "out"
+          },
+          "mds-dp-supply-chain-data": {
+            "label": "generates",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-proc-cust-acq-dp-customer": {
+      "id": "mds-rel-proc-cust-acq-dp-customer",
+      "sourceId": "mds-proc-cust-acq",
+      "targetId": "mds-dp-customer-insights",
+      "type": "generates",
+      "properties": {
+        "perspectives": {
+          "mds-proc-cust-acq": {
+            "label": "generated by",
+            "direction": "out"
+          },
+          "mds-dp-customer-insights": {
+            "label": "generates",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-proc-demand-forecast-dp-sc": {
+      "id": "mds-rel-proc-demand-forecast-dp-sc",
+      "sourceId": "mds-proc-demand-forecast",
+      "targetId": "mds-dp-supply-chain-data",
+      "type": "depends_on",
+      "properties": {
+        "perspectives": {
+          "mds-proc-demand-forecast": {
+            "label": "used by",
+            "direction": "out"
+          },
+          "mds-dp-supply-chain-data": {
+            "label": "depends on",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-proc-channel-conflict-dp-sales": {
+      "id": "mds-rel-proc-channel-conflict-dp-sales",
+      "sourceId": "mds-proc-channel-conflict",
+      "targetId": "mds-dp-sales-revenue",
+      "type": "depends_on",
+      "properties": {
+        "perspectives": {
+          "mds-proc-channel-conflict": {
+            "label": "used by",
+            "direction": "out"
+          },
+          "mds-dp-sales-revenue": {
+            "label": "depends on",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-tech-ecommerce-dp-sales": {
+      "id": "mds-rel-tech-ecommerce-dp-sales",
+      "sourceId": "mds-tech-ecommerce",
+      "targetId": "mds-dp-sales-revenue",
+      "type": "generates",
+      "properties": {
+        "perspectives": {
+          "mds-tech-ecommerce": {
+            "label": "generated by",
+            "direction": "out"
+          },
+          "mds-dp-sales-revenue": {
+            "label": "generates",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-tech-crm-dp-customer": {
+      "id": "mds-rel-tech-crm-dp-customer",
+      "sourceId": "mds-tech-crm",
+      "targetId": "mds-dp-customer-insights",
+      "type": "generates",
+      "properties": {
+        "perspectives": {
+          "mds-tech-crm": {
+            "label": "generated by",
+            "direction": "out"
+          },
+          "mds-dp-customer-insights": {
+            "label": "generates",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-tech-cdp-dp-customer": {
+      "id": "mds-rel-tech-cdp-dp-customer",
+      "sourceId": "mds-tech-cdp",
+      "targetId": "mds-dp-customer-insights",
+      "type": "generates",
+      "properties": {
+        "perspectives": {
+          "mds-tech-cdp": {
+            "label": "generated by",
+            "direction": "out"
+          },
+          "mds-dp-customer-insights": {
+            "label": "generates",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-tech-inventory-dp-sc": {
+      "id": "mds-rel-tech-inventory-dp-sc",
+      "sourceId": "mds-tech-inventory",
+      "targetId": "mds-dp-supply-chain-data",
+      "type": "generates",
+      "properties": {
+        "perspectives": {
+          "mds-tech-inventory": {
+            "label": "generated by",
+            "direction": "out"
+          },
+          "mds-dp-supply-chain-data": {
+            "label": "generates",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-tech-mktg-dp-customer": {
+      "id": "mds-rel-tech-mktg-dp-customer",
+      "sourceId": "mds-tech-mktg-analytics",
+      "targetId": "mds-dp-customer-insights",
+      "type": "depends_on",
+      "properties": {
+        "perspectives": {
+          "mds-tech-mktg-analytics": {
+            "label": "used by",
+            "direction": "out"
+          },
+          "mds-dp-customer-insights": {
+            "label": "depends on",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-dp-customer-feeds-cust-acq": {
+      "id": "mds-rel-dp-customer-feeds-cust-acq",
+      "sourceId": "mds-dp-customer-insights",
+      "targetId": "mds-proc-cust-acq",
+      "type": "supports",
+      "properties": {
+        "perspectives": {
+          "mds-dp-customer-insights": {
+            "label": "feeds",
+            "direction": "out"
+          },
+          "mds-proc-cust-acq": {
+            "label": "fed by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-dp-sc-feeds-demand-forecast": {
+      "id": "mds-rel-dp-sc-feeds-demand-forecast",
+      "sourceId": "mds-dp-supply-chain-data",
+      "targetId": "mds-proc-demand-forecast",
+      "type": "supports",
+      "properties": {
+        "perspectives": {
+          "mds-dp-supply-chain-data": {
+            "label": "feeds",
+            "direction": "out"
+          },
+          "mds-proc-demand-forecast": {
+            "label": "fed by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-dp-sales-feeds-channel-conf": {
+      "id": "mds-rel-dp-sales-feeds-channel-conf",
+      "sourceId": "mds-dp-sales-revenue",
+      "targetId": "mds-proc-channel-conflict",
+      "type": "supports",
+      "properties": {
+        "perspectives": {
+          "mds-dp-sales-revenue": {
+            "label": "feeds",
+            "direction": "out"
+          },
+          "mds-proc-channel-conflict": {
+            "label": "fed by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-dp-product-feeds-order-fulfil": {
+      "id": "mds-rel-dp-product-feeds-order-fulfil",
+      "sourceId": "mds-dp-product-catalogue",
+      "targetId": "mds-proc-order-fulfil",
+      "type": "supports",
+      "properties": {
+        "perspectives": {
+          "mds-dp-product-catalogue": {
+            "label": "feeds",
+            "direction": "out"
+          },
+          "mds-proc-order-fulfil": {
+            "label": "fed by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-dp-sales-supports-eav-yr1": {
+      "id": "mds-rel-dp-sales-supports-eav-yr1",
+      "sourceId": "mds-dp-sales-revenue",
+      "targetId": "mds-kpi-eav-yr1",
+      "type": "supports",
+      "properties": {
+        "perspectives": {
+          "mds-dp-sales-revenue": {
+            "label": "supports",
+            "direction": "out"
+          },
+          "mds-kpi-eav-yr1": {
+            "label": "supported by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-dp-sales-supports-eav-yr2": {
+      "id": "mds-rel-dp-sales-supports-eav-yr2",
+      "sourceId": "mds-dp-sales-revenue",
+      "targetId": "mds-kpi-eav-yr2",
+      "type": "supports",
+      "properties": {
+        "perspectives": {
+          "mds-dp-sales-revenue": {
+            "label": "supports",
+            "direction": "out"
+          },
+          "mds-kpi-eav-yr2": {
+            "label": "supported by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-dp-sales-supports-eav-yr3": {
+      "id": "mds-rel-dp-sales-supports-eav-yr3",
+      "sourceId": "mds-dp-sales-revenue",
+      "targetId": "mds-kpi-eav-yr3",
+      "type": "supports",
+      "properties": {
+        "perspectives": {
+          "mds-dp-sales-revenue": {
+            "label": "supports",
+            "direction": "out"
+          },
+          "mds-kpi-eav-yr3": {
+            "label": "supported by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-dp-customer-supports-tav": {
+      "id": "mds-rel-dp-customer-supports-tav",
+      "sourceId": "mds-dp-customer-insights",
+      "targetId": "mds-kpi-tav",
+      "type": "supports",
+      "properties": {
+        "perspectives": {
+          "mds-dp-customer-insights": {
+            "label": "supports",
+            "direction": "out"
+          },
+          "mds-kpi-tav": {
+            "label": "supported by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-dp-sc-supports-capex-target": {
+      "id": "mds-rel-dp-sc-supports-capex-target",
+      "sourceId": "mds-dp-supply-chain-data",
+      "targetId": "mds-kpi-capex-target",
+      "type": "supports",
+      "properties": {
+        "perspectives": {
+          "mds-dp-supply-chain-data": {
+            "label": "supports",
+            "direction": "out"
+          },
+          "mds-kpi-capex-target": {
+            "label": "supported by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-dp-sales-supports-d2c-margin": {
+      "id": "mds-rel-dp-sales-supports-d2c-margin",
+      "sourceId": "mds-dp-sales-revenue",
+      "targetId": "mds-kpi-d2c-margin",
+      "type": "supports",
+      "properties": {
+        "perspectives": {
+          "mds-dp-sales-revenue": {
+            "label": "supports",
+            "direction": "out"
+          },
+          "mds-kpi-d2c-margin": {
+            "label": "supported by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-dp-customer-consumed-by-cdp": {
+      "id": "mds-rel-dp-customer-consumed-by-cdp",
+      "sourceId": "mds-dp-customer-insights",
+      "targetId": "mds-tech-cdp",
+      "type": "consumed_by",
+      "properties": {
+        "perspectives": {
+          "mds-dp-customer-insights": {
+            "label": "consumes",
+            "direction": "out"
+          },
+          "mds-tech-cdp": {
+            "label": "consumed by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-dp-customer-consumed-by-mktg": {
+      "id": "mds-rel-dp-customer-consumed-by-mktg",
+      "sourceId": "mds-dp-customer-insights",
+      "targetId": "mds-tech-mktg-analytics",
+      "type": "consumed_by",
+      "properties": {
+        "perspectives": {
+          "mds-dp-customer-insights": {
+            "label": "consumes",
+            "direction": "out"
+          },
+          "mds-tech-mktg-analytics": {
+            "label": "consumed by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-dp-sc-consumed-by-inventory": {
+      "id": "mds-rel-dp-sc-consumed-by-inventory",
+      "sourceId": "mds-dp-supply-chain-data",
+      "targetId": "mds-tech-inventory",
+      "type": "consumed_by",
+      "properties": {
+        "perspectives": {
+          "mds-dp-supply-chain-data": {
+            "label": "consumes",
+            "direction": "out"
+          },
+          "mds-tech-inventory": {
+            "label": "consumed by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-proc-order-fulfil-dp-sales": {
+      "id": "mds-rel-proc-order-fulfil-dp-sales",
+      "sourceId": "mds-proc-order-fulfil",
+      "targetId": "mds-dp-sales-revenue",
+      "type": "generates",
+      "properties": {
+        "perspectives": {
+          "mds-proc-order-fulfil": {
+            "label": "generates",
+            "direction": "out"
+          },
+          "mds-dp-sales-revenue": {
+            "label": "generated by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-proc-order-fulfil-consumes-customer": {
+      "id": "mds-rel-proc-order-fulfil-consumes-customer",
+      "sourceId": "mds-proc-order-fulfil",
+      "targetId": "mds-dp-customer-insights",
+      "type": "depends_on",
+      "properties": {
+        "perspectives": {
+          "mds-proc-order-fulfil": {
+            "label": "uses customer data from",
+            "direction": "out"
+          },
+          "mds-dp-customer-insights": {
+            "label": "consumed by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-proc-demand-forecast-consumes-customer": {
+      "id": "mds-rel-proc-demand-forecast-consumes-customer",
+      "sourceId": "mds-proc-demand-forecast",
+      "targetId": "mds-dp-customer-insights",
+      "type": "depends_on",
+      "properties": {
+        "perspectives": {
+          "mds-proc-demand-forecast": {
+            "label": "uses demand signals from",
+            "direction": "out"
+          },
+          "mds-dp-customer-insights": {
+            "label": "consumed by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-proc-channel-conflict-consumes-product": {
+      "id": "mds-rel-proc-channel-conflict-consumes-product",
+      "sourceId": "mds-proc-channel-conflict",
+      "targetId": "mds-dp-product-catalogue",
+      "type": "depends_on",
+      "properties": {
+        "perspectives": {
+          "mds-proc-channel-conflict": {
+            "label": "checks product catalogue from",
+            "direction": "out"
+          },
+          "mds-dp-product-catalogue": {
+            "label": "consumed by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-proc-cust-acq-consumes-product": {
+      "id": "mds-rel-proc-cust-acq-consumes-product",
+      "sourceId": "mds-proc-cust-acq",
+      "targetId": "mds-dp-product-catalogue",
+      "type": "depends_on",
+      "properties": {
+        "perspectives": {
+          "mds-proc-cust-acq": {
+            "label": "uses product targeting from",
+            "direction": "out"
+          },
+          "mds-dp-product-catalogue": {
+            "label": "consumed by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-sales-domain-fp": {
+      "id": "mds-rel-sales-domain-fp",
+      "sourceId": "mds-domain-sales",
+      "targetId": "mds-dp-financial-perf",
+      "type": "has_data_product",
+      "properties": {},
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-catmgr-manages-fp": {
+      "id": "mds-rel-catmgr-manages-fp",
+      "sourceId": "mds-person-cat-manager",
+      "targetId": "mds-dp-financial-perf",
+      "type": "manages",
+      "properties": {},
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-ecom-gen-fp": {
+      "id": "mds-rel-ecom-gen-fp",
+      "sourceId": "mds-tech-ecommerce",
+      "targetId": "mds-dp-financial-perf",
+      "type": "generates",
+      "properties": {},
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-mktg-gen-fp": {
+      "id": "mds-rel-mktg-gen-fp",
+      "sourceId": "mds-tech-mktg-analytics",
+      "targetId": "mds-dp-financial-perf",
+      "type": "generates",
+      "properties": {},
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-conflict-gen-fp": {
+      "id": "mds-rel-conflict-gen-fp",
+      "sourceId": "mds-proc-channel-conflict",
+      "targetId": "mds-dp-financial-perf",
+      "type": "generates",
+      "properties": {},
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-demand-dep-fp": {
+      "id": "mds-rel-demand-dep-fp",
+      "sourceId": "mds-proc-demand-forecast",
+      "targetId": "mds-dp-financial-perf",
+      "type": "depends_on",
+      "properties": {},
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-fp-sup-conflict": {
+      "id": "mds-rel-fp-sup-conflict",
+      "sourceId": "mds-dp-financial-perf",
+      "targetId": "mds-proc-channel-conflict",
+      "type": "supports",
+      "properties": {},
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-fp-consumed-mktg": {
+      "id": "mds-rel-fp-consumed-mktg",
+      "sourceId": "mds-dp-financial-perf",
+      "targetId": "mds-tech-mktg-analytics",
+      "type": "consumed_by",
+      "properties": {},
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-fp-sup-roi": {
+      "id": "mds-rel-fp-sup-roi",
+      "sourceId": "mds-dp-financial-perf",
+      "targetId": "mds-kpi-roi",
+      "type": "supports",
+      "properties": {},
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-sales-sup-rv": {
+      "id": "mds-rel-sales-sup-rv",
+      "sourceId": "mds-dp-sales-revenue",
+      "targetId": "mds-kpi-rv-baseline",
+      "type": "supports",
+      "properties": {},
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-group-governs-d2c-opco": {
+      "id": "mds-rel-group-governs-d2c-opco",
+      "sourceId": "mds-legal-group",
+      "targetId": "mds-legal-d2c-opco",
+      "type": "governs",
+      "properties": {},
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-group-governs-wholesale": {
+      "id": "mds-rel-group-governs-wholesale",
+      "sourceId": "mds-legal-group",
+      "targetId": "mds-legal-wholesale",
+      "type": "governs",
+      "properties": {},
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-group-governs-sports": {
+      "id": "mds-rel-group-governs-sports",
+      "sourceId": "mds-legal-group",
+      "targetId": "mds-cat-sports-nutrition",
+      "type": "governs",
+      "properties": {},
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-group-governs-vitamins": {
+      "id": "mds-rel-group-governs-vitamins",
+      "sourceId": "mds-legal-group",
+      "targetId": "mds-cat-vitamins",
+      "type": "governs",
+      "properties": {},
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-group-governs-beauty": {
+      "id": "mds-rel-group-governs-beauty",
+      "sourceId": "mds-legal-group",
+      "targetId": "mds-cat-beauty",
+      "type": "governs",
+      "properties": {},
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-group-governs-pet": {
+      "id": "mds-rel-group-governs-pet",
+      "sourceId": "mds-legal-group",
+      "targetId": "mds-cat-pet",
+      "type": "governs",
+      "properties": {},
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-group-governs-apparel": {
+      "id": "mds-rel-group-governs-apparel",
+      "sourceId": "mds-legal-group",
+      "targetId": "mds-cat-apparel",
+      "type": "governs",
+      "properties": {},
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-d2c-opco-governs-chan": {
+      "id": "mds-rel-d2c-opco-governs-chan",
+      "sourceId": "mds-legal-d2c-opco",
+      "targetId": "mds-chan-d2c",
+      "type": "governs",
+      "properties": {},
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-d2c-opco-governs-ecom": {
+      "id": "mds-rel-d2c-opco-governs-ecom",
+      "sourceId": "mds-legal-d2c-opco",
+      "targetId": "mds-tech-ecommerce",
+      "type": "governs",
+      "properties": {},
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-wholesale-governs-chan": {
+      "id": "mds-rel-wholesale-governs-chan",
+      "sourceId": "mds-legal-wholesale",
+      "targetId": "mds-chan-trade",
+      "type": "governs",
+      "properties": {},
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-catmgr-employed-by": {
+      "id": "mds-rel-catmgr-employed-by",
+      "sourceId": "mds-person-cat-manager",
+      "targetId": "mds-legal-d2c-opco",
+      "type": "employed_by",
+      "properties": {},
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-digital-employed-by": {
+      "id": "mds-rel-digital-employed-by",
+      "sourceId": "mds-person-digital-lead",
+      "targetId": "mds-legal-d2c-opco",
+      "type": "employed_by",
+      "properties": {},
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-sc-employed-by": {
+      "id": "mds-rel-sc-employed-by",
+      "sourceId": "mds-person-sc-planner",
+      "targetId": "mds-legal-wholesale",
+      "type": "employed_by",
+      "properties": {},
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-data-employed-by": {
+      "id": "mds-rel-data-employed-by",
+      "sourceId": "mds-person-data-lead",
+      "targetId": "mds-legal-group",
+      "type": "employed_by",
+      "properties": {},
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-order-fulfil-opco": {
+      "id": "mds-rel-order-fulfil-opco",
+      "sourceId": "mds-proc-order-fulfil",
+      "targetId": "mds-legal-d2c-opco",
+      "type": "operates_in",
+      "properties": {},
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-conflict-group": {
+      "id": "mds-rel-conflict-group",
+      "sourceId": "mds-proc-channel-conflict",
+      "targetId": "mds-legal-group",
+      "type": "operates_in",
+      "properties": {},
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-conflict-wholesale": {
+      "id": "mds-rel-conflict-wholesale",
+      "sourceId": "mds-proc-channel-conflict",
+      "targetId": "mds-legal-wholesale",
+      "type": "operates_in",
+      "properties": {},
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-cust-acq-opco": {
+      "id": "mds-rel-cust-acq-opco",
+      "sourceId": "mds-proc-cust-acq",
+      "targetId": "mds-legal-d2c-opco",
+      "type": "operates_in",
+      "properties": {},
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "mds-rel-demand-forecast-group": {
+      "id": "mds-rel-demand-forecast-group",
+      "sourceId": "mds-proc-demand-forecast",
+      "targetId": "mds-legal-group",
+      "type": "operates_in",
+      "properties": {},
+      "createdAt": "2026-08-02T00:00:00.000Z"
+    },
+    "r-leg-dom-sales": {
+      "id": "r-leg-dom-sales",
+      "sourceId": "mds-legal-retailer-agreement",
+      "targetId": "mds-domain-sales",
+      "type": "applies_to",
+      "properties": {},
+      "createdAt": "2026-08-22T00:00:00.000Z"
+    },
+    "mds-rel-governs-3pl-domain": {
+      "id": "mds-rel-governs-3pl-domain",
+      "sourceId": "mds-legal-3pl-msa",
+      "targetId": "mds-domain-supply-chain",
+      "type": "applies_to",
+      "properties": {},
+      "createdAt": "2026-08-22T00:00:00.000Z"
+    },
+    "mds-rel-governs-carrier-terms-domain": {
+      "id": "mds-rel-governs-carrier-terms-domain",
+      "sourceId": "mds-legal-carrier-terms",
+      "targetId": "mds-domain-supply-chain",
+      "type": "applies_to",
+      "properties": {},
+      "createdAt": "2026-08-22T00:00:00.000Z"
+    },
+    "r-pol-price-dom-sales": {
+      "id": "r-pol-price-dom-sales",
+      "sourceId": "mds-policy-pricing",
+      "targetId": "mds-domain-sales",
+      "type": "applies_to",
+      "properties": {},
+      "createdAt": "2026-08-22T00:00:00.000Z"
+    },
+    "r-pol-price-dom-cust": {
+      "id": "r-pol-price-dom-cust",
+      "sourceId": "mds-policy-pricing",
+      "targetId": "mds-domain-customer",
+      "type": "applies_to",
+      "properties": {},
+      "createdAt": "2026-08-22T00:00:00.000Z"
+    },
+    "r-pol-excl-dom": {
+      "id": "r-pol-excl-dom",
+      "sourceId": "mds-policy-channel-exclusivity",
+      "targetId": "mds-domain-sales",
+      "type": "applies_to",
+      "properties": {},
+      "createdAt": "2026-08-22T00:00:00.000Z"
+    },
+    "r-pol-sup-dom": {
+      "id": "r-pol-sup-dom",
+      "sourceId": "mds-policy-supplier-ethics",
+      "targetId": "mds-domain-supply-chain",
+      "type": "applies_to",
+      "properties": {},
+      "createdAt": "2026-08-22T00:00:00.000Z"
+    },
+    "r-pol-cons-dom": {
+      "id": "r-pol-cons-dom",
+      "sourceId": "mds-policy-consent",
+      "targetId": "mds-domain-customer",
+      "type": "applies_to",
+      "properties": {},
+      "createdAt": "2026-08-22T00:00:00.000Z"
+    },
+    "r-pol-dq-dom": {
+      "id": "r-pol-dq-dom",
+      "sourceId": "mds-policy-data-quality",
+      "targetId": "mds-domain-product",
+      "type": "applies_to",
+      "properties": {},
+      "createdAt": "2026-08-22T00:00:00.000Z"
+    },
+    "r-pol-dq-catalogue": {
+      "id": "r-pol-dq-catalogue",
+      "sourceId": "mds-policy-data-quality",
+      "targetId": "mds-dp-product-catalogue",
+      "type": "applies_to",
+      "properties": {},
+      "createdAt": "2026-08-22T00:00:00.000Z"
+    },
+    "r-pol-dq-enforced": {
+      "id": "r-pol-dq-enforced",
+      "sourceId": "mds-person-cat-manager",
+      "targetId": "mds-policy-data-quality",
+      "type": "enforced_by",
+      "properties": {},
+      "createdAt": "2026-08-22T00:00:00.000Z"
+    },
+    "r-pol-npi-dom": {
+      "id": "r-pol-npi-dom",
+      "sourceId": "mds-policy-npi",
+      "targetId": "mds-domain-product",
+      "type": "applies_to",
+      "properties": {},
+      "createdAt": "2026-08-22T00:00:00.000Z"
+    },
+    "r-pol-npi-sn": {
+      "id": "r-pol-npi-sn",
+      "sourceId": "mds-policy-npi",
+      "targetId": "mds-cat-sports-nutrition",
+      "type": "applies_to",
+      "properties": {},
+      "createdAt": "2026-08-22T00:00:00.000Z"
+    },
+    "r-pol-npi-vit": {
+      "id": "r-pol-npi-vit",
+      "sourceId": "mds-policy-npi",
+      "targetId": "mds-cat-vitamins",
+      "type": "applies_to",
+      "properties": {},
+      "createdAt": "2026-08-22T00:00:00.000Z"
+    },
+    "r-pol-npi-bpc": {
+      "id": "r-pol-npi-bpc",
+      "sourceId": "mds-policy-npi",
+      "targetId": "mds-cat-beauty",
+      "type": "applies_to",
+      "properties": {},
+      "createdAt": "2026-08-22T00:00:00.000Z"
+    },
+    "r-pol-npi-pet": {
+      "id": "r-pol-npi-pet",
+      "sourceId": "mds-policy-npi",
+      "targetId": "mds-cat-pet",
+      "type": "applies_to",
+      "properties": {},
+      "createdAt": "2026-08-22T00:00:00.000Z"
+    },
+    "r-pol-npi-app": {
+      "id": "r-pol-npi-app",
+      "sourceId": "mds-policy-npi",
+      "targetId": "mds-cat-apparel",
+      "type": "applies_to",
+      "properties": {},
+      "createdAt": "2026-08-22T00:00:00.000Z"
+    },
+    "r-pol-npi-enforced": {
+      "id": "r-pol-npi-enforced",
+      "sourceId": "mds-person-cat-manager",
+      "targetId": "mds-policy-npi",
+      "type": "enforced_by",
+      "properties": {},
+      "createdAt": "2026-08-22T00:00:00.000Z"
+    },
+    "r-pol-lifecycle-dom": {
+      "id": "r-pol-lifecycle-dom",
+      "sourceId": "mds-policy-lifecycle",
+      "targetId": "mds-domain-product",
+      "type": "applies_to",
+      "properties": {},
+      "createdAt": "2026-08-22T00:00:00.000Z"
+    },
+    "r-pol-lifecycle-trade": {
+      "id": "r-pol-lifecycle-trade",
+      "sourceId": "mds-policy-lifecycle",
+      "targetId": "mds-chan-trade",
+      "type": "applies_to",
+      "properties": {},
+      "createdAt": "2026-08-22T00:00:00.000Z"
+    },
+    "r-pol-lifecycle-enforced": {
+      "id": "r-pol-lifecycle-enforced",
+      "sourceId": "mds-person-cat-manager",
+      "targetId": "mds-policy-lifecycle",
+      "type": "enforced_by",
+      "properties": {},
+      "createdAt": "2026-08-22T00:00:00.000Z"
+    }
+  }
+}

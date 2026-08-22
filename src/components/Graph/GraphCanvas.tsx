@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 import { useGraphStore } from '../../store/graphStore';
 import { useChatStore } from '../../store/chatStore';
 import type { GraphNode, GraphLink, Entity } from '../../types/graph';
-import { getCategoryConfig, isDemoEntityType } from '../../constants/categories';
+import { getCategoryConfig, isDemoEntityType, OPERATING_PILLAR_TYPES } from '../../constants/categories';
 import { getRelationshipDisplay } from '../../utils/relationshipPerspective';
 import './GraphCanvas.css';
 
@@ -15,9 +15,15 @@ function truncateLabel(text: string, max = 20): string {
     return text.length > max ? `${text.slice(0, max - 1)}…` : text;
 }
 
+function getNodeRadius(node: GraphNode, focusEntityId: string | null): number {
+    if (node.id === focusEntityId) return 38;
+    if (OPERATING_PILLAR_TYPES.includes(node.type as typeof OPERATING_PILLAR_TYPES[number])) return 32;
+    return 26;
+}
+
 function getNodeFillColor(node: GraphNode, personaLens: string): string {
     if (personaLens === 'vp_supply_chain' && node.type === 'supply_chain_node') {
-        const status = (node.metadata as any)?.d2c_status;
+        const status = node.metadata?.d2c_status;
         if (status === 'ready')   return '#22c55e';
         if (status === 'blocker') return '#ef4444';
         if (status === 'partial') return '#f59e0b';
@@ -56,16 +62,18 @@ export const GraphCanvas: React.FC = () => {
     const entities = useGraphStore(state => state.entities);
     const relationships = useGraphStore(state => state.relationships);
     const focusEntityId = useGraphStore(state => state.focusEntityId);
-    const { selectEntity, selectedEntityId, setFocusEntity, filter } = useGraphStore();
+    const { selectedEntityId, setFocusEntity, filter } = useGraphStore();
 
     const personaLens = useChatStore(state => state.personaLens);
     const highlightedEntities = useChatStore(state => state.highlightedEntities);
     const highlightedRelationships = useChatStore(state => state.highlightedRelationships);
 
     const nodesRef = useRef<GraphNode[]>([]);
-    const prevFocusRef = useRef<string | null>(null);
+    const overviewLayoutRef = useRef<Map<string, { x: number; y: number }>>(new Map());
     const prevDimensionsRef = useRef({ width: 0, height: 0 });
+    const prevFilterKeyRef = useRef<string>('');
     const fitRef = useRef<(animated?: boolean) => void>(() => {});
+    const zoomRef = useRef<d3.ZoomBehavior<SVGSVGElement, unknown> | null>(null);
 
     const { entities: visibleEntities, relationships: visibleRelationships } = useMemo(
         () => getEgoNetwork(focusEntityId, entities, relationships),
@@ -125,21 +133,31 @@ export const GraphCanvas: React.FC = () => {
         const centerX = width / 2;
         const centerY = height / 2;
 
-        if (prevFocusRef.current !== focusEntityId) {
-            nodesRef.current = [];
-            prevFocusRef.current = focusEntityId;
-        }
-
         if (prevDimensionsRef.current.width !== width || prevDimensionsRef.current.height !== height) {
             nodesRef.current = [];
             prevDimensionsRef.current = { width, height };
         }
 
+        const filterKey = JSON.stringify([...(filter.entityTypes ?? [])].sort()) + '|' + (filter.searchQuery ?? '');
+        if (prevFilterKeyRef.current !== filterKey) {
+            nodesRef.current = [];
+            prevFilterKeyRef.current = filterKey;
+        }
+
+        const isUnfiltered = !(filter.entityTypes && filter.entityTypes.length > 0) && !filter.searchQuery;
+
         const nodes: GraphNode[] = filteredEntities.map(e => {
             const existing = nodesRef.current.find(n => n.id === e.id);
-            return existing
-                ? { ...e, x: existing.x, y: existing.y, fx: existing.fx, fy: existing.fy }
-                : { ...e };
+            if (existing) {
+                return { ...e, x: existing.x, y: existing.y, fx: existing.fx, fy: existing.fy };
+            }
+            if (!focusEntityId && isUnfiltered) {
+                const cached = overviewLayoutRef.current.get(e.id);
+                if (cached) {
+                    return { ...e, x: cached.x, y: cached.y };
+                }
+            }
+            return { ...e };
         });
 
         const orbitRadius = Math.min(width, height) * 0.34;
@@ -195,12 +213,12 @@ export const GraphCanvas: React.FC = () => {
         svg.call(zoom);
 
         const labelCollisionRadius = (d: GraphNode) =>
-            d.id === focusEntityId ? 78 : 62;
+            getNodeRadius(d, focusEntityId) + (d.id === focusEntityId ? 46 : 40);
 
         const fitToContent = (animated = true) => {
             if (!svgRef.current || nodesRef.current.length === 0) return;
             const svgEl = d3.select(svgRef.current);
-            const zoomBehavior = (svgRef.current as any)._zoom;
+            const zoomBehavior = zoomRef.current;
             if (!zoomBehavior) return;
             const pad = 70;
             const xs = nodesRef.current.map(n => n.x ?? 0);
@@ -218,6 +236,7 @@ export const GraphCanvas: React.FC = () => {
         fitRef.current = fitToContent;
 
         const simulation = d3.forceSimulation<GraphNode>(nodes)
+            .alphaDecay(0.08)
             .force('link', d3.forceLink<GraphNode, DisplayGraphLink>(links)
                 .id(d => d.id)
                 .distance(d => {
@@ -287,14 +306,14 @@ export const GraphCanvas: React.FC = () => {
             .text(d => d.displayLabel);
 
         const node = g.append('g')
-            .selectAll('g')
+            .selectAll<SVGGElement, GraphNode>('g')
             .data(nodes)
             .join('g')
             .attr('class', d => `graph-node ${d.id === focusEntityId ? 'graph-node-focus' : ''}`)
             .call(d3.drag<SVGGElement, GraphNode>()
                 .on('start', dragstarted)
                 .on('drag', dragged)
-                .on('end', dragended) as any);
+                .on('end', dragended));
 
         node.each(function (d) {
             const el = d3.select(this);
@@ -308,7 +327,8 @@ export const GraphCanvas: React.FC = () => {
                     ? 'var(--color-accent-500)'
                     : 'white';
             const strokeWidth = isFocus ? 4 : isSelected ? 3 : 2;
-            const radius = isFocus ? 32 : 22;
+            const radius = getNodeRadius(d, focusEntityId);
+            const iconFontSize = radius * 1.15;
 
             el.append('circle')
                 .attr('r', radius)
@@ -317,10 +337,6 @@ export const GraphCanvas: React.FC = () => {
                 .attr('stroke-width', strokeWidth)
                 .on('click', (event) => {
                     event.stopPropagation();
-                    selectEntity(d.id);
-                })
-                .on('dblclick', (event) => {
-                    event.stopPropagation();
                     setFocusEntity(d.id);
                 });
 
@@ -328,8 +344,8 @@ export const GraphCanvas: React.FC = () => {
             el.append('text')
                 .text(icon)
                 .attr('text-anchor', 'middle')
-                .attr('dy', 5)
-                .attr('font-size', isFocus ? '16px' : '12px')
+                .attr('dy', iconFontSize * 0.32)
+                .attr('font-size', `${iconFontSize}px`)
                 .attr('fill', 'white')
                 .style('pointer-events', 'none');
         });
@@ -340,7 +356,7 @@ export const GraphCanvas: React.FC = () => {
             .text(d => truncateLabel(d.name))
             .attr('class', 'node-label')
             .attr('text-anchor', 'middle')
-            .attr('dy', d => d.id === focusEntityId ? 46 : 34)
+            .attr('dy', d => getNodeRadius(d, focusEntityId) + 12)
             .attr('fill', 'var(--text-primary)')
             .attr('font-size', d => d.id === focusEntityId ? '13px' : '11px')
             .attr('font-weight', d => d.id === focusEntityId ? '700' : '600');
@@ -349,11 +365,20 @@ export const GraphCanvas: React.FC = () => {
             .text(d => getCategoryConfig(d.type)?.label ?? d.type)
             .attr('class', 'node-type')
             .attr('text-anchor', 'middle')
-            .attr('dy', d => d.id === focusEntityId ? 60 : 48)
-            .attr('fill', 'var(--text-tertiary)')
+            .attr('dy', d => getNodeRadius(d, focusEntityId) + 26)
+            .attr('fill', 'var(--color-accent-400)')
             .attr('font-size', '9px');
 
-        simulation.on('end', () => fitRef.current(true));
+        simulation.on('end', () => {
+            fitRef.current(true);
+            if (!focusEntityId && isUnfiltered) {
+                nodes.forEach(n => {
+                    if (n.x != null && n.y != null) {
+                        overviewLayoutRef.current.set(n.id, { x: n.x, y: n.y });
+                    }
+                });
+            }
+        });
 
         simulation.on('tick', () => {
             link
@@ -413,8 +438,8 @@ export const GraphCanvas: React.FC = () => {
             d.fy = event.y;
         }
 
-        svg.on('click', () => selectEntity(null));
-        (svgRef.current as any)._zoom = zoom;
+        svg.on('click', () => setFocusEntity(null));
+        zoomRef.current = zoom;
 
         const rafId = requestAnimationFrame(() => fitRef.current(false));
 
@@ -422,7 +447,10 @@ export const GraphCanvas: React.FC = () => {
             cancelAnimationFrame(rafId);
             simulation.stop();
         };
-    }, [dimensions, filteredEntities, filteredRelationships, focusEntityId, selectEntity, selectedEntityId, setFocusEntity]);
+        // personaLens is deliberately excluded: it only sets initial fill color here,
+        // and is applied reactively (without rebuilding the simulation) by the cosmetic effect below.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [dimensions, filter, filteredEntities, filteredRelationships, focusEntityId, selectedEntityId, setFocusEntity]);
 
     // 2. Cosmetic Effect: mutates node colors, SC glow, and path highlight WITHOUT restarting simulation
     useEffect(() => {
@@ -436,7 +464,7 @@ export const GraphCanvas: React.FC = () => {
                 d3.select(this).select('circle').attr('fill', fill);
 
                 const el = d3.select(this);
-                const status = (d.metadata as any)?.d2c_status;
+                const status = d.metadata?.d2c_status;
                 el.classed('node-sc-ready', personaLens === 'vp_supply_chain' && status === 'ready');
                 el.classed('node-sc-blocker', personaLens === 'vp_supply_chain' && status === 'blocker');
                 el.classed('node-sc-partial', personaLens === 'vp_supply_chain' && status === 'partial');
@@ -468,7 +496,7 @@ export const GraphCanvas: React.FC = () => {
     const handleManualZoom = (factor: number) => {
         if (!svgRef.current) return;
         const svg = d3.select(svgRef.current);
-        const zoom = (svgRef.current as any)._zoom;
+        const zoom = zoomRef.current;
         if (zoom) {
             svg.transition().duration(300).call(zoom.scaleBy, factor);
         }
@@ -497,7 +525,7 @@ export const GraphCanvas: React.FC = () => {
                 </button>
             </div>
 
-            <div className="graph-hint">Drag to reposition · Double-click to focus · Click to select</div>
+            <div className="graph-hint">Drag to reposition · Click to focus</div>
         </div>
     );
 };

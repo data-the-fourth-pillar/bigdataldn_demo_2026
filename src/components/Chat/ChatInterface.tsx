@@ -153,6 +153,8 @@ export const ChatInterface: React.FC = () => {
                             <h3>🌐 Generic</h3>
                         ) : groundingMode === 'kg_full' ? (
                             <h3><span className="icon-graph">🕸️</span> 📊 Leverage your Enterprise Context and Data</h3>
+                        ) : groundingMode === 'data_only' ? (
+                            <h3>📊 Data — No Enterprise Context</h3>
                         ) : (
                             <h3><span className="icon-graph">🕸️</span> Leverage your Enterprise Context</h3>
                         )}
@@ -161,7 +163,9 @@ export const ChatInterface: React.FC = () => {
                                 ? <>Does not use enterprise context.<br />Answers are based on general knowledge only.</>
                                 : groundingMode === 'kg_full'
                                     ? 'Chat is grounded in your enterprise context and data.'
-                                    : 'Chat is grounded in your enterprise context.'}
+                                    : groundingMode === 'data_only'
+                                        ? <>Answers use data only.<br />No relationships, ownership, or business context applied.</>
+                                        : 'Chat is grounded in your enterprise context.'}
                         </p>
                         <div className="example-questions">
                             <p className="example-label">Try asking:</p>
@@ -198,8 +202,16 @@ export const ChatInterface: React.FC = () => {
                                 )}
                             </div>
                             <div className="message-content">
+                                <div className="message-timestamp">
+                                    {new Date(message.timestamp).toLocaleString(undefined, {
+                                        day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit',
+                                    })}
+                                </div>
                                 {message.role === 'assistant' && isGenericResponse && (
                                     <div className="generic-mode-badge">🌐 Generic — no enterprise context used</div>
+                                )}
+                                {message.role === 'assistant' && message.groundingMode === 'data_only' && (
+                                    <div className="generic-mode-badge">📊 Data only — no Enterprise Context used. Relationships, ownership, and business meaning are not reflected in this answer.</div>
                                 )}
                                 {message.role === 'assistant' && isGraphGrounded && (
                                     reasoning ? (
@@ -223,7 +235,7 @@ export const ChatInterface: React.FC = () => {
                                 </div>
 
 
-                                {hasContext && (
+                                {hasContext && message.groundingMode !== 'data_only' && (
                                     <details className="context-details">
                                         <summary>💾 Enterprise Context Used</summary>
                                         <div className="context-markdown">
@@ -232,11 +244,11 @@ export const ChatInterface: React.FC = () => {
                                     </details>
                                 )}
 
-                                {message.role === 'assistant' && message.groundingMode === 'kg_full' && (message.usedContext?.entities?.length ?? 0) > 0 && (
+                                {message.role === 'assistant' && (message.groundingMode === 'kg_full' || message.groundingMode === 'data_only') && (message.usedContext?.entities?.length ?? 0) > 0 && (
                                     <DataUsedPanel entityIds={message.usedContext!.entities} />
                                 )}
 
-                                {message.role === 'assistant' && !isGenericResponse && (message.usedContext?.entities?.length ?? 0) > 0 && (
+                                {message.role === 'assistant' && !isGenericResponse && message.groundingMode !== 'data_only' && (message.usedContext?.entities?.length ?? 0) > 0 && (
                                     <details className="lineage-details">
                                         <summary>🔗 Lineage</summary>
                                         <LineagePanel
@@ -268,11 +280,15 @@ export const ChatInterface: React.FC = () => {
                     );
                 })}
 
-                {isStreaming && currentStreamingMessage && (
+                {isStreaming && (
                     <div className="message assistant">
                         <div className="message-avatar">🤖</div>
                         <div className="message-content">
-                            <div className="message-text">{currentStreamingMessage}</div>
+                            {currentStreamingMessage ? (
+                                <div className="message-text">{currentStreamingMessage}</div>
+                            ) : (
+                                <div className="message-text thinking-text">Agent is developing the response…</div>
+                            )}
                             <div className="streaming-indicator">
                                 <span className="dot"></span>
                                 <span className="dot"></span>
@@ -290,11 +306,7 @@ export const ChatInterface: React.FC = () => {
                     type="text"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                    placeholder={
-                        isGraphGrounded
-                            ? 'Ask about entities, processes, data products...'
-                            : 'Ask a question...'
-                    }
+                    placeholder="Ask a question..."
                     disabled={isStreaming}
                     className="chat-input"
                 />

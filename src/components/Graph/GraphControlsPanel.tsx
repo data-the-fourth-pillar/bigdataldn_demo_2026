@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useGraphStore } from '../../store/graphStore';
-import { DEMO_CATEGORIES, isDemoEntityType } from '../../constants/categories';
+import { DEMO_CATEGORIES, isDemoEntityType, OPERATING_PILLAR_TYPES } from '../../constants/categories';
 import './GraphControlsPanel.css';
 
 export const GraphControlsPanel: React.FC = () => {
@@ -90,11 +90,10 @@ export const GraphControlsPanel: React.FC = () => {
                 </div>
 
                 {(() => {
-                    const PILLAR_IDS = ['person', 'process', 'technology', 'data_product'];
                     const visible = DEMO_CATEGORIES.filter(t => visibleEntityTypes.has(t.id));
-                    const pillars = PILLAR_IDS.map(id => visible.find(t => t.id === id)).filter(Boolean) as typeof DEMO_CATEGORIES;
+                    const pillars = OPERATING_PILLAR_TYPES.map(id => visible.find(t => t.id === id)).filter(Boolean) as typeof DEMO_CATEGORIES;
                     const others = visible
-                        .filter(t => !PILLAR_IDS.includes(t.id))
+                        .filter(t => !(OPERATING_PILLAR_TYPES as string[]).includes(t.id))
                         .sort((a, b) => a.label.localeCompare(b.label));
 
                     const renderChip = (type: typeof DEMO_CATEGORIES[number]) => (

@@ -76,10 +76,32 @@ class LLMService:
                 "2. At the very end of your answer, add exactly one line in this format: "
                 "FOLLOW_UPS: <question 1> | <question 2> | <question 3>. Make the questions specific and useful. Do not number them."
             )
+        elif grounding_mode == 'data_only':
+            system_message = f"""You are answering using ONLY the data tables below. You have NO access to entity relationships, ownership, domain context, or business definitions — only the literal rows and columns shown.
+
+{context}
+
+CRITICAL INSTRUCTIONS:
+1. Always start your response with a <reasoning> section (1-2 sentences max).
+2. The FIRST sentence of <reasoning> MUST be exactly: "Answering using data only, without Enterprise Context."
+3. Do NOT infer relationships, ownership, or business meaning that is not literally a column in the tables above. If the question requires that kind of context, say you cannot determine it from data alone.
+4. If the tables do not fully answer the question, say so explicitly rather than guessing or filling gaps with assumptions.
+5. Keep your total response (excluding the <reasoning> block and the FOLLOW_UPS line) to 200 words or fewer.
+6. At the very end of your answer, add exactly one line in this format: FOLLOW_UPS: <question 1> | <question 2> | <question 3>. Do not number them.
+7. Immediately before the FOLLOW_UPS line, add this exact sentence on its own line: "⚠️ This response used data only — no Enterprise Context (relationships, ownership, definitions) was applied."
+
+Example Format:
+<reasoning>
+Answering using data only, without Enterprise Context.
+</reasoning>
+Final answer goes here...
+
+⚠️ This response used data only — no Enterprise Context (relationships, ownership, definitions) was applied.
+FOLLOW_UPS: question 1 | question 2 | question 3"""
         else:
             persona_instructions = {
                 'ceo': (
-                    "You are advising a CEO. Structure your answer as: (1) Recommendation — 2-3 sentences naming the specific categories and regions to launch, and why. "
+                    "You are advising a CEO. Structure your answer as: (1) Recommendation — 2-3 sentences naming the specific categories and regions to launch (using their exact names from the context, never abbreviated), and why. "
                     "(2) KPIs & Financials — list every KPI and finance entity by name and value only (one line each, no prose description). "
                     "(3) Supporting context — one brief sentence per relevant entity type (supply chain, marketing channel, legal). "
                     "Keep each section concise. Do not write paragraph-length descriptions of individual entities. "
@@ -112,6 +134,7 @@ CRITICAL INSTRUCTIONS:
 5. Never split the same list or topic across two sections. One answer, one pass — no repeated summaries at the end.
 6. When including entities in a list, use ALL entities of that type found in the context. Do not apply a stricter filter (e.g. "directly connected") that was not in the question.
 7. When describing a KPI, entity name, or metric, use ONLY the name and description as given in the enterprise context. Do NOT add qualifications, scope restrictions, or specificity (e.g. "specifically focusing on X category") that are not explicitly stated in that entity's own description.
+7b. Always write every entity name (regions, categories, KPIs, nodes, etc.) EXACTLY as it appears in the enterprise context above. Never abbreviate, shorten, or combine names (e.g. write "London South East", not "London & SE" or "London/SE") — copy the name verbatim.
 8. Keep your total response (excluding the <reasoning> block and the FOLLOW_UPS line) to 250 words or fewer. Be concise and structured — use bullet points, not paragraphs. If you are listing entities, name and value only (no description prose).
 9. At the very end of your answer (after all content), add exactly one line in this format: FOLLOW_UPS: <question 1> | <question 2> | <question 3>. Make the questions specific, grounded in the entities just discussed, and useful for the persona. Do not number them.
 
@@ -182,6 +205,35 @@ Final answer goes here..."""
             + "\n".join(answer_parts)
         )
 
+    def generate_fallback_response_data_only(self, context: str) -> str:
+        disclaimer = "⚠️ This response used data only — no Enterprise Context (relationships, ownership, definitions) was applied."
+
+        if not context or context.startswith("No data") or context.startswith("No relevant"):
+            return (
+                "<reasoning>\n"
+                "No data tables matched this question.\n"
+                "</reasoning>\n"
+                "I don't have any data covering that question. "
+                "Try asking about product catalogue, customer insights, supply chain, or sales revenue data.\n\n"
+                f"{disclaimer}"
+            )
+
+        tables_only = context.split("\n## Instructions:")[0].strip()
+
+        return (
+            "<reasoning>\n"
+            "Answering using data only, without Enterprise Context.\n"
+            "</reasoning>\n"
+            f"{tables_only}\n\n"
+            "_Note: Configure OPENAI_API_KEY for full AI-powered answers. This response lists the data directly._\n\n"
+            f"{disclaimer}"
+        )
+
+    def _fallback_for(self, user_message: str, context: str, grounding_mode: str) -> str:
+        if grounding_mode == 'data_only':
+            return self.generate_fallback_response_data_only(context)
+        return self.generate_fallback_response(user_message, context)
+
     async def generate_response(
         self,
         user_message: str,
@@ -205,7 +257,7 @@ Final answer goes here..."""
             }
 
         if not client:
-            fallback = self.generate_fallback_response(user_message, context)
+            fallback = self._fallback_for(user_message, context, grounding_mode)
             reasoning, answer = self.extract_reasoning(fallback)
             return {
                 'content': answer,
@@ -226,6 +278,12 @@ Final answer goes here..."""
             raw_content = response.choices[0].message.content or ''
             reasoning, answer = self.extract_reasoning(raw_content)
 
+            if grounding_mode == 'data_only' and 'no enterprise context' not in answer.lower():
+                answer = answer.rstrip() + (
+                    "\n\n⚠️ This response used data only — no Enterprise Context "
+                    "(relationships, ownership, definitions) was applied."
+                )
+
             return {
                 'content': answer,
                 'reasoning': reasoning or None,
@@ -233,7 +291,7 @@ Final answer goes here..."""
             }
         except Exception:
             print("LLM provider error — details suppressed for security")
-            fallback = self.generate_fallback_response(user_message, context)
+            fallback = self._fallback_for(user_message, context, grounding_mode)
             reasoning, answer = self.extract_reasoning(fallback)
             return {
                 'content': answer,
@@ -261,7 +319,7 @@ Final answer goes here..."""
             return
 
         if not client:
-            fallback = self.generate_fallback_response(user_message, context)
+            fallback = self._fallback_for(user_message, context, grounding_mode)
             chunk_size = 40
             for i in range(0, len(fallback), chunk_size):
                 yield fallback[i:i + chunk_size]
@@ -284,7 +342,7 @@ Final answer goes here..."""
 
         except Exception:
             print("LLM provider error — details suppressed for security")
-            fallback = self.generate_fallback_response(user_message, context)
+            fallback = self._fallback_for(user_message, context, grounding_mode)
             yield fallback
 
 llm_service = LLMService()

@@ -5,8 +5,8 @@ import './GroundingModeSelector.css';
 
 const GROUNDING_OPTIONS: { value: GroundingMode; label: string; title: string }[] = [
     { value: 'generic', label: 'Generic', title: 'No graph context — standard AI response' },
-    { value: 'kg_only', label: 'EC', title: 'Answers grounded in graph entities and relationships' },
-    { value: 'kg_full', label: 'EC + Data', title: 'Full context including data product tables' },
+    { value: 'data_only', label: 'Data', title: 'Data only — no entity relationships, ownership, or business context' },
+    { value: 'kg_full', label: 'Data + EC', title: 'Data grounded in full Enterprise Context — relationships, ownership, business meaning' },
 ];
 
 export const GroundingModeSelector: React.FC = () => {

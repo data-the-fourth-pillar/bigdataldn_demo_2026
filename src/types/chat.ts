@@ -27,7 +27,7 @@ export interface UsedContext {
     raw_context_string?: string;
 }
 
-export type GroundingMode = 'generic' | 'kg_only' | 'kg_full';
+export type GroundingMode = 'generic' | 'kg_only' | 'data_only' | 'kg_full';
 export type PersonaLens = 'ceo' | 'vp_supply_chain' | 'cdo';
 export type LLMProvider = 'openai' | 'gemini';
 

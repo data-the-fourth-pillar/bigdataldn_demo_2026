@@ -18,7 +18,7 @@ venv/
 .env.*
 
 # Runtime artifacts (per CLAUDE.md Stage 2 convention)
-data/
+/data/
 logs/
 output/
 cache/

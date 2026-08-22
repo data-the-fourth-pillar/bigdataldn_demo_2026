@@ -26,6 +26,8 @@ export const DEMO_CATEGORIES: CategoryConfig[] = [
 
 export const DEMO_ENTITY_TYPES = DEMO_CATEGORIES.map(c => c.id);
 
+export const OPERATING_PILLAR_TYPES: EntityType[] = ['person', 'process', 'technology', 'data_product'];
+
 export const DEMO_RELATIONSHIP_TYPES = [
     'has_data_product',
     'used_in',

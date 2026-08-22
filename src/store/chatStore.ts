@@ -202,21 +202,31 @@ export const useChatStore = create<ChatState>((set) => ({
         currentStreamingMessage: state.currentStreamingMessage + chunk
     })),
 
-    // Write new messages back to the active session immediately so history stays current
+    // Write new messages back to the active session immediately so history stays current.
+    // A brand-new conversation has no activeSessionId yet — create its session on the
+    // first completed exchange instead of waiting for the user to navigate away.
     finishStreaming: (message) => set((state) => {
         const newMessages = [...state.messages, message];
         let sessions = state.sessions;
-        if (state.activeSessionId) {
+        let activeSessionId = state.activeSessionId;
+
+        if (activeSessionId) {
             sessions = sessions.map(s =>
-                s.id === state.activeSessionId ? { ...s, messages: newMessages } : s
+                s.id === activeSessionId ? { ...s, messages: newMessages } : s
             );
-            saveSessions(sessions);
+        } else {
+            const session = makeSession(newMessages);
+            activeSessionId = session.id;
+            sessions = [session, ...sessions];
         }
+        saveSessions(sessions);
+
         return {
             isStreaming: false,
             currentStreamingMessage: '',
             messages: newMessages,
             sessions,
+            activeSessionId,
         };
     }),
 

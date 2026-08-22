@@ -223,12 +223,15 @@
 }
 
 .btn-danger {
-    background: var(--color-error);
-    color: white;
+    background: rgba(239, 68, 68, 0.12);
+    color: var(--color-error);
+    border: 1px solid rgba(239, 68, 68, 0.35);
 }
 
 .btn-danger:hover {
-    background: #dc2626;
+    background: var(--color-error);
+    color: white;
+    border-color: var(--color-error);
 }
 
 .btn-sm {

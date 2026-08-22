@@ -192,6 +192,40 @@ class ContextService:
         if not entities:
             return "No relevant information found in the enterprise context."
 
+        if grounding_mode == 'data_only':
+            data_entities = [
+                e for e in entities
+                if e.metadata and isinstance(e.metadata.get('tabular_data'), dict)
+                and e.metadata['tabular_data'].get('headers') and e.metadata['tabular_data'].get('rows')
+            ]
+            if not data_entities:
+                return "No data tables found for this query."
+
+            parts = [
+                "# Data (No Enterprise Context)\n",
+                "The tables below are provided with no entity descriptions, relationships, ownership, or business definitions attached.\n",
+            ]
+            for entity in data_entities:
+                table = entity.metadata['tabular_data']
+                headers = table['headers']
+                rows = table['rows']
+                parts.append(f"## {entity.name}")
+                header_str = " | ".join(headers)
+                separator = " | ".join(["---"] * len(headers))
+                parts.append(f"| {header_str} |")
+                parts.append(f"| {separator} |")
+                for row in rows[:20]:
+                    row_str = " | ".join(str(val) for val in row)
+                    parts.append(f"| {row_str} |")
+                parts.append("")
+
+            parts.append("## Instructions:")
+            parts.append("- Answer using ONLY the numbers in these tables")
+            parts.append("- Do NOT assume relationships, ownership, or business meaning beyond what a column literally states")
+            parts.append("- Explicitly note that this response has no Enterprise Context")
+
+            return "\n".join(parts)
+
         if persona_lens == 'ceo':
             entities = sorted(entities, key=lambda e: 0 if e.type in ('kpi', 'finance_entity') else 1)
         elif persona_lens == 'vp_supply_chain':

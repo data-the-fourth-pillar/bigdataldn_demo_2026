@@ -146,6 +146,16 @@
     min-width: 0;
 }
 
+.message-timestamp {
+    font-size: var(--font-size-xs);
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-1);
+}
+
+.message.user .message-timestamp {
+    text-align: right;
+}
+
 .message-text {
     padding: var(--space-4);
     border-radius: var(--radius-lg);
@@ -157,6 +167,11 @@
 .message.user .message-text {
     background: var(--color-accent-500);
     color: white;
+}
+
+.message-text.thinking-text {
+    font-style: italic;
+    color: var(--text-secondary);
 }
 
 .citations {
