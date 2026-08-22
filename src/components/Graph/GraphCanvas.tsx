@@ -56,7 +56,7 @@ export const GraphCanvas: React.FC = () => {
     const entities = useGraphStore(state => state.entities);
     const relationships = useGraphStore(state => state.relationships);
     const focusEntityId = useGraphStore(state => state.focusEntityId);
-    const { selectEntity, selectedEntityId, setFocusEntity, filter, setFilter, clearFilter } = useGraphStore();
+    const { selectEntity, selectedEntityId, setFocusEntity, filter } = useGraphStore();
 
     const personaLens = useChatStore(state => state.personaLens);
     const highlightedEntities = useChatStore(state => state.highlightedEntities);
@@ -64,6 +64,8 @@ export const GraphCanvas: React.FC = () => {
 
     const nodesRef = useRef<GraphNode[]>([]);
     const prevFocusRef = useRef<string | null>(null);
+    const prevDimensionsRef = useRef({ width: 0, height: 0 });
+    const fitRef = useRef<(animated?: boolean) => void>(() => {});
 
     const { entities: visibleEntities, relationships: visibleRelationships } = useMemo(
         () => getEgoNetwork(focusEntityId, entities, relationships),
@@ -95,22 +97,21 @@ export const GraphCanvas: React.FC = () => {
         );
     }, [visibleRelationships, filteredEntities]);
 
-    const focusEntity = focusEntityId
-        ? entities.find(e => e.id === focusEntityId)
-        : undefined;
-
     const [dimensions, setDimensions] = useState({ width: 800, height: 600 });
 
     useEffect(() => {
-        const updateDimensions = () => {
-            if (svgRef.current) {
-                const { width, height } = svgRef.current.getBoundingClientRect();
+        if (!svgRef.current) return;
+        const observer = new ResizeObserver(entries => {
+            const entry = entries[0];
+            if (entry) {
+                const { width, height } = entry.contentRect;
                 setDimensions({ width, height });
+                // Re-fit whenever the canvas resizes (e.g. right panel open/close)
+                fitRef.current(false);
             }
-        };
-        updateDimensions();
-        window.addEventListener('resize', updateDimensions);
-        return () => window.removeEventListener('resize', updateDimensions);
+        });
+        observer.observe(svgRef.current);
+        return () => observer.disconnect();
     }, []);
 
     // 1. Structural Effect: rebuilds graph nodes/links and force simulation
@@ -127,6 +128,11 @@ export const GraphCanvas: React.FC = () => {
         if (prevFocusRef.current !== focusEntityId) {
             nodesRef.current = [];
             prevFocusRef.current = focusEntityId;
+        }
+
+        if (prevDimensionsRef.current.width !== width || prevDimensionsRef.current.height !== height) {
+            nodesRef.current = [];
+            prevDimensionsRef.current = { width, height };
         }
 
         const nodes: GraphNode[] = filteredEntities.map(e => {
@@ -191,6 +197,26 @@ export const GraphCanvas: React.FC = () => {
         const labelCollisionRadius = (d: GraphNode) =>
             d.id === focusEntityId ? 78 : 62;
 
+        const fitToContent = (animated = true) => {
+            if (!svgRef.current || nodesRef.current.length === 0) return;
+            const svgEl = d3.select(svgRef.current);
+            const zoomBehavior = (svgRef.current as any)._zoom;
+            if (!zoomBehavior) return;
+            const pad = 70;
+            const xs = nodesRef.current.map(n => n.x ?? 0);
+            const ys = nodesRef.current.map(n => n.y ?? 0);
+            const minX = Math.min(...xs) - pad;
+            const maxX = Math.max(...xs) + pad;
+            const minY = Math.min(...ys) - pad;
+            const maxY = Math.max(...ys) + pad;
+            const scale = Math.min(1.0, Math.min(width / (maxX - minX), height / (maxY - minY)));
+            const tx = (width - scale * (minX + maxX)) / 2;
+            const ty = (height - scale * (minY + maxY)) / 2;
+            const t = d3.zoomIdentity.translate(tx, ty).scale(scale);
+            (animated ? svgEl.transition().duration(600) : svgEl).call(zoomBehavior.transform, t);
+        };
+        fitRef.current = fitToContent;
+
         const simulation = d3.forceSimulation<GraphNode>(nodes)
             .force('link', d3.forceLink<GraphNode, DisplayGraphLink>(links)
                 .id(d => d.id)
@@ -198,13 +224,13 @@ export const GraphCanvas: React.FC = () => {
                     const s = d.source as GraphNode;
                     const t = d.target as GraphNode;
                     if (s.id === focusEntityId || t.id === focusEntityId) return orbitRadius;
-                    return 140;
+                    return 100;
                 })
                 .strength(0.45))
             .force('charge', d3.forceManyBody().strength(d =>
-                (d as GraphNode).id === focusEntityId ? -900 : -520
+                (d as GraphNode).id === focusEntityId ? -600 : -280
             ))
-            .force('center', d3.forceCenter(centerX, centerY).strength(0.03))
+            .force('center', d3.forceCenter(centerX, centerY).strength(0.08))
             .force('collision', d3.forceCollide<GraphNode>()
                 .radius(labelCollisionRadius)
                 .strength(0.95)
@@ -327,6 +353,8 @@ export const GraphCanvas: React.FC = () => {
             .attr('fill', 'var(--text-tertiary)')
             .attr('font-size', '9px');
 
+        simulation.on('end', () => fitRef.current(true));
+
         simulation.on('tick', () => {
             link
                 .attr('x1', d => (d.source as GraphNode).x ?? 0)
@@ -388,7 +416,10 @@ export const GraphCanvas: React.FC = () => {
         svg.on('click', () => selectEntity(null));
         (svgRef.current as any)._zoom = zoom;
 
+        const rafId = requestAnimationFrame(() => fitRef.current(false));
+
         return () => {
+            cancelAnimationFrame(rafId);
             simulation.stop();
         };
     }, [dimensions, filteredEntities, filteredRelationships, focusEntityId, selectEntity, selectedEntityId, setFocusEntity]);
@@ -443,39 +474,8 @@ export const GraphCanvas: React.FC = () => {
         }
     };
 
-    const focusLabel = focusEntity
-        ? `${getCategoryConfig(focusEntity.type)?.label ?? focusEntity.type} in Focus`
-        : 'Enterprise Context';
-
     return (
         <div className="graph-canvas-container">
-            <div className="canvas-top-bar">
-                <div className="focus-banner">
-                    <span className="focus-banner-label">{focusLabel}</span>
-                    <span className="focus-banner-name">{focusEntity?.name ?? 'Select a focus'}</span>
-                </div>
-
-                <div className="search-overlay">
-                    <div className="floating-search">
-                        <span className="search-icon">🔍</span>
-                        <input
-                            type="text"
-                            placeholder="Search entities..."
-                            value={filter.searchQuery || ''}
-                            onChange={(e) => setFilter({ searchQuery: e.target.value })}
-                            className="search-input"
-                        />
-                        {(filter.searchQuery || (filter.entityTypes && filter.entityTypes.length > 0)) && (
-                            <button onClick={clearFilter} className="clear-btn" title="Clear all filters">
-                                ✕
-                            </button>
-                        )}
-                    </div>
-                </div>
-
-                <div className="canvas-top-bar-spacer" aria-hidden="true" />
-            </div>
-
             <svg ref={svgRef} className="graph-canvas" />
 
             {filteredEntities.length === 0 && (
@@ -490,15 +490,8 @@ export const GraphCanvas: React.FC = () => {
                 <div className="control-divider" />
                 <button
                     className="zoom-btn"
-                    onClick={() => {
-                        if (!svgRef.current) return;
-                        const svg = d3.select(svgRef.current);
-                        const zoom = (svgRef.current as any)._zoom;
-                        if (zoom) {
-                            svg.transition().duration(500).call(zoom.transform, d3.zoomIdentity);
-                        }
-                    }}
-                    title="Reset Zoom"
+                    onClick={() => fitRef.current(true)}
+                    title="Fit to content"
                 >
                     🎯
                 </button>

@@ -64,6 +64,16 @@
     box-shadow: 0 0 0 2px rgba(56, 190, 201, 0.12);
 }
 
+.gc-subheading {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: var(--text-tertiary);
+    margin-top: var(--space-2);
+    display: block;
+}
+
 .gc-chips {
     display: flex;
     flex-wrap: wrap;

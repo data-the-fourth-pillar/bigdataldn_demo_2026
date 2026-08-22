@@ -5,48 +5,6 @@
     background: var(--bg-primary);
 }
 
-.chat-header {
-    padding: var(--space-6);
-    border-bottom: 1px solid var(--border-primary);
-    background: var(--surface);
-}
-
-.header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: var(--space-4);
-}
-
-.header-content h2 {
-    font-size: var(--font-size-2xl);
-    font-weight: var(--font-weight-semibold);
-    margin: 0;
-}
-
-.graph-stats {
-    display: flex;
-    gap: var(--space-6);
-}
-
-.stat {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.stat-value {
-    font-size: var(--font-size-2xl);
-    font-weight: var(--font-weight-bold);
-    color: var(--color-accent-600);
-}
-
-.stat-label {
-    font-size: var(--font-size-xs);
-    color: var(--text-tertiary);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
 
 .focus-context-bar {
     display: flex;
@@ -86,47 +44,6 @@
     color: var(--color-accent-700);
 }
 
-.grounding-controls {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-}
-
-.grounding-controls label {
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-medium);
-    color: var(--text-secondary);
-}
-
-.mode-selector {
-    display: flex;
-    gap: var(--space-2);
-    background: var(--bg-secondary);
-    padding: var(--space-1);
-    border-radius: var(--radius-md);
-}
-
-.mode-btn {
-    padding: var(--space-2) var(--space-4);
-    border: none;
-    background: transparent;
-    color: var(--text-secondary);
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-medium);
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    transition: all var(--transition-fast);
-}
-
-.mode-btn:hover {
-    background: var(--bg-tertiary);
-    color: var(--text-primary);
-}
-
-.mode-btn.active {
-    background: var(--color-accent-500);
-    color: white;
-}
 
 .messages-container {
     flex: 1;
@@ -138,7 +55,7 @@
 }
 
 .welcome-message {
-    max-width: 600px;
+    max-width: 750px;
     margin: auto;
     text-align: center;
     padding: var(--space-8);

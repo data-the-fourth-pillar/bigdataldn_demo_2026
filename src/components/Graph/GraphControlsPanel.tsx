@@ -38,7 +38,18 @@ export const GraphControlsPanel: React.FC = () => {
     return (
         <div className="graph-controls-panel">
             <div className="gc-section">
-                <span className="gc-label">Focus</span>
+                <div className="gc-label-row">
+                    <span className="gc-label">Focus</span>
+                    {focusEntityId && (
+                        <button
+                            type="button"
+                            className="gc-clear-btn"
+                            onClick={() => setFocusEntity(null)}
+                        >
+                            Clear
+                        </button>
+                    )}
+                </div>
                 <select
                     className="gc-focus-select"
                     value={focusEntityId ?? ''}
@@ -77,26 +88,48 @@ export const GraphControlsPanel: React.FC = () => {
                         </button>
                     )}
                 </div>
-                <div className="gc-chips">
-                    {[...DEMO_CATEGORIES]
-                        .filter(t => visibleEntityTypes.has(t.id))
-                        .sort((a, b) => a.label.localeCompare(b.label))
-                        .map(type => (
+
+                {(() => {
+                    const PILLAR_IDS = ['person', 'process', 'technology', 'data_product'];
+                    const visible = DEMO_CATEGORIES.filter(t => visibleEntityTypes.has(t.id));
+                    const pillars = PILLAR_IDS.map(id => visible.find(t => t.id === id)).filter(Boolean) as typeof DEMO_CATEGORIES;
+                    const others = visible
+                        .filter(t => !PILLAR_IDS.includes(t.id))
+                        .sort((a, b) => a.label.localeCompare(b.label));
+
+                    const renderChip = (type: typeof DEMO_CATEGORIES[number]) => (
                         <label
-                                key={type.id}
-                                className={`gc-chip ${filter.entityTypes?.includes(type.id) ? 'active' : ''}`}
-                                title={`Toggle ${type.label}`}
-                            >
-                                <input
-                                    type="checkbox"
-                                    checked={filter.entityTypes?.includes(type.id) || false}
-                                    onChange={() => toggleEntityType(type.id)}
-                                />
-                                <span>{type.icon}</span>
-                                <span>{type.label}</span>
-                            </label>
-                        ))}
-                </div>
+                            key={type.id}
+                            className={`gc-chip ${filter.entityTypes?.includes(type.id) ? 'active' : ''}`}
+                            title={`Toggle ${type.label}`}
+                        >
+                            <input
+                                type="checkbox"
+                                checked={filter.entityTypes?.includes(type.id) || false}
+                                onChange={() => toggleEntityType(type.id)}
+                            />
+                            <span>{type.icon}</span>
+                            <span>{type.label}</span>
+                        </label>
+                    );
+
+                    return (
+                        <>
+                            {pillars.length > 0 && (
+                                <>
+                                    <span className="gc-subheading">Operating Pillars</span>
+                                    <div className="gc-chips">{pillars.map(renderChip)}</div>
+                                </>
+                            )}
+                            {others.length > 0 && (
+                                <>
+                                    <span className="gc-subheading">Others</span>
+                                    <div className="gc-chips">{others.map(renderChip)}</div>
+                                </>
+                            )}
+                        </>
+                    );
+                })()}
             </div>
         </div>
     );

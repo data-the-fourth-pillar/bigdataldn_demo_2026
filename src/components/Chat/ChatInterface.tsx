@@ -2,11 +2,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { useChatStore } from '../../store/chatStore';
-import { useGraphStore } from '../../store/graphStore';
 import { chatApi } from '../../api/chatApi';
 import { LineagePanel } from './LineagePanel';
 import { DataUsedPanel } from './DataUsedPanel';
-import type { GroundingMode } from '../../types/chat';
 import './ChatInterface.css';
 
 function stripTabularData(contextStr: string): string {
@@ -56,15 +54,12 @@ export const ChatInterface: React.FC = () => {
         isStreaming,
         currentStreamingMessage,
         addMessage,
-        setGroundingMode,
         setHighlightedPath,
         clearHighlightedPath,
         startStreaming,
         appendStreamChunk,
         finishStreaming,
     } = useChatStore();
-
-    const { entities, relationships } = useGraphStore();
 
     const [input, setInput] = useState('');
     const [failoverNotice, setFailoverNotice] = useState<string | null>(null);
@@ -129,12 +124,6 @@ export const ChatInterface: React.FC = () => {
         await sendMessage(input);
     };
 
-    const groundingModes: { value: GroundingMode; label: string; description: string }[] = [
-        { value: 'generic', label: 'Generic', description: 'No graph context — standard AI response' },
-        { value: 'kg_only', label: 'Enterprise Context (EC)', description: 'Answers grounded in graph entities and relationships' },
-        { value: 'kg_full', label: 'EC + Data', description: 'Full context including data product tables' },
-    ];
-
     const isGraphGrounded = groundingMode !== 'generic';
 
     return (
@@ -157,47 +146,15 @@ export const ChatInterface: React.FC = () => {
                 </div>
             )}
 
-            <div className="chat-header">
-                <div className="header-content">
-                    <div className="graph-stats">
-                        <span className="stat">
-                            <span className="stat-value">{entities.length}</span>
-                            <span className="stat-label">entities</span>
-                        </span>
-                        <span className="stat">
-                            <span className="stat-value">{relationships.length}</span>
-                            <span className="stat-label">relationships</span>
-                        </span>
-                    </div>
-                </div>
-
-                <div className="grounding-controls">
-                    <label>Grounding Mode:</label>
-                    <div className="mode-selector">
-                        {groundingModes.map(mode => (
-                            <button
-                                key={mode.value}
-                                type="button"
-                                className={`mode-btn ${groundingMode === mode.value ? 'active' : ''}`}
-                                onClick={() => setGroundingMode(mode.value)}
-                                title={mode.description}
-                            >
-                                {mode.label}
-                            </button>
-                        ))}
-                    </div>
-                </div>
-            </div>
-
             <div className="messages-container">
                 {messages.length === 0 && (
                     <div className="welcome-message">
                         {!isGraphGrounded ? (
-                            <h3>💬 Generic</h3>
+                            <h3>🌐 Generic</h3>
                         ) : groundingMode === 'kg_full' ? (
-                            <h3>👋 Leverage your Enterprise Context and Data</h3>
+                            <h3><span className="icon-graph">🕸️</span> 📊 Leverage your Enterprise Context and Data</h3>
                         ) : (
-                            <h3>👋 Leverage your Enterprise Context</h3>
+                            <h3><span className="icon-graph">🕸️</span> Leverage your Enterprise Context</h3>
                         )}
                         <p>
                             {!isGraphGrounded
@@ -242,7 +199,7 @@ export const ChatInterface: React.FC = () => {
                             </div>
                             <div className="message-content">
                                 {message.role === 'assistant' && isGenericResponse && (
-                                    <div className="generic-mode-badge">⚡ Generic — no enterprise context used</div>
+                                    <div className="generic-mode-badge">🌐 Generic — no enterprise context used</div>
                                 )}
                                 {message.role === 'assistant' && isGraphGrounded && (
                                     reasoning ? (

@@ -42,7 +42,7 @@ export const DEMO_RELATIONSHIP_TYPES = [
     'competes_with',
     'governs',
     'funds',
-    'phases_in_year',
+    'rollout_in',
     'launched_in',
     'sold_via',
     'managed_by',
@@ -52,6 +52,14 @@ export const DEMO_RELATIONSHIP_TYPES = [
     'uses_domain',
     'applies_to',
     'enforced_by',
+    'employed_by',
+    'operates_in',
+    'has_owner',
+    'has_process',
+    'has_technology',
+    'manages',
+    'supports',
+    'consumed_by',
 ] as const;
 
 export function getCategoryConfig(type: EntityType): CategoryConfig | undefined {

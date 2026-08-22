@@ -59,7 +59,7 @@ class ContextService:
             'measures': ['measures', 'kpi for', 'tracks'],
             'fulfils_region': ['fulfils', 'serves', 'covers'],
             'depends_on': ['depends on', 'requires', 'needs'],
-            'phases_in_year': ['phase', 'year 1', 'year 2', 'year 3', 'roadmap'],
+            'rollout_in': ['phase', 'year 1', 'year 2', 'year 3', 'roadmap', 'rollout'],
             'governs': ['governs', 'contract', 'exclusivity'],
             'launched_in': ['launched in', 'available in', 'live in', 'launch region'],
             'sold_via': ['sold via', 'sold through', 'channel for', 'available on'],
@@ -70,6 +70,14 @@ class ContextService:
             'uses_domain': ['uses domain', 'data domain for', 'governed by domain'],
             'applies_to': ['applies to', 'covers', 'in scope', 'subject to'],
             'enforced_by': ['enforced by', 'enforces', 'responsible for policy', 'owns policy'],
+            'has_owner': ['has owner', 'domain owner', 'data steward', 'who owns domain'],
+            'has_process': ['has process', 'domain process', 'process within domain'],
+            'has_technology': ['has technology', 'domain technology', 'systems in domain'],
+            'manages': ['manages', 'is responsible for', 'who manages', 'who runs'],
+            'supports': ['supports', 'feeds into', 'informs', 'backs'],
+            'consumed_by': ['consumed by', 'used by system', 'ingested by'],
+            'employed_by': ['employed by', 'works for', 'reports to', 'employee of', 'who employs'],
+            'operates_in': ['operates in', 'runs in', 'process within', 'which entity runs', 'legal entity for process'],
         }
 
         relevant_types = []

@@ -1,0 +1,193 @@
+.graph-header-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    min-width: 0;
+    padding-right: 16px;
+}
+
+/* Stats pill */
+.ghc-stats {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    padding: 4px 10px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-full);
+}
+
+.ghc-stat {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+}
+
+.ghc-stat-value {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-accent-600);
+}
+
+[data-theme="dark"] .ghc-stat-value {
+    color: var(--color-accent-400);
+}
+
+.ghc-stat-label {
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.ghc-stat-divider {
+    width: 1px;
+    height: 14px;
+    background: var(--border-primary);
+    display: inline-block;
+}
+
+/* Search wrapper — fills remaining space, anchors the dropdown */
+.ghc-search-wrapper {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+}
+
+.ghc-search {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    height: 32px;
+    padding: 0 12px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-full);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.ghc-search:focus-within,
+.ghc-search.ghc-search-open {
+    border-color: var(--color-accent-400);
+    box-shadow: 0 0 0 2px rgba(56, 190, 201, 0.12);
+    border-radius: 16px 16px 0 0;
+}
+
+.ghc-search-icon {
+    font-size: 13px;
+    opacity: 0.5;
+    flex-shrink: 0;
+}
+
+.ghc-search-input {
+    flex: 1;
+    border: none;
+    background: none;
+    font-size: 13px;
+    color: var(--text-primary);
+    min-width: 0;
+}
+
+.ghc-search-input:focus {
+    outline: none;
+}
+
+.ghc-search-input::placeholder {
+    color: var(--text-tertiary);
+}
+
+.ghc-search-clear {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 11px;
+    color: var(--text-tertiary);
+    padding: 2px 4px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: color var(--transition-fast);
+}
+
+.ghc-search-clear:hover {
+    color: var(--color-error);
+}
+
+/* Suggestions dropdown */
+.ghc-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: var(--surface);
+    border: 1px solid var(--color-accent-400);
+    border-top: none;
+    border-radius: 0 0 16px 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    list-style: none;
+    margin: 0;
+    padding: 4px 0 8px;
+    overflow: hidden;
+}
+
+[data-theme="dark"] .ghc-suggestions {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.ghc-suggestion-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px;
+    cursor: pointer;
+    transition: background var(--transition-fast);
+}
+
+.ghc-suggestion-item:hover,
+.ghc-suggestion-item.active {
+    background: var(--color-accent-50);
+}
+
+[data-theme="dark"] .ghc-suggestion-item:hover,
+[data-theme="dark"] .ghc-suggestion-item.active {
+    background: rgba(44, 177, 188, 0.12);
+}
+
+.ghc-sug-icon {
+    font-size: 14px;
+    flex-shrink: 0;
+    width: 20px;
+    text-align: center;
+}
+
+.ghc-sug-name {
+    flex: 1;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ghc-sug-type {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--color-accent-600);
+    background: var(--color-accent-50);
+    padding: 1px 6px;
+    border-radius: var(--radius-full);
+    text-transform: uppercase;
+    letter-spacing: 0.2px;
+    flex-shrink: 0;
+}
+
+[data-theme="dark"] .ghc-sug-type {
+    color: var(--color-accent-300);
+    background: rgba(44, 177, 188, 0.15);
+}

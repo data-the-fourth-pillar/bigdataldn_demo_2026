@@ -154,7 +154,7 @@
     right: 16px;
     z-index: 20;
     display: grid;
-    grid-template-columns: minmax(0, 200px) 1fr minmax(0, 200px);
+    grid-template-columns: auto 1fr auto;
     align-items: start;
     gap: 12px;
     pointer-events: none;
@@ -173,8 +173,6 @@
 
 .floating-search {
     pointer-events: auto;
-    width: 100%;
-    max-width: 380px;
     background: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.3);
@@ -184,7 +182,8 @@
     align-items: center;
     gap: 12px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-    transition: all var(--transition-md);
+    transition: width 0.25s ease, background var(--transition-md), box-shadow var(--transition-md);
+    min-width: 180px;
 }
 
 [data-theme="dark"] .floating-search {
@@ -248,7 +247,6 @@
     box-shadow: var(--shadow-md);
     pointer-events: none;
     min-width: 0;
-    max-width: 200px;
 }
 
 [data-theme="dark"] .focus-banner {
@@ -268,8 +266,6 @@
     font-weight: 700;
     color: var(--text-primary);
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .graph-node-focus circle {

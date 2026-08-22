@@ -8,12 +8,14 @@ import './EntityPanel.css';
 export const EntityPanel: React.FC = () => {
     const {
         entities,
+        relationships,
         selectedEntityId,
         addEntity,
         updateEntity,
         deleteEntity,
         addRelationship,
         setFocusEntity,
+        selectEntity,
     } = useGraphStore();
 
     const visibleEntities = entities.filter(e => isDemoEntityType(e.type));
@@ -60,6 +62,7 @@ export const EntityPanel: React.FC = () => {
             prevEntityIdRef.current = selectedEntity.id;
         } else {
             prevEntityIdRef.current = null;
+            setIsCollapsed(true);
         }
     }, [selectedEntity]);
 
@@ -129,6 +132,11 @@ export const EntityPanel: React.FC = () => {
 
     const availableTargets = visibleEntities.filter(e => e.id !== selectedEntityId);
     const panelTitle = selectedEntity ? selectedEntity.name : isCreating ? 'New Entity' : 'Entity Panel';
+
+    const entityRelationships = selectedEntityId
+        ? relationships.filter(r => r.sourceId === selectedEntityId || r.targetId === selectedEntityId)
+        : [];
+    const entityIndex = Object.fromEntries(entities.map(e => [e.id, e]));
 
     if (isCollapsed) {
         return (
@@ -295,7 +303,7 @@ export const EntityPanel: React.FC = () => {
                 {selectedEntity && !isAddingRelationship && (
                     <div className="relationships-section">
                         <div className="section-header">
-                            <h3>Relationships</h3>
+                            <h3>Relationships ({entityRelationships.length})</h3>
                             <button
                                 type="button"
                                 className="btn btn-sm btn-secondary"
@@ -304,6 +312,35 @@ export const EntityPanel: React.FC = () => {
                                 + Add
                             </button>
                         </div>
+                        {entityRelationships.length === 0 ? (
+                            <p className="rel-empty">No relationships yet.</p>
+                        ) : (
+                            <ul className="rel-list">
+                                {entityRelationships.map(r => {
+                                    const isOutgoing = r.sourceId === selectedEntityId;
+                                    const otherId = isOutgoing ? r.targetId : r.sourceId;
+                                    const other = entityIndex[otherId];
+                                    if (!other) return null;
+                                    const typeLabel = r.type.replace(/_/g, ' ');
+                                    const otherTypeLabel = getCategoryConfig(other.type)?.label ?? other.type;
+                                    return (
+                                        <li key={r.id} className="rel-item">
+                                            <span className="rel-direction">{isOutgoing ? '→' : '←'}</span>
+                                            <span className="rel-type">{typeLabel}</span>
+                                            <button
+                                                type="button"
+                                                className="rel-target"
+                                                onClick={() => selectEntity(other.id)}
+                                                title={`Go to ${other.name}`}
+                                            >
+                                                {other.name}
+                                                <span className="rel-target-type">{otherTypeLabel}</span>
+                                            </button>
+                                        </li>
+                                    );
+                                })}
+                            </ul>
+                        )}
                     </div>
                 )}
 
