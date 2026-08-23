@@ -82,6 +82,10 @@ export const GraphCanvas: React.FC = () => {
 
     const filteredEntities = useMemo(() => {
         let filtered = visibleEntities;
+        if (filter.entityIds && filter.entityIds.length > 0) {
+            const scopedIds = new Set(filter.entityIds);
+            filtered = filtered.filter(e => scopedIds.has(e.id));
+        }
         if (filter.entityTypes && filter.entityTypes.length > 0) {
             filtered = filtered.filter(e =>
                 filter.entityTypes!.includes(e.type) ||
@@ -138,13 +142,15 @@ export const GraphCanvas: React.FC = () => {
             prevDimensionsRef.current = { width, height };
         }
 
-        const filterKey = JSON.stringify([...(filter.entityTypes ?? [])].sort()) + '|' + (filter.searchQuery ?? '');
+        const filterKey = JSON.stringify([...(filter.entityTypes ?? [])].sort()) + '|' + (filter.searchQuery ?? '')
+            + '|' + JSON.stringify([...(filter.entityIds ?? [])].sort());
         if (prevFilterKeyRef.current !== filterKey) {
             nodesRef.current = [];
             prevFilterKeyRef.current = filterKey;
         }
 
-        const isUnfiltered = !(filter.entityTypes && filter.entityTypes.length > 0) && !filter.searchQuery;
+        const isUnfiltered = !(filter.entityTypes && filter.entityTypes.length > 0) && !filter.searchQuery
+            && !(filter.entityIds && filter.entityIds.length > 0);
 
         const nodes: GraphNode[] = filteredEntities.map(e => {
             const existing = nodesRef.current.find(n => n.id === e.id);

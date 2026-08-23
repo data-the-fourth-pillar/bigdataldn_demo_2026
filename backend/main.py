@@ -12,8 +12,8 @@ app = FastAPI(
 async def startup_event():
     """
     Seed data on startup.
-    - On Vercel: Customer support data is auto-loaded from backend/data/seed_customer_support.json
-    - Locally: ACME corp data is seeded if database is empty
+    - On Vercel: MDS D2C data is auto-loaded from backend/data/seed_mds_d2c.json (see storage_service.load_graph)
+    - Locally: Big Data demo data is seeded if the graph is empty
     """
     import os
     

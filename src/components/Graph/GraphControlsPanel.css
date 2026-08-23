@@ -112,3 +112,17 @@
 .gc-chip input {
     display: none;
 }
+
+.gc-chat-scope-banner {
+    padding: var(--space-3);
+    background: color-mix(in srgb, var(--color-accent-500) 12%, transparent);
+    border: 1px solid var(--color-accent-500);
+    border-radius: var(--radius-md);
+}
+
+.gc-chat-scope-desc {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.4;
+}

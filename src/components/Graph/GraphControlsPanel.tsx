@@ -11,11 +11,17 @@ export const GraphControlsPanel: React.FC = () => {
         setFocusEntity,
         filter,
         setFilter,
+        clearFilter,
     } = useGraphStore();
 
     const demoEntities = entities.filter(e => isDemoEntityType(e.type));
+    const chatScopeIds = filter.entityIds && filter.entityIds.length > 0 ? filter.entityIds : null;
 
     const visibleEntityTypes = useMemo(() => {
+        if (chatScopeIds) {
+            const scoped = new Set(chatScopeIds);
+            return new Set(demoEntities.filter(e => scoped.has(e.id)).map(e => e.type));
+        }
         if (!focusEntityId) {
             return new Set(demoEntities.map(e => e.type));
         }
@@ -25,7 +31,13 @@ export const GraphControlsPanel: React.FC = () => {
             if (r.targetId === focusEntityId) neighborIds.add(r.sourceId);
         });
         return new Set(demoEntities.filter(e => neighborIds.has(e.id)).map(e => e.type));
-    }, [focusEntityId, demoEntities, relationships]);
+    }, [focusEntityId, demoEntities, relationships, chatScopeIds]);
+
+    const chatScopeRelCount = useMemo(() => {
+        if (!chatScopeIds) return 0;
+        const idSet = new Set(chatScopeIds);
+        return relationships.filter(r => idSet.has(r.sourceId) && idSet.has(r.targetId)).length;
+    }, [chatScopeIds, relationships]);
 
     const toggleEntityType = (typeId: string) => {
         const current = filter.entityTypes || [];
@@ -37,6 +49,20 @@ export const GraphControlsPanel: React.FC = () => {
 
     return (
         <div className="graph-controls-panel">
+            {chatScopeIds && (
+                <div className="gc-section gc-chat-scope-banner">
+                    <div className="gc-label-row">
+                        <span className="gc-label">🕸️ Chat Context</span>
+                        <button type="button" className="gc-clear-btn" onClick={clearFilter}>
+                            Clear
+                        </button>
+                    </div>
+                    <p className="gc-chat-scope-desc">
+                        Showing {chatScopeIds.length} entities, {chatScopeRelCount} relationships from a chat response.
+                    </p>
+                </div>
+            )}
+
             <div className="gc-section">
                 <div className="gc-label-row">
                     <span className="gc-label">Focus</span>

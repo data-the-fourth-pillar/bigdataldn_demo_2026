@@ -59,4 +59,6 @@ export interface GraphFilter {
     entityTypes?: EntityType[];
     relationshipTypes?: RelationshipType[];
     searchQuery?: string;
+    /** When set, scopes the graph to exactly this entity ID set (e.g. a chat response's used context) */
+    entityIds?: string[];
 }

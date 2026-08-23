@@ -73,7 +73,10 @@ class LLMService:
                 "names, internal tools, or internal operational details. Give general best-practice advice only.\n\n"
                 "CRITICAL INSTRUCTIONS:\n"
                 "1. Keep your total response to 250 words or fewer. Be concise — use bullet points, not lengthy paragraphs.\n"
-                "2. At the very end of your answer, add exactly one line in this format: "
+                "2. If your answer has more than one logical section (e.g. KPIs, financial framework, next steps), give each section "
+                "a real markdown header (`## Section Name`) rather than a bold inline label — never use `**Section Name:**` as a "
+                "pseudo-header. A short answer with only one section needs no header at all.\n"
+                "3. At the very end of your answer, add exactly one line in this format: "
                 "FOLLOW_UPS: <question 1> | <question 2> | <question 3>. Make the questions specific and useful. Do not number them."
             )
         elif grounding_mode == 'data_only':
@@ -84,26 +87,44 @@ class LLMService:
 CRITICAL INSTRUCTIONS:
 1. Always start your response with a <reasoning> section (1-2 sentences max).
 2. The FIRST sentence of <reasoning> MUST be exactly: "Answering using data only, without Enterprise Context."
-3. Do NOT infer relationships, ownership, or business meaning that is not literally a column in the tables above. If the question requires that kind of context, say you cannot determine it from data alone.
-4. If the tables do not fully answer the question, say so explicitly rather than guessing or filling gaps with assumptions.
-5. Keep your total response (excluding the <reasoning> block and the FOLLOW_UPS line) to 200 words or fewer.
+3. Structure your final answer in exactly two sections, in this order, using these exact markdown headers:
+
+## Exec Summary
+- ✅ **Could answer:** 1-2 sentences on what the data tables let you determine for this question.
+- ⚠️ **Could not answer:** 1-2 sentences naming SPECIFICALLY what could not be determined because Enterprise Context (relationships, ownership, business meaning, policies) is missing. Be concrete about what's missing for THIS question, not a generic disclaimer.
+
+## Detailed Response
+The fuller answer, using ONLY the numbers/rows literally present in the tables above.
+
+4. Do NOT infer relationships, ownership, or business meaning that is not literally a column in the tables. If the question needs that kind of context, say so explicitly in "Could not answer" rather than guessing or filling gaps with assumptions.
+5. Keep your total response (excluding the <reasoning> block and the FOLLOW_UPS line) to 250 words or fewer.
 6. At the very end of your answer, add exactly one line in this format: FOLLOW_UPS: <question 1> | <question 2> | <question 3>. Do not number them.
-7. Immediately before the FOLLOW_UPS line, add this exact sentence on its own line: "⚠️ This response used data only — no Enterprise Context (relationships, ownership, definitions) was applied."
+7. Immediately before the FOLLOW_UPS line, add this exact line, as a markdown blockquote (starting with `> `): "> ⚠️ This response used data only — no Enterprise Context (relationships, ownership, definitions) was applied."
 
 Example Format:
 <reasoning>
 Answering using data only, without Enterprise Context.
 </reasoning>
-Final answer goes here...
+## Exec Summary
+- ✅ **Could answer:** ...
+- ⚠️ **Could not answer:** ...
 
-⚠️ This response used data only — no Enterprise Context (relationships, ownership, definitions) was applied.
+## Detailed Response
+...
+
+> ⚠️ This response used data only — no Enterprise Context (relationships, ownership, definitions) was applied.
 FOLLOW_UPS: question 1 | question 2 | question 3"""
         else:
             persona_instructions = {
                 'ceo': (
-                    "You are advising a CEO. Structure your answer as: (1) Recommendation — 2-3 sentences naming the specific categories and regions to launch (using their exact names from the context, never abbreviated), and why. "
-                    "(2) KPIs & Financials — list every KPI and finance entity by name and value only (one line each, no prose description). "
-                    "(3) Supporting context — one brief sentence per relevant entity type (supply chain, marketing channel, legal). "
+                    "You are advising a CEO. Structure your answer as three sections, each under its own real markdown header "
+                    "(`## Recommendation`, `## KPIs & Financials`, `## Supporting Context` — exact header text, in that order): "
+                    "## Recommendation — 2-3 sentences naming the specific categories and regions to launch (using their exact names from the context, never abbreviated), and why. "
+                    "Bold every specific entity name you mention (categories, regions, KPIs, supply chain nodes, etc.) using **Name** markdown syntax, so key facts are easy to eyeball. "
+                    "## KPIs & Financials — render as a markdown table with two columns, headers `Metric` and `Value`, one row per KPI/finance entity, name and value only (no prose description). "
+                    "Order the rows logically, grouped by theme (e.g. market sizing together, then rollout/expansion values, then margins and returns, then costs and timeline) rather than randomly. "
+                    "Any sequence of dated/staged values (e.g. Year 1, Year 2, Year 3) MUST appear in chronological order, never scattered. "
+                    "## Supporting Context — one brief sentence per relevant entity type (supply chain, marketing channel, legal). "
                     "Keep each section concise. Do not write paragraph-length descriptions of individual entities. "
                     "Give ONE unified answer: do not split the same information across sections or repeat any list."
                 ),
@@ -132,11 +153,12 @@ CRITICAL INSTRUCTIONS:
 3. Then add 1 sentence naming the 1-2 key entities you are drawing on.
 4. Close the tag with </reasoning> then give the final answer.
 5. Never split the same list or topic across two sections. One answer, one pass — no repeated summaries at the end.
-6. When including entities in a list, use ALL entities of that type found in the context. Do not apply a stricter filter (e.g. "directly connected") that was not in the question.
+6. When including entities in a list, use ALL entities of that type found in the context that are relevant to the channel/scope actually asked about — do not apply a stricter filter (e.g. "directly connected") beyond that. Specifically: EXCLUDE any entity whose name or description ties it exclusively to a different channel than the one the question is about (e.g. exclude Wholesale-specific KPIs like "RV Wholesale Baseline" from a question about D2C, or vice versa) unless the question explicitly asks for a cross-channel comparison. The context graph often connects entities from different channels through a shared data product — being graph-connected does not make an entity relevant if it belongs to a different channel than what was asked.
 7. When describing a KPI, entity name, or metric, use ONLY the name and description as given in the enterprise context. Do NOT add qualifications, scope restrictions, or specificity (e.g. "specifically focusing on X category") that are not explicitly stated in that entity's own description.
 7b. Always write every entity name (regions, categories, KPIs, nodes, etc.) EXACTLY as it appears in the enterprise context above. Never abbreviate, shorten, or combine names (e.g. write "London South East", not "London & SE" or "London/SE") — copy the name verbatim.
 8. Keep your total response (excluding the <reasoning> block and the FOLLOW_UPS line) to 250 words or fewer. Be concise and structured — use bullet points, not paragraphs. If you are listing entities, name and value only (no description prose).
-9. At the very end of your answer (after all content), add exactly one line in this format: FOLLOW_UPS: <question 1> | <question 2> | <question 3>. Make the questions specific, grounded in the entities just discussed, and useful for the persona. Do not number them.
+9. If your answer has more than one logical section, give each section a real markdown header (`## Section Name`) — never a bold inline label like `**Section Name:**`, and never a top-level `# Header`. A short answer with only one section needs no header at all.
+10. At the very end of your answer (after all content), add exactly one line in this format: FOLLOW_UPS: <question 1> | <question 2> | <question 3>. Make the questions specific, grounded in the entities just discussed, and useful for the persona. Do not number them.
 
 Example Format:
 <reasoning>
@@ -206,24 +228,37 @@ Final answer goes here..."""
         )
 
     def generate_fallback_response_data_only(self, context: str) -> str:
-        disclaimer = "⚠️ This response used data only — no Enterprise Context (relationships, ownership, definitions) was applied."
+        disclaimer = "> ⚠️ This response used data only — no Enterprise Context (relationships, ownership, definitions) was applied."
 
         if not context or context.startswith("No data") or context.startswith("No relevant"):
             return (
                 "<reasoning>\n"
                 "No data tables matched this question.\n"
                 "</reasoning>\n"
-                "I don't have any data covering that question. "
+                "## Exec Summary\n"
+                "- ✅ **Could answer:** Nothing — no matching data tables were found for this question.\n"
+                "- ⚠️ **Could not answer:** Everything. There is no data to work from, and no Enterprise Context (relationships, ownership, business meaning) either.\n\n"
+                "## Detailed Response\n"
                 "Try asking about product catalogue, customer insights, supply chain, or sales revenue data.\n\n"
                 f"{disclaimer}"
             )
 
-        tables_only = context.split("\n## Instructions:")[0].strip()
+        # Strip the leading "# Data (No Enterprise Context)" header/blurb — redundant now
+        # that Exec Summary already covers that framing — keep just the per-table sections.
+        tables_only = context.split("\n## Instructions:")[0]
+        first_table_idx = tables_only.find("\n## ")
+        if first_table_idx != -1:
+            tables_only = tables_only[first_table_idx + 1:]
+        tables_only = tables_only.strip()
 
         return (
             "<reasoning>\n"
             "Answering using data only, without Enterprise Context.\n"
             "</reasoning>\n"
+            "## Exec Summary\n"
+            "- ✅ **Could answer:** The literal numbers in the tables below.\n"
+            "- ⚠️ **Could not answer:** Why these numbers matter, who owns them, or how they relate to other parts of the business — that requires Enterprise Context, which was not used here.\n\n"
+            "## Detailed Response\n"
             f"{tables_only}\n\n"
             "_Note: Configure OPENAI_API_KEY for full AI-powered answers. This response lists the data directly._\n\n"
             f"{disclaimer}"
@@ -280,7 +315,7 @@ Final answer goes here..."""
 
             if grounding_mode == 'data_only' and 'no enterprise context' not in answer.lower():
                 answer = answer.rstrip() + (
-                    "\n\n⚠️ This response used data only — no Enterprise Context "
+                    "\n\n> ⚠️ This response used data only — no Enterprise Context "
                     "(relationships, ownership, definitions) was applied."
                 )
 

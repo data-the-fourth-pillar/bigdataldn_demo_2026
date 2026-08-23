@@ -323,7 +323,10 @@ class ContextService:
     ) -> Dict[str, Any]:
         interpretation = self.interpret_query(query)
         relevant_entities = self.find_relevant_entities(interpretation, focus_entity_id)
-        depth = 3 if grounding_mode != 'generic' else 1
+        # depth=1 keeps "used context" meaningfully scoped to the question rather than
+        # sweeping in most of the graph — this is a dense graph (70 entities/293 relationships)
+        # where depth=3 reaches ~all of it regardless of how narrow the seed match is.
+        depth = 1
         subgraph = self.expand_context(relevant_entities, depth=depth)
         context_string = self.package_context(subgraph, grounding_mode, focus_entity_id, persona_lens=persona_lens)
 

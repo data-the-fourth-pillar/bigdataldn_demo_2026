@@ -3,20 +3,9 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { useChatStore } from '../../store/chatStore';
 import { chatApi } from '../../api/chatApi';
-import { LineagePanel } from './LineagePanel';
+import { ContextGraphPanel } from './ContextGraphPanel';
 import { DataUsedPanel } from './DataUsedPanel';
 import './ChatInterface.css';
-
-function stripTabularData(contextStr: string): string {
-    // Remove "Data Product Content:" label and all subsequent table lines (| ... |)
-    return contextStr
-        .split('\n')
-        .filter(line => {
-            const t = line.trim();
-            return t !== 'Data Product Content:' && !(t.startsWith('|'));
-        })
-        .join('\n');
-}
 
 const PERSONA_LABELS: Record<string, string> = {
     ceo: 'CEO',
@@ -160,7 +149,7 @@ export const ChatInterface: React.FC = () => {
                         )}
                         <p>
                             {!isGraphGrounded
-                                ? <>Does not use enterprise context.<br />Answers are based on general knowledge only.</>
+                                ? <>Does not use enterprise data or context.<br />Answers are based on general knowledge only.</>
                                 : groundingMode === 'kg_full'
                                     ? 'Chat is grounded in your enterprise context and data.'
                                     : groundingMode === 'data_only'
@@ -187,7 +176,6 @@ export const ChatInterface: React.FC = () => {
                     const reasoningMatch = message.content.match(/<reasoning>([\s\S]*?)<\/reasoning>/);
                     const reasoning = message.reasoning || (reasoningMatch ? reasoningMatch[1].trim() : null);
                     const cleanContent = message.content.replace(/<reasoning>[\s\S]*?<\/reasoning>/, '').trim();
-                    const hasContext = message.usedContext?.raw_context_string;
 
                     const isGenericResponse = message.role === 'assistant' && message.groundingMode === 'generic';
 
@@ -208,7 +196,7 @@ export const ChatInterface: React.FC = () => {
                                     })}
                                 </div>
                                 {message.role === 'assistant' && isGenericResponse && (
-                                    <div className="generic-mode-badge">🌐 Generic — no enterprise context used</div>
+                                    <div className="generic-mode-badge">🌐 Generic — no enterprise data or context used</div>
                                 )}
                                 {message.role === 'assistant' && message.groundingMode === 'data_only' && (
                                     <div className="generic-mode-badge">📊 Data only — no Enterprise Context used. Relationships, ownership, and business meaning are not reflected in this answer.</div>
@@ -235,23 +223,19 @@ export const ChatInterface: React.FC = () => {
                                 </div>
 
 
-                                {hasContext && message.groundingMode !== 'data_only' && (
-                                    <details className="context-details">
-                                        <summary>💾 Enterprise Context Used</summary>
-                                        <div className="context-markdown">
-                                            <ReactMarkdown remarkPlugins={[remarkGfm]}>{stripTabularData(message.usedContext?.raw_context_string ?? '')}</ReactMarkdown>
-                                        </div>
-                                    </details>
-                                )}
-
                                 {message.role === 'assistant' && (message.groundingMode === 'kg_full' || message.groundingMode === 'data_only') && (message.usedContext?.entities?.length ?? 0) > 0 && (
                                     <DataUsedPanel entityIds={message.usedContext!.entities} />
                                 )}
 
                                 {message.role === 'assistant' && !isGenericResponse && message.groundingMode !== 'data_only' && (message.usedContext?.entities?.length ?? 0) > 0 && (
-                                    <details className="lineage-details">
-                                        <summary>🔗 Lineage</summary>
-                                        <LineagePanel
+                                    <details className="context-details" open>
+                                        <summary>
+                                            🕸️ Enterprise Context Used
+                                            <span className="context-details-count">
+                                                {' '}({message.usedContext!.entities.length} entities, {message.usedContext!.relationships.length} relationships)
+                                            </span>
+                                        </summary>
+                                        <ContextGraphPanel
                                             entityIds={message.usedContext!.entities}
                                             relationshipIds={message.usedContext!.relationships}
                                         />

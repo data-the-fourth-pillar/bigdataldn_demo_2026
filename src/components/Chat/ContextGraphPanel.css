@@ -1,0 +1,31 @@
+.context-graph-panel {
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+    padding: var(--space-2);
+}
+
+.context-graph-svg {
+    width: 100%;
+    height: 260px;
+    display: block;
+}
+
+.context-graph-edge {
+    stroke: var(--graph-edge-default);
+    stroke-opacity: 0.5;
+    stroke-width: 1.5;
+}
+
+.context-graph-node {
+    cursor: pointer;
+}
+
+.context-graph-node:hover circle {
+    filter: brightness(1.15);
+}
+
+.context-graph-label {
+    fill: var(--text-secondary);
+    pointer-events: none;
+    font-weight: 500;
+}

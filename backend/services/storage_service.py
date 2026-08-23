@@ -70,7 +70,7 @@ class JSONStorageService:
                 seed_file = os.path.join(
                     os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
                     "data",
-                    "seed_customer_support.json"
+                    "seed_mds_d2c.json"
                 )
                 if os.path.exists(seed_file):
                     with open(seed_file, 'r') as f:
