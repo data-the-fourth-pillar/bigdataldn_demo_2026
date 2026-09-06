@@ -1,7 +1,7 @@
 .home-page {
     height: 100%;
     overflow-y: auto;
-    padding: var(--space-8);
+    padding: var(--space-5) var(--space-8);
 }
 
 .home-page-inner {
@@ -9,7 +9,7 @@
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: var(--space-16);
+    gap: var(--space-8);
 }
 
 /* Hero */
@@ -78,27 +78,48 @@
 
 .home-hero-image {
     position: relative;
-    border-radius: var(--radius-xl);
+    width: min(260px, 100%);
+    aspect-ratio: 1 / 1;
+    margin: 0 auto;
+    border-radius: 50%;
     overflow: hidden;
+    background: #eef2f6;
     box-shadow: var(--shadow-xl);
 }
 
+[data-theme="dark"] .home-hero-image {
+    background: #03070e;
+}
+
+@keyframes shoe-spin {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
 .shoe-image {
-    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: contain;
+    animation: shoe-spin 12s linear infinite;
 }
 
 .shoe-image-dark {
-    display: none;
+    visibility: hidden;
 }
 
 [data-theme="dark"] .shoe-image-light {
-    display: none;
+    visibility: hidden;
 }
 
 [data-theme="dark"] .shoe-image-dark {
-    display: block;
+    visibility: visible;
 }
 
 /* Personas */
@@ -114,13 +135,13 @@
 .home-personas-sub {
     color: var(--text-secondary);
     max-width: 640px;
-    margin: 0 auto var(--space-8);
+    margin: 0 auto var(--space-5);
 }
 
 .persona-cards {
     display: flex;
     justify-content: center;
-    gap: var(--space-10);
+    gap: var(--space-8);
     flex-wrap: wrap;
 }
 
@@ -130,8 +151,8 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    width: 180px;
-    height: 180px;
+    width: 140px;
+    height: 140px;
     border-radius: 50%;
     border: none;
     color: #ffffff;
@@ -144,13 +165,13 @@
 }
 
 .persona-card-icon {
-    font-size: 2.25rem;
+    font-size: 1.75rem;
     display: block;
-    margin-bottom: var(--space-2);
+    margin-bottom: var(--space-1);
 }
 
 .persona-card h3 {
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-base);
     color: #ffffff;
 }
 

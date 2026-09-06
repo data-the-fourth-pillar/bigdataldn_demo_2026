@@ -189,6 +189,22 @@
     margin-top: 0;
 }
 
+.message-text ul,
+.message-text ol {
+    margin: var(--space-2) 0 var(--space-3);
+    padding-left: var(--space-5);
+}
+
+.message-text li {
+    margin-bottom: var(--space-1);
+}
+
+.message-text li > ul,
+.message-text li > ol {
+    margin: var(--space-1) 0;
+    padding-left: var(--space-5);
+}
+
 .message-text blockquote {
     margin: var(--space-3) 0 0;
     padding: var(--space-2) var(--space-3);

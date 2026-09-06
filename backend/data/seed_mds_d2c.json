@@ -937,9 +937,61 @@
       "type": "data_product",
       "name": "D2C Financial Performance Data",
       "description": "Consolidates D2C revenue, CAPEX investment, operating costs, gross margin to calculate ROI vs wholesale baseline",
-      "metadata": {},
+      "metadata": {
+        "pillar": "Data",
+        "domain": "Sales",
+        "tabular_data": {
+          "headers": [
+            "Metric",
+            "Value",
+            "Type"
+          ],
+          "rows": [
+            [
+              "D2C Launch Capex Estimate",
+              "\u00a3750,000",
+              "Capital Expenditure"
+            ],
+            [
+              "D2C Launch Marketing Budget",
+              "\u00a3350,000",
+              "Operational Expenditure"
+            ],
+            [
+              "D2C COGS Per Order",
+              "\u00a314.50",
+              "Unit Cost"
+            ],
+            [
+              "Expected D2C Break-Even",
+              "9 Months",
+              "Payback Period"
+            ],
+            [
+              "Wholesale Operating Margin (Baseline)",
+              "24.5%",
+              "Margin Baseline"
+            ],
+            [
+              "D2C Target Gross Margin",
+              "62%",
+              "Margin Target"
+            ],
+            [
+              "D2C Target Return on Investment",
+              "28%",
+              "ROI Target"
+            ],
+            [
+              "RV Wholesale Baseline",
+              "\u00a345,000,000",
+              "Revenue Baseline"
+            ]
+          ]
+        }
+      },
       "createdAt": "2026-08-02T00:00:00.000Z",
-      "updatedAt": "2026-08-02T00:00:00.000Z"
+      "updatedAt": "2026-09-06T00:00:00.000Z"
     },
     "mds-legal-group": {
       "id": "mds-legal-group",
@@ -2978,7 +3030,7 @@
       "properties": {
         "perspectives": {
           "mds-person-sc-planner": {
-            "label": "managed by",
+            "label": "manages",
             "direction": "out"
           },
           "mds-proc-order-fulfil": {
@@ -2997,7 +3049,7 @@
       "properties": {
         "perspectives": {
           "mds-person-digital-lead": {
-            "label": "managed by",
+            "label": "manages",
             "direction": "out"
           },
           "mds-proc-cust-acq": {
@@ -3016,7 +3068,7 @@
       "properties": {
         "perspectives": {
           "mds-person-sc-planner": {
-            "label": "managed by",
+            "label": "manages",
             "direction": "out"
           },
           "mds-proc-demand-forecast": {
@@ -3035,7 +3087,7 @@
       "properties": {
         "perspectives": {
           "mds-person-cat-manager": {
-            "label": "managed by",
+            "label": "manages",
             "direction": "out"
           },
           "mds-proc-channel-conflict": {
@@ -3054,7 +3106,7 @@
       "properties": {
         "perspectives": {
           "mds-person-digital-lead": {
-            "label": "managed by",
+            "label": "manages",
             "direction": "out"
           },
           "mds-tech-ecommerce": {
@@ -3073,7 +3125,7 @@
       "properties": {
         "perspectives": {
           "mds-person-data-lead": {
-            "label": "managed by",
+            "label": "manages",
             "direction": "out"
           },
           "mds-tech-crm": {
@@ -3092,7 +3144,7 @@
       "properties": {
         "perspectives": {
           "mds-person-data-lead": {
-            "label": "managed by",
+            "label": "manages",
             "direction": "out"
           },
           "mds-tech-cdp": {
@@ -3111,7 +3163,7 @@
       "properties": {
         "perspectives": {
           "mds-person-sc-planner": {
-            "label": "managed by",
+            "label": "manages",
             "direction": "out"
           },
           "mds-tech-inventory": {
@@ -3130,7 +3182,7 @@
       "properties": {
         "perspectives": {
           "mds-person-data-lead": {
-            "label": "managed by",
+            "label": "manages",
             "direction": "out"
           },
           "mds-tech-mktg-analytics": {
@@ -3149,7 +3201,7 @@
       "properties": {
         "perspectives": {
           "mds-person-cat-manager": {
-            "label": "managed by",
+            "label": "manages",
             "direction": "out"
           },
           "mds-dp-product-catalogue": {
@@ -3168,7 +3220,7 @@
       "properties": {
         "perspectives": {
           "mds-person-data-lead": {
-            "label": "managed by",
+            "label": "manages",
             "direction": "out"
           },
           "mds-dp-customer-insights": {
@@ -3187,7 +3239,7 @@
       "properties": {
         "perspectives": {
           "mds-person-sc-planner": {
-            "label": "managed by",
+            "label": "manages",
             "direction": "out"
           },
           "mds-dp-supply-chain-data": {
@@ -3206,7 +3258,7 @@
       "properties": {
         "perspectives": {
           "mds-person-digital-lead": {
-            "label": "managed by",
+            "label": "manages",
             "direction": "out"
           },
           "mds-dp-sales-revenue": {
@@ -3225,11 +3277,11 @@
       "properties": {
         "perspectives": {
           "mds-proc-order-fulfil": {
-            "label": "powers",
+            "label": "powered by",
             "direction": "out"
           },
           "mds-tech-ecommerce": {
-            "label": "powered by",
+            "label": "powers",
             "direction": "in"
           }
         }
@@ -3244,11 +3296,11 @@
       "properties": {
         "perspectives": {
           "mds-proc-order-fulfil": {
-            "label": "powers",
+            "label": "powered by",
             "direction": "out"
           },
           "mds-tech-inventory": {
-            "label": "powered by",
+            "label": "powers",
             "direction": "in"
           }
         }
@@ -3263,11 +3315,11 @@
       "properties": {
         "perspectives": {
           "mds-proc-cust-acq": {
-            "label": "powers",
+            "label": "powered by",
             "direction": "out"
           },
           "mds-tech-crm": {
-            "label": "powered by",
+            "label": "powers",
             "direction": "in"
           }
         }
@@ -3282,11 +3334,11 @@
       "properties": {
         "perspectives": {
           "mds-proc-cust-acq": {
-            "label": "powers",
+            "label": "powered by",
             "direction": "out"
           },
           "mds-tech-cdp": {
-            "label": "powered by",
+            "label": "powers",
             "direction": "in"
           }
         }
@@ -3301,11 +3353,11 @@
       "properties": {
         "perspectives": {
           "mds-proc-cust-acq": {
-            "label": "powers",
+            "label": "powered by",
             "direction": "out"
           },
           "mds-tech-mktg-analytics": {
-            "label": "powered by",
+            "label": "powers",
             "direction": "in"
           }
         }
@@ -3320,11 +3372,11 @@
       "properties": {
         "perspectives": {
           "mds-proc-demand-forecast": {
-            "label": "powers",
+            "label": "powered by",
             "direction": "out"
           },
           "mds-tech-inventory": {
-            "label": "powered by",
+            "label": "powers",
             "direction": "in"
           }
         }
@@ -3339,11 +3391,11 @@
       "properties": {
         "perspectives": {
           "mds-proc-channel-conflict": {
-            "label": "powers",
+            "label": "powered by",
             "direction": "out"
           },
           "mds-tech-ecommerce": {
-            "label": "powered by",
+            "label": "powers",
             "direction": "in"
           }
         }
@@ -3358,11 +3410,11 @@
       "properties": {
         "perspectives": {
           "mds-proc-order-fulfil": {
-            "label": "generated by",
+            "label": "generates",
             "direction": "out"
           },
           "mds-dp-supply-chain-data": {
-            "label": "generates",
+            "label": "generated by",
             "direction": "in"
           }
         }
@@ -3377,11 +3429,11 @@
       "properties": {
         "perspectives": {
           "mds-proc-cust-acq": {
-            "label": "generated by",
+            "label": "generates",
             "direction": "out"
           },
           "mds-dp-customer-insights": {
-            "label": "generates",
+            "label": "generated by",
             "direction": "in"
           }
         }
@@ -3434,11 +3486,11 @@
       "properties": {
         "perspectives": {
           "mds-tech-ecommerce": {
-            "label": "generated by",
+            "label": "generates",
             "direction": "out"
           },
           "mds-dp-sales-revenue": {
-            "label": "generates",
+            "label": "generated by",
             "direction": "in"
           }
         }
@@ -3453,11 +3505,11 @@
       "properties": {
         "perspectives": {
           "mds-tech-crm": {
-            "label": "generated by",
+            "label": "generates",
             "direction": "out"
           },
           "mds-dp-customer-insights": {
-            "label": "generates",
+            "label": "generated by",
             "direction": "in"
           }
         }
@@ -3472,11 +3524,11 @@
       "properties": {
         "perspectives": {
           "mds-tech-cdp": {
-            "label": "generated by",
+            "label": "generates",
             "direction": "out"
           },
           "mds-dp-customer-insights": {
-            "label": "generates",
+            "label": "generated by",
             "direction": "in"
           }
         }
@@ -3491,11 +3543,11 @@
       "properties": {
         "perspectives": {
           "mds-tech-inventory": {
-            "label": "generated by",
+            "label": "generates",
             "direction": "out"
           },
           "mds-dp-supply-chain-data": {
-            "label": "generates",
+            "label": "generated by",
             "direction": "in"
           }
         }
@@ -3719,11 +3771,11 @@
       "properties": {
         "perspectives": {
           "mds-dp-customer-insights": {
-            "label": "consumes",
+            "label": "consumed by",
             "direction": "out"
           },
           "mds-tech-cdp": {
-            "label": "consumed by",
+            "label": "consumes",
             "direction": "in"
           }
         }
@@ -3738,11 +3790,11 @@
       "properties": {
         "perspectives": {
           "mds-dp-customer-insights": {
-            "label": "consumes",
+            "label": "consumed by",
             "direction": "out"
           },
           "mds-tech-mktg-analytics": {
-            "label": "consumed by",
+            "label": "consumes",
             "direction": "in"
           }
         }
@@ -3757,11 +3809,11 @@
       "properties": {
         "perspectives": {
           "mds-dp-supply-chain-data": {
-            "label": "consumes",
+            "label": "consumed by",
             "direction": "out"
           },
           "mds-tech-inventory": {
-            "label": "consumed by",
+            "label": "consumes",
             "direction": "in"
           }
         }
@@ -3876,7 +3928,18 @@
       "sourceId": "mds-person-cat-manager",
       "targetId": "mds-dp-financial-perf",
       "type": "manages",
-      "properties": {},
+      "properties": {
+        "perspectives": {
+          "mds-person-cat-manager": {
+            "label": "manages",
+            "direction": "out"
+          },
+          "mds-dp-financial-perf": {
+            "label": "managed by",
+            "direction": "in"
+          }
+        }
+      },
       "createdAt": "2026-08-02T00:00:00.000Z"
     },
     "mds-rel-ecom-gen-fp": {
@@ -4262,6 +4325,896 @@
       "type": "enforced_by",
       "properties": {},
       "createdAt": "2026-08-22T00:00:00.000Z"
+    },
+    "mds-rel-booked-to-capex-d2c-opco": {
+      "id": "mds-rel-booked-to-capex-d2c-opco",
+      "sourceId": "mds-fin-capex",
+      "targetId": "mds-legal-d2c-opco",
+      "type": "booked_to",
+      "properties": {
+        "perspectives": {
+          "mds-fin-capex": {
+            "label": "booked to",
+            "direction": "out"
+          },
+          "mds-legal-d2c-opco": {
+            "label": "bears cost of",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-booked-to-cogs-d2c-opco": {
+      "id": "mds-rel-booked-to-cogs-d2c-opco",
+      "sourceId": "mds-fin-cogs",
+      "targetId": "mds-legal-d2c-opco",
+      "type": "booked_to",
+      "properties": {
+        "perspectives": {
+          "mds-fin-cogs": {
+            "label": "booked to",
+            "direction": "out"
+          },
+          "mds-legal-d2c-opco": {
+            "label": "bears cost of",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-booked-to-marketing-d2c-opco": {
+      "id": "mds-rel-booked-to-marketing-d2c-opco",
+      "sourceId": "mds-fin-marketing",
+      "targetId": "mds-legal-d2c-opco",
+      "type": "booked_to",
+      "properties": {
+        "perspectives": {
+          "mds-fin-marketing": {
+            "label": "booked to",
+            "direction": "out"
+          },
+          "mds-legal-d2c-opco": {
+            "label": "bears cost of",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-booked-to-breakeven-d2c-opco": {
+      "id": "mds-rel-booked-to-breakeven-d2c-opco",
+      "sourceId": "mds-fin-breakeven",
+      "targetId": "mds-legal-d2c-opco",
+      "type": "booked_to",
+      "properties": {
+        "perspectives": {
+          "mds-fin-breakeven": {
+            "label": "booked to",
+            "direction": "out"
+          },
+          "mds-legal-d2c-opco": {
+            "label": "bears cost of",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-booked-to-wholesale-margin-wholesale": {
+      "id": "mds-rel-booked-to-wholesale-margin-wholesale",
+      "sourceId": "mds-fin-wholesale-margin",
+      "targetId": "mds-legal-wholesale",
+      "type": "booked_to",
+      "properties": {
+        "perspectives": {
+          "mds-fin-wholesale-margin": {
+            "label": "booked to",
+            "direction": "out"
+          },
+          "mds-legal-wholesale": {
+            "label": "bears cost of",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-trades-in-d2c-opco-london-se": {
+      "id": "mds-rel-trades-in-d2c-opco-london-se",
+      "sourceId": "mds-legal-d2c-opco",
+      "targetId": "mds-region-london-se",
+      "type": "trades_in",
+      "properties": {
+        "perspectives": {
+          "mds-legal-d2c-opco": {
+            "label": "trades in",
+            "direction": "out"
+          },
+          "mds-region-london-se": {
+            "label": "trading legal entity",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-trades-in-d2c-opco-midlands": {
+      "id": "mds-rel-trades-in-d2c-opco-midlands",
+      "sourceId": "mds-legal-d2c-opco",
+      "targetId": "mds-region-midlands",
+      "type": "trades_in",
+      "properties": {
+        "perspectives": {
+          "mds-legal-d2c-opco": {
+            "label": "trades in",
+            "direction": "out"
+          },
+          "mds-region-midlands": {
+            "label": "trading legal entity",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-trades-in-d2c-opco-north": {
+      "id": "mds-rel-trades-in-d2c-opco-north",
+      "sourceId": "mds-legal-d2c-opco",
+      "targetId": "mds-region-north",
+      "type": "trades_in",
+      "properties": {
+        "perspectives": {
+          "mds-legal-d2c-opco": {
+            "label": "trades in",
+            "direction": "out"
+          },
+          "mds-region-north": {
+            "label": "trading legal entity",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-trades-in-d2c-opco-scotland": {
+      "id": "mds-rel-trades-in-d2c-opco-scotland",
+      "sourceId": "mds-legal-d2c-opco",
+      "targetId": "mds-region-scotland",
+      "type": "trades_in",
+      "properties": {
+        "perspectives": {
+          "mds-legal-d2c-opco": {
+            "label": "trades in",
+            "direction": "out"
+          },
+          "mds-region-scotland": {
+            "label": "trading legal entity",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-trades-in-d2c-opco-wales": {
+      "id": "mds-rel-trades-in-d2c-opco-wales",
+      "sourceId": "mds-legal-d2c-opco",
+      "targetId": "mds-region-wales",
+      "type": "trades_in",
+      "properties": {
+        "perspectives": {
+          "mds-legal-d2c-opco": {
+            "label": "trades in",
+            "direction": "out"
+          },
+          "mds-region-wales": {
+            "label": "trading legal entity",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-trades-in-d2c-opco-ni": {
+      "id": "mds-rel-trades-in-d2c-opco-ni",
+      "sourceId": "mds-legal-d2c-opco",
+      "targetId": "mds-region-ni",
+      "type": "trades_in",
+      "properties": {
+        "perspectives": {
+          "mds-legal-d2c-opco": {
+            "label": "trades in",
+            "direction": "out"
+          },
+          "mds-region-ni": {
+            "label": "trading legal entity",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-trades-in-wholesale-london-se": {
+      "id": "mds-rel-trades-in-wholesale-london-se",
+      "sourceId": "mds-legal-wholesale",
+      "targetId": "mds-region-london-se",
+      "type": "trades_in",
+      "properties": {
+        "perspectives": {
+          "mds-legal-wholesale": {
+            "label": "trades in",
+            "direction": "out"
+          },
+          "mds-region-london-se": {
+            "label": "trading legal entity",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-trades-in-wholesale-midlands": {
+      "id": "mds-rel-trades-in-wholesale-midlands",
+      "sourceId": "mds-legal-wholesale",
+      "targetId": "mds-region-midlands",
+      "type": "trades_in",
+      "properties": {
+        "perspectives": {
+          "mds-legal-wholesale": {
+            "label": "trades in",
+            "direction": "out"
+          },
+          "mds-region-midlands": {
+            "label": "trading legal entity",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-trades-in-wholesale-north": {
+      "id": "mds-rel-trades-in-wholesale-north",
+      "sourceId": "mds-legal-wholesale",
+      "targetId": "mds-region-north",
+      "type": "trades_in",
+      "properties": {
+        "perspectives": {
+          "mds-legal-wholesale": {
+            "label": "trades in",
+            "direction": "out"
+          },
+          "mds-region-north": {
+            "label": "trading legal entity",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-trades-in-wholesale-scotland": {
+      "id": "mds-rel-trades-in-wholesale-scotland",
+      "sourceId": "mds-legal-wholesale",
+      "targetId": "mds-region-scotland",
+      "type": "trades_in",
+      "properties": {
+        "perspectives": {
+          "mds-legal-wholesale": {
+            "label": "trades in",
+            "direction": "out"
+          },
+          "mds-region-scotland": {
+            "label": "trading legal entity",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-trades-in-wholesale-wales": {
+      "id": "mds-rel-trades-in-wholesale-wales",
+      "sourceId": "mds-legal-wholesale",
+      "targetId": "mds-region-wales",
+      "type": "trades_in",
+      "properties": {
+        "perspectives": {
+          "mds-legal-wholesale": {
+            "label": "trades in",
+            "direction": "out"
+          },
+          "mds-region-wales": {
+            "label": "trading legal entity",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-trades-in-wholesale-ni": {
+      "id": "mds-rel-trades-in-wholesale-ni",
+      "sourceId": "mds-legal-wholesale",
+      "targetId": "mds-region-ni",
+      "type": "trades_in",
+      "properties": {
+        "perspectives": {
+          "mds-legal-wholesale": {
+            "label": "trades in",
+            "direction": "out"
+          },
+          "mds-region-ni": {
+            "label": "trading legal entity",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-measures-capex-target-d2c-opco": {
+      "id": "mds-rel-measures-capex-target-d2c-opco",
+      "sourceId": "mds-kpi-capex-target",
+      "targetId": "mds-legal-d2c-opco",
+      "type": "measures",
+      "properties": {
+        "perspectives": {
+          "mds-kpi-capex-target": {
+            "label": "tracks performance of",
+            "direction": "out"
+          },
+          "mds-legal-d2c-opco": {
+            "label": "tracked by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-measures-roi-d2c-opco": {
+      "id": "mds-rel-measures-roi-d2c-opco",
+      "sourceId": "mds-kpi-roi",
+      "targetId": "mds-legal-d2c-opco",
+      "type": "measures",
+      "properties": {
+        "perspectives": {
+          "mds-kpi-roi": {
+            "label": "tracks performance of",
+            "direction": "out"
+          },
+          "mds-legal-d2c-opco": {
+            "label": "tracked by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-measures-eav-yr3-d2c-opco": {
+      "id": "mds-rel-measures-eav-yr3-d2c-opco",
+      "sourceId": "mds-kpi-eav-yr3",
+      "targetId": "mds-legal-d2c-opco",
+      "type": "measures",
+      "properties": {
+        "perspectives": {
+          "mds-kpi-eav-yr3": {
+            "label": "tracks performance of",
+            "direction": "out"
+          },
+          "mds-legal-d2c-opco": {
+            "label": "tracked by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-measures-d2c-margin-d2c-opco": {
+      "id": "mds-rel-measures-d2c-margin-d2c-opco",
+      "sourceId": "mds-kpi-d2c-margin",
+      "targetId": "mds-legal-d2c-opco",
+      "type": "measures",
+      "properties": {
+        "perspectives": {
+          "mds-kpi-d2c-margin": {
+            "label": "tracks performance of",
+            "direction": "out"
+          },
+          "mds-legal-d2c-opco": {
+            "label": "tracked by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-measures-eav-yr1-d2c-opco": {
+      "id": "mds-rel-measures-eav-yr1-d2c-opco",
+      "sourceId": "mds-kpi-eav-yr1",
+      "targetId": "mds-legal-d2c-opco",
+      "type": "measures",
+      "properties": {
+        "perspectives": {
+          "mds-kpi-eav-yr1": {
+            "label": "tracks performance of",
+            "direction": "out"
+          },
+          "mds-legal-d2c-opco": {
+            "label": "tracked by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-measures-tav-group": {
+      "id": "mds-rel-measures-tav-group",
+      "sourceId": "mds-kpi-tav",
+      "targetId": "mds-legal-group",
+      "type": "measures",
+      "properties": {
+        "perspectives": {
+          "mds-kpi-tav": {
+            "label": "tracks performance of",
+            "direction": "out"
+          },
+          "mds-legal-group": {
+            "label": "tracked by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-measures-rv-baseline-wholesale": {
+      "id": "mds-rel-measures-rv-baseline-wholesale",
+      "sourceId": "mds-kpi-rv-baseline",
+      "targetId": "mds-legal-wholesale",
+      "type": "measures",
+      "properties": {
+        "perspectives": {
+          "mds-kpi-rv-baseline": {
+            "label": "tracks performance of",
+            "direction": "out"
+          },
+          "mds-legal-wholesale": {
+            "label": "tracked by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-measures-eav-yr2-d2c-opco": {
+      "id": "mds-rel-measures-eav-yr2-d2c-opco",
+      "sourceId": "mds-kpi-eav-yr2",
+      "targetId": "mds-legal-d2c-opco",
+      "type": "measures",
+      "properties": {
+        "perspectives": {
+          "mds-kpi-eav-yr2": {
+            "label": "tracks performance of",
+            "direction": "out"
+          },
+          "mds-legal-d2c-opco": {
+            "label": "tracked by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-applies-to-lifecycle-wholesale": {
+      "id": "mds-rel-applies-to-lifecycle-wholesale",
+      "sourceId": "mds-policy-lifecycle",
+      "targetId": "mds-legal-wholesale",
+      "type": "applies_to",
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-applies-to-retailer-agreement-wholesale": {
+      "id": "mds-rel-applies-to-retailer-agreement-wholesale",
+      "sourceId": "mds-legal-retailer-agreement",
+      "targetId": "mds-legal-wholesale",
+      "type": "applies_to",
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-applies-to-consent-d2c-opco": {
+      "id": "mds-rel-applies-to-consent-d2c-opco",
+      "sourceId": "mds-policy-consent",
+      "targetId": "mds-legal-d2c-opco",
+      "type": "applies_to",
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-applies-to-supplier-ethics-group": {
+      "id": "mds-rel-applies-to-supplier-ethics-group",
+      "sourceId": "mds-policy-supplier-ethics",
+      "targetId": "mds-legal-group",
+      "type": "applies_to",
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-applies-to-npi-group": {
+      "id": "mds-rel-applies-to-npi-group",
+      "sourceId": "mds-policy-npi",
+      "targetId": "mds-legal-group",
+      "type": "applies_to",
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-applies-to-pricing-d2c-opco": {
+      "id": "mds-rel-applies-to-pricing-d2c-opco",
+      "sourceId": "mds-policy-pricing",
+      "targetId": "mds-legal-d2c-opco",
+      "type": "applies_to",
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-applies-to-carrier-terms-d2c-opco": {
+      "id": "mds-rel-applies-to-carrier-terms-d2c-opco",
+      "sourceId": "mds-legal-carrier-terms",
+      "targetId": "mds-legal-d2c-opco",
+      "type": "applies_to",
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-applies-to-data-privacy-group": {
+      "id": "mds-rel-applies-to-data-privacy-group",
+      "sourceId": "mds-policy-data-privacy",
+      "targetId": "mds-legal-group",
+      "type": "applies_to",
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-applies-to-channel-exclusivity-d2c-opco": {
+      "id": "mds-rel-applies-to-channel-exclusivity-d2c-opco",
+      "sourceId": "mds-policy-channel-exclusivity",
+      "targetId": "mds-legal-d2c-opco",
+      "type": "applies_to",
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-applies-to-channel-exclusivity-wholesale": {
+      "id": "mds-rel-applies-to-channel-exclusivity-wholesale",
+      "sourceId": "mds-policy-channel-exclusivity",
+      "targetId": "mds-legal-wholesale",
+      "type": "applies_to",
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-applies-to-3pl-msa-d2c-opco": {
+      "id": "mds-rel-applies-to-3pl-msa-d2c-opco",
+      "sourceId": "mds-legal-3pl-msa",
+      "targetId": "mds-legal-d2c-opco",
+      "type": "applies_to",
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-applies-to-data-quality-group": {
+      "id": "mds-rel-applies-to-data-quality-group",
+      "sourceId": "mds-policy-data-quality",
+      "targetId": "mds-legal-group",
+      "type": "applies_to",
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-generates-capex-dp-financial-perf": {
+      "id": "mds-rel-generates-capex-dp-financial-perf",
+      "sourceId": "mds-fin-capex",
+      "targetId": "mds-dp-financial-perf",
+      "type": "generates",
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-generates-marketing-dp-financial-perf": {
+      "id": "mds-rel-generates-marketing-dp-financial-perf",
+      "sourceId": "mds-fin-marketing",
+      "targetId": "mds-dp-financial-perf",
+      "type": "generates",
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-generates-cogs-dp-financial-perf": {
+      "id": "mds-rel-generates-cogs-dp-financial-perf",
+      "sourceId": "mds-fin-cogs",
+      "targetId": "mds-dp-financial-perf",
+      "type": "generates",
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-generates-breakeven-dp-financial-perf": {
+      "id": "mds-rel-generates-breakeven-dp-financial-perf",
+      "sourceId": "mds-fin-breakeven",
+      "targetId": "mds-dp-financial-perf",
+      "type": "generates",
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-generates-wholesale-margin-dp-financial-perf": {
+      "id": "mds-rel-generates-wholesale-margin-dp-financial-perf",
+      "sourceId": "mds-fin-wholesale-margin",
+      "targetId": "mds-dp-financial-perf",
+      "type": "generates",
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-sales-domain-has-dp-financial-perf": {
+      "id": "mds-rel-sales-domain-has-dp-financial-perf",
+      "sourceId": "mds-domain-sales",
+      "targetId": "mds-dp-financial-perf",
+      "type": "has_data_product",
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-digital-lead-manages-dp-financial-perf": {
+      "id": "mds-rel-digital-lead-manages-dp-financial-perf",
+      "sourceId": "mds-person-digital-lead",
+      "targetId": "mds-dp-financial-perf",
+      "type": "manages",
+      "properties": {
+        "perspectives": {
+          "mds-person-digital-lead": {
+            "label": "manages",
+            "direction": "out"
+          },
+          "mds-dp-financial-perf": {
+            "label": "managed by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-dp-financial-perf-supports-roi": {
+      "id": "mds-rel-dp-financial-perf-supports-roi",
+      "sourceId": "mds-dp-financial-perf",
+      "targetId": "mds-kpi-roi",
+      "type": "supports",
+      "properties": {
+        "perspectives": {
+          "mds-dp-financial-perf": {
+            "label": "supports",
+            "direction": "out"
+          },
+          "mds-kpi-roi": {
+            "label": "supported by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-dp-financial-perf-supports-d2c-margin": {
+      "id": "mds-rel-dp-financial-perf-supports-d2c-margin",
+      "sourceId": "mds-dp-financial-perf",
+      "targetId": "mds-kpi-d2c-margin",
+      "type": "supports",
+      "properties": {
+        "perspectives": {
+          "mds-dp-financial-perf": {
+            "label": "supports",
+            "direction": "out"
+          },
+          "mds-kpi-d2c-margin": {
+            "label": "supported by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-dp-financial-perf-supports-rv-baseline": {
+      "id": "mds-rel-dp-financial-perf-supports-rv-baseline",
+      "sourceId": "mds-dp-financial-perf",
+      "targetId": "mds-kpi-rv-baseline",
+      "type": "supports",
+      "properties": {
+        "perspectives": {
+          "mds-dp-financial-perf": {
+            "label": "supports",
+            "direction": "out"
+          },
+          "mds-kpi-rv-baseline": {
+            "label": "supported by",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-dp-depends-financial-perf-sales-revenue": {
+      "id": "mds-rel-dp-depends-financial-perf-sales-revenue",
+      "sourceId": "mds-dp-financial-perf",
+      "targetId": "mds-dp-sales-revenue",
+      "type": "depends_on",
+      "properties": {
+        "perspectives": {
+          "mds-dp-financial-perf": {
+            "label": "depends on",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-dp-depends-sales-revenue-product-catalogue": {
+      "id": "mds-rel-dp-depends-sales-revenue-product-catalogue",
+      "sourceId": "mds-dp-sales-revenue",
+      "targetId": "mds-dp-product-catalogue",
+      "type": "depends_on",
+      "properties": {
+        "perspectives": {
+          "mds-dp-sales-revenue": {
+            "label": "depends on",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-dp-depends-customer-insights-sales-revenue": {
+      "id": "mds-rel-dp-depends-customer-insights-sales-revenue",
+      "sourceId": "mds-dp-customer-insights",
+      "targetId": "mds-dp-sales-revenue",
+      "type": "depends_on",
+      "properties": {
+        "perspectives": {
+          "mds-dp-customer-insights": {
+            "label": "depends on",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-dp-depends-supply-chain-data-product-catalogue": {
+      "id": "mds-rel-dp-depends-supply-chain-data-product-catalogue",
+      "sourceId": "mds-dp-supply-chain-data",
+      "targetId": "mds-dp-product-catalogue",
+      "type": "depends_on",
+      "properties": {
+        "perspectives": {
+          "mds-dp-supply-chain-data": {
+            "label": "depends on",
+            "direction": "out"
+          }
+        }
+      },
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-dp-product-catalogue-consumed-by-data-lead": {
+      "id": "mds-rel-dp-product-catalogue-consumed-by-data-lead",
+      "sourceId": "mds-dp-product-catalogue",
+      "targetId": "mds-person-data-lead",
+      "type": "consumed_by",
+      "properties": {
+        "perspectives": {
+          "mds-dp-product-catalogue": {
+            "label": "consumed by",
+            "direction": "out"
+          },
+          "mds-person-data-lead": {
+            "label": "consumes",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-dp-supply-chain-data-consumed-by-data-lead": {
+      "id": "mds-rel-dp-supply-chain-data-consumed-by-data-lead",
+      "sourceId": "mds-dp-supply-chain-data",
+      "targetId": "mds-person-data-lead",
+      "type": "consumed_by",
+      "properties": {
+        "perspectives": {
+          "mds-dp-supply-chain-data": {
+            "label": "consumed by",
+            "direction": "out"
+          },
+          "mds-person-data-lead": {
+            "label": "consumes",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-dp-sales-revenue-consumed-by-data-lead": {
+      "id": "mds-rel-dp-sales-revenue-consumed-by-data-lead",
+      "sourceId": "mds-dp-sales-revenue",
+      "targetId": "mds-person-data-lead",
+      "type": "consumed_by",
+      "properties": {
+        "perspectives": {
+          "mds-dp-sales-revenue": {
+            "label": "consumed by",
+            "direction": "out"
+          },
+          "mds-person-data-lead": {
+            "label": "consumes",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-dp-financial-perf-consumed-by-data-lead": {
+      "id": "mds-rel-dp-financial-perf-consumed-by-data-lead",
+      "sourceId": "mds-dp-financial-perf",
+      "targetId": "mds-person-data-lead",
+      "type": "consumed_by",
+      "properties": {
+        "perspectives": {
+          "mds-dp-financial-perf": {
+            "label": "consumed by",
+            "direction": "out"
+          },
+          "mds-person-data-lead": {
+            "label": "consumes",
+            "direction": "in"
+          }
+        }
+      },
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-product-domain-operates-in-d2c-opco": {
+      "id": "mds-rel-product-domain-operates-in-d2c-opco",
+      "sourceId": "mds-domain-product",
+      "targetId": "mds-legal-d2c-opco",
+      "type": "operates_in",
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-sales-domain-operates-in-d2c-opco": {
+      "id": "mds-rel-sales-domain-operates-in-d2c-opco",
+      "sourceId": "mds-domain-sales",
+      "targetId": "mds-legal-d2c-opco",
+      "type": "operates_in",
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-supply-chain-domain-operates-in-wholesale": {
+      "id": "mds-rel-supply-chain-domain-operates-in-wholesale",
+      "sourceId": "mds-domain-supply-chain",
+      "targetId": "mds-legal-wholesale",
+      "type": "operates_in",
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-customer-domain-operates-in-group": {
+      "id": "mds-rel-customer-domain-operates-in-group",
+      "sourceId": "mds-domain-customer",
+      "targetId": "mds-legal-group",
+      "type": "operates_in",
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-generates-lutterworth-supply-chain-data": {
+      "id": "mds-rel-generates-lutterworth-supply-chain-data",
+      "sourceId": "mds-sc-lutterworth",
+      "targetId": "mds-dp-supply-chain-data",
+      "type": "generates",
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-generates-lastmile-se-supply-chain-data": {
+      "id": "mds-rel-generates-lastmile-se-supply-chain-data",
+      "sourceId": "mds-sc-lastmile-se",
+      "targetId": "mds-dp-supply-chain-data",
+      "type": "generates",
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-generates-3pl-north-supply-chain-data": {
+      "id": "mds-rel-generates-3pl-north-supply-chain-data",
+      "sourceId": "mds-sc-3pl-north",
+      "targetId": "mds-dp-supply-chain-data",
+      "type": "generates",
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-generates-lastmile-scotland-supply-chain-data": {
+      "id": "mds-rel-generates-lastmile-scotland-supply-chain-data",
+      "sourceId": "mds-sc-lastmile-scotland",
+      "targetId": "mds-dp-supply-chain-data",
+      "type": "generates",
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-generates-midlands-3pl-supply-chain-data": {
+      "id": "mds-rel-generates-midlands-3pl-supply-chain-data",
+      "sourceId": "mds-sc-midlands-3pl",
+      "targetId": "mds-dp-supply-chain-data",
+      "type": "generates",
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-generates-beauty-hub-supply-chain-data": {
+      "id": "mds-rel-generates-beauty-hub-supply-chain-data",
+      "sourceId": "mds-sc-beauty-hub",
+      "targetId": "mds-dp-supply-chain-data",
+      "type": "generates",
+      "createdAt": "2026-09-06T00:00:00.000Z"
+    },
+    "mds-rel-generates-ni-hub-supply-chain-data": {
+      "id": "mds-rel-generates-ni-hub-supply-chain-data",
+      "sourceId": "mds-sc-ni-hub",
+      "targetId": "mds-dp-supply-chain-data",
+      "type": "generates",
+      "createdAt": "2026-09-06T00:00:00.000Z"
     }
   }
 }

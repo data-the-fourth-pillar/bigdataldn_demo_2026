@@ -62,6 +62,8 @@ export const DEMO_RELATIONSHIP_TYPES = [
     'manages',
     'supports',
     'consumed_by',
+    'booked_to',
+    'trades_in',
 ] as const;
 
 export function getCategoryConfig(type: EntityType): CategoryConfig | undefined {

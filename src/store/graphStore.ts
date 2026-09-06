@@ -35,7 +35,7 @@ export const useGraphStore = create<GraphState>((set, get) => ({
     selectedEntityId: null,
     selectedRelationshipId: null,
     focusEntityId: null,
-    filter: {},
+    filter: { entityTypes: [] },
 
     setEntities: (entities) => set({ entities }),
 
@@ -84,7 +84,7 @@ export const useGraphStore = create<GraphState>((set, get) => ({
         filter: { ...state.filter, ...filter }
     })),
 
-    clearFilter: () => set({ filter: {} }),
+    clearFilter: () => set({ filter: { entityTypes: [] } }),
 
     getFilteredData: () => {
         const state = get();
@@ -92,7 +92,7 @@ export const useGraphStore = create<GraphState>((set, get) => ({
         let filteredRelationships = state.relationships;
 
         // Filter by entity types
-        if (state.filter.entityTypes && state.filter.entityTypes.length > 0) {
+        if (state.filter.entityTypes !== undefined) {
             filteredEntities = filteredEntities.filter(e =>
                 state.filter.entityTypes!.includes(e.type)
             );

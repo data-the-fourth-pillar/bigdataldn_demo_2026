@@ -86,7 +86,7 @@ export const GraphCanvas: React.FC = () => {
             const scopedIds = new Set(filter.entityIds);
             filtered = filtered.filter(e => scopedIds.has(e.id));
         }
-        if (filter.entityTypes && filter.entityTypes.length > 0) {
+        if (filter.entityTypes !== undefined) {
             filtered = filtered.filter(e =>
                 filter.entityTypes!.includes(e.type) ||
                 (e.type === 'metadata_technical' && filter.entityTypes!.includes('technology'))
@@ -128,7 +128,13 @@ export const GraphCanvas: React.FC = () => {
 
     // 1. Structural Effect: rebuilds graph nodes/links and force simulation
     useEffect(() => {
-        if (!svgRef.current || filteredEntities.length === 0) {
+        if (!svgRef.current) {
+            return undefined;
+        }
+
+        if (filteredEntities.length === 0) {
+            d3.select(svgRef.current).selectAll('*').remove();
+            nodesRef.current = [];
             return undefined;
         }
 
@@ -149,7 +155,7 @@ export const GraphCanvas: React.FC = () => {
             prevFilterKeyRef.current = filterKey;
         }
 
-        const isUnfiltered = !(filter.entityTypes && filter.entityTypes.length > 0) && !filter.searchQuery
+        const isUnfiltered = filter.entityTypes === undefined && !filter.searchQuery
             && !(filter.entityIds && filter.entityIds.length > 0);
 
         const nodes: GraphNode[] = filteredEntities.map(e => {
@@ -514,7 +520,11 @@ export const GraphCanvas: React.FC = () => {
 
             {filteredEntities.length === 0 && (
                 <div className="graph-empty-overlay">
-                    <p>No entities to display. Load the demo or create a new entity.</p>
+                    <p>
+                        {entities.length === 0
+                            ? 'No entities to display. Load the demo or create a new entity.'
+                            : 'Select an entity type from the sidebar to start exploring the graph.'}
+                    </p>
                 </div>
             )}
 

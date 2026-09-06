@@ -4,11 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import { useGraphStore } from '../../store/graphStore';
 import { getCategoryConfig } from '../../constants/categories';
 import type { GraphNode, GraphLink } from '../../types/graph';
+import { getCitedEntityIds } from '../../utils/citedEntities';
 import './ContextGraphPanel.css';
 
 interface ContextGraphPanelProps {
     entityIds: string[];
     relationshipIds: string[];
+    answerText: string;
 }
 
 const NODE_RADIUS = 16;
@@ -48,67 +50,93 @@ function layoutGraph(entityIds: string[], relationshipIds: string[], allEntities
     return { nodes, links, viewBox: `${minX} ${minY} ${width} ${height}` };
 }
 
-export const ContextGraphPanel: React.FC<ContextGraphPanelProps> = ({ entityIds, relationshipIds }) => {
+export const ContextGraphPanel: React.FC<ContextGraphPanelProps> = ({ entityIds, relationshipIds, answerText }) => {
     const { entities, relationships, setFocusEntity, setFilter, selectEntity } = useGraphStore();
     const navigate = useNavigate();
 
-    const { nodes, links, viewBox } = useMemo(
-        () => layoutGraph(entityIds, relationshipIds, entities as GraphNode[], relationships as GraphLink[]),
+    // "Retrieved" (entityIds/relationshipIds) is everything sent to the LLM as
+    // context — often much broader than what the answer actually drew on, since a
+    // correctly type-matched entity (e.g. a legal entity) can itself be a
+    // well-connected hub. "Cited" narrows that down to entities the answer text
+    // actually names, so the graph shown here matches what the response really
+    // used rather than everything that was available to it.
+    const { citedEntityIds, citedRelationshipIds, isFiltered } = useMemo(() => {
+        const { citedIds, isFiltered: filtered } = getCitedEntityIds(entityIds, answerText, entities);
+        const citedSet = new Set(citedIds);
+        const citedRelIds = relationshipIds.filter(rid => {
+            const rel = relationships.find(r => r.id === rid);
+            return rel ? citedSet.has(rel.sourceId) && citedSet.has(rel.targetId) : false;
+        });
+
+        return { citedEntityIds: citedIds, citedRelationshipIds: citedRelIds, isFiltered: filtered };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        [entityIds.join(','), relationshipIds.join(','), entities, relationships]
+    }, [entityIds.join(','), relationshipIds.join(','), answerText, entities, relationships]);
+
+    const { nodes, links, viewBox } = useMemo(
+        () => layoutGraph(citedEntityIds, citedRelationshipIds, entities as GraphNode[], relationships as GraphLink[]),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [citedEntityIds.join(','), citedRelationshipIds.join(','), entities, relationships]
     );
 
     if (nodes.length === 0) return null;
 
     const handleNodeClick = (id: string) => {
         setFocusEntity(null);
-        setFilter({ entityIds });
+        setFilter({ entityIds: citedEntityIds, entityTypes: undefined });
         selectEntity(id);
         navigate('/graph');
     };
 
     return (
-        <div className="context-graph-panel">
-            <svg className="context-graph-svg" viewBox={viewBox} preserveAspectRatio="xMidYMid meet">
-                <g>
-                    {links.map(link => {
-                        const s = link.source as GraphNode;
-                        const t = link.target as GraphNode;
-                        return (
-                            <line
-                                key={link.id}
-                                x1={s.x ?? 0}
-                                y1={s.y ?? 0}
-                                x2={t.x ?? 0}
-                                y2={t.y ?? 0}
-                                className="context-graph-edge"
-                            />
-                        );
-                    })}
-                </g>
-                <g>
-                    {nodes.map(node => {
-                        const category = getCategoryConfig(node.type);
-                        return (
-                            <g
-                                key={node.id}
-                                transform={`translate(${node.x ?? 0},${node.y ?? 0})`}
-                                className="context-graph-node"
-                                onClick={() => handleNodeClick(node.id)}
-                            >
-                                <title>{node.name}</title>
-                                <circle r={NODE_RADIUS} fill={category?.color ?? 'var(--graph-node-default)'} stroke="white" strokeWidth={1.5} />
-                                <text textAnchor="middle" dy={5} fontSize={13} fill="white" style={{ pointerEvents: 'none' }}>
-                                    {category?.icon ?? '•'}
-                                </text>
-                                <text textAnchor="middle" dy={NODE_RADIUS + 13} fontSize={9} className="context-graph-label">
-                                    {node.name.length > 18 ? `${node.name.slice(0, 17)}…` : node.name}
-                                </text>
-                            </g>
-                        );
-                    })}
-                </g>
-            </svg>
-        </div>
+        <details className="context-details" open>
+            <summary>
+                🕸️ Enterprise Context {isFiltered ? 'Cited' : 'Used'}
+                <span className="context-details-count">
+                    {' '}({nodes.length} {nodes.length === 1 ? 'entity' : 'entities'}, {links.length} {links.length === 1 ? 'relationship' : 'relationships'})
+                </span>
+            </summary>
+            <div className="context-graph-panel">
+                <svg className="context-graph-svg" viewBox={viewBox} preserveAspectRatio="xMidYMid meet">
+                    <g>
+                        {links.map(link => {
+                            const s = link.source as GraphNode;
+                            const t = link.target as GraphNode;
+                            return (
+                                <line
+                                    key={link.id}
+                                    x1={s.x ?? 0}
+                                    y1={s.y ?? 0}
+                                    x2={t.x ?? 0}
+                                    y2={t.y ?? 0}
+                                    className="context-graph-edge"
+                                />
+                            );
+                        })}
+                    </g>
+                    <g>
+                        {nodes.map(node => {
+                            const category = getCategoryConfig(node.type);
+                            return (
+                                <g
+                                    key={node.id}
+                                    transform={`translate(${node.x ?? 0},${node.y ?? 0})`}
+                                    className="context-graph-node"
+                                    onClick={() => handleNodeClick(node.id)}
+                                >
+                                    <title>{node.name}</title>
+                                    <circle r={NODE_RADIUS} fill={category?.color ?? 'var(--graph-node-default)'} stroke="white" strokeWidth={1.5} />
+                                    <text textAnchor="middle" dy={5} fontSize={13} fill="white" style={{ pointerEvents: 'none' }}>
+                                        {category?.icon ?? '•'}
+                                    </text>
+                                    <text textAnchor="middle" dy={NODE_RADIUS + 13} fontSize={9} className="context-graph-label">
+                                        {node.name.length > 18 ? `${node.name.slice(0, 17)}…` : node.name}
+                                    </text>
+                                </g>
+                            );
+                        })}
+                    </g>
+                </svg>
+            </div>
+        </details>
     );
 };

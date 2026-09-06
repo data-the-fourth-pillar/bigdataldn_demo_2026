@@ -11,24 +11,24 @@ Three flagship questions, one per persona. Each is asked **identically across al
 | Mode | What happens | What to point out live |
 |---|---|---|
 | **Generic** | Generic industry playbook: "start small, test highest-margin SKUs, watch fulfilment costs" — no MDS category names, no numbers. | It could be any company's advice. Zero specificity. |
-| **Data** | Pulls Product Catalogue Data + Sales Revenue Data tables. Can spot Sports Nutrition has the highest target margin (62%) and is D2C-ready — but has no idea whether supply chain can actually fulfil it, no launch-readiness KPI targets (D2C Target Gross Margin 62%, ROI 28%, EAV Year 1 £2M), and can't see the Channel Exclusivity Policy that restricts which categories go where. | Answer sounds plausible but is missing a critical caveat: it can't tell you supply chain risk exists. |
-| **Data + EC** | Names Sports Nutrition, cites the actual KPI targets, and flags that Central Beauty Hub is only Partial-ready and 3PL Partner North is a Blocker — plus surfaces the Channel Exclusivity Policy and D2C Pricing Policy constraints, and who owns the call (D2C Category Manager). | The "aha" moment — the same question now returns a decision-grade answer with real risk flags the Data-only mode structurally couldn't see. |
+| **Data** | Pulls all 5 data product tables, including D2C Financial Performance Data (Capex £750K, Marketing Budget £350K, COGS £14.50/order, Break-Even 9 months, Gross Margin target 62%, ROI target 28%, Wholesale Baseline £45M). Can spot Sports Nutrition has the highest target margin and is D2C-ready — but still has no idea whether supply chain can actually fulfil it, can't see the Channel Exclusivity Policy that restricts which categories go where, and has no concept of legal-entity accountability for that spend. | Even with every number in the warehouse, it's structurally blind to relationships — it's not a "less data" problem, it's a "no ownership or risk context" problem. |
+| **Data + EC** | Names Sports Nutrition, cites the actual KPI targets, flags that Central Beauty Hub is only Partial-ready and 3PL Partner North is a Blocker, surfaces the Channel Exclusivity Policy and D2C Pricing Policy constraints, names D2C Category Manager as the operational owner — **and now also names MDS D2C OpCo Ltd as the legal entity the Capex/Marketing spend is booked to**, since Cost/Budget items are now linked to the legal entity that bears them. | The "aha" moment — decision-grade answer with real risk flags, an accountable person, *and* an accountable legal entity, none of which Data mode could see regardless of how many tables it had. |
 
 ## VP Supply Chain — "Which supply chain nodes are ready for D2C, and what should I fix first?"
 
 | Mode | What happens | What to point out live |
 |---|---|---|
 | **Generic** | Generic "audit capacity, lead times, 3PL partners" advice. No node names. | Useless for an actual ops decision. |
-| **Data** | Lists all 7 nodes' status from the raw table: Lutterworth DC + Last-Mile SE Courier (Ready), Midlands 3PL Facility + Central Beauty Hub + Belfast Regional Hub (Partial), 3PL Partner North + Last-Mile Scotland Carrier (Blocker). Numbers only — no idea why they're blocked, who owns fixing them, or what policy governs them. | It can enumerate but not diagnose or assign ownership. |
-| **Data + EC** | Same node list, but tied to the 3PL Master Services Agreement and National Courier Terms policies, and the Supply Chain Planner as the accountable owner via the Supply Chain Domain. | The jump from "here's a status list" to "here's who's accountable and under what contract." |
+| **Data** | Lists all 7 nodes' status from the raw table: Lutterworth DC + Last-Mile SE Courier (Ready), Midlands 3PL Facility + Central Beauty Hub + Belfast Regional Hub (Partial), 3PL Partner North + Last-Mile Scotland Carrier (Blocker). Numbers only — no idea why they're blocked, who owns fixing them, or what policy or legal entity governs them. | It can enumerate but not diagnose or assign ownership. |
+| **Data + EC** | Same node list, but tied to the 3PL Master Services Agreement and National Courier Terms policies, the Supply Chain Planner as the accountable owner via the Supply Chain Domain — **and now also names MDS D2C OpCo Ltd as the legal entity those policies apply to**, since Policy → Legal Entity links now exist. | The jump from "here's a status list" to "here's who's accountable, under what contract, and for which legal entity." |
 
-## CDO — "What governs the Customer domain, and are we set up for compliant personalization?"
+## CDO — "Which data products power our D2C decisions, and how are they connected?"
 
 | Mode | What happens | What to point out live |
 |---|---|---|
-| **Generic** | Generic GDPR/consent-management talking points. No mention of MDS systems at all. | Pure boilerplate — this is what "everyone already has." |
-| **Data** | Pulls Customer Insights Data table (segment size, AOV, LTV, D2C propensity by segment) — real numbers, but zero way to answer "are we compliant" since that's a policy/relationship question, not a column in a table. Watch it hedge or flatly say it can't determine this from data alone. | The mode's most exposed failure — compliance literally cannot be answered from a spreadsheet. |
-| **Data + EC** | Names Customer Data Privacy Policy and Customer Consent Personalisation Policy, the systems they apply to (CDP, CRM, Marketing Analytics Platform, Customer Insights Data), and the accountable owner (Data Analytics Lead via Customer Domain) — then layers in the actual segment numbers. | Strongest contrast of the three: Data mode can't even attempt the governance half of the question; Data+EC answers it directly. |
+| **Generic** | Generic "maintain a data catalog, understand your lineage" talking points. No MDS system or dataset names. | Boilerplate — this is what every data-maturity slide already says. |
+| **Data** | Dumps all 5 data product tables (Product Catalogue, Customer Insights, Supply Chain, Sales Revenue, D2C Financial Performance) — real numbers, but zero idea which dataset feeds which, or who's accountable for any of them. Lineage is inherently a relationship concept, so this is the mode's most exposed failure of the three flagships. | It can list datasets but cannot trace a single arrow between them — lineage literally cannot live in a spreadsheet. |
+| **Data + EC** | Names the actual lineage chain — Product Catalogue Data as the master dataset feeding Sales Revenue Data and Supply Chain Data, which in turn feed Customer Insights Data and D2C Financial Performance Data — and names Data Analytics Lead (employed at the Group level, not a subsidiary) as the owner overseeing all 5, not just Customer Insights Data. | Strongest contrast of the three: Data mode can't even attempt the "how are they connected" half of the question; Data+EC traces the whole chain and names one accountable owner across it. |
 
 ---
 
@@ -54,3 +54,16 @@ Three flagship questions, one per persona. Each is asked **identically across al
 - Sales Domain → Digital Commerce Lead
 - Supply Chain Domain → Supply Chain Planner
 - Customer Domain → Data Analytics Lead
+
+**Legal entity accountability (added 2026-09-06):**
+- D2C launch Cost/Budget items (Capex, Marketing Budget, COGS, Break-Even) — booked to MDS D2C OpCo Ltd
+- Wholesale Operating Margin — booked to MDS Wholesale Trading Ltd
+- 3PL Master Services Agreement, National Courier Terms, D2C Pricing Policy, Customer Consent Personalisation Policy — apply to MDS D2C OpCo Ltd
+- Channel Exclusivity Policy — applies to both MDS D2C OpCo Ltd and MDS Wholesale Trading Ltd
+- Customer Data Privacy Policy, Supplier Code of Conduct, New Product Introduction, Product Data Quality Standard — apply to MDS Group Ltd (group-wide standards)
+
+**Data product lineage (added 2026-09-06):**
+- Product Catalogue Data — master dataset, nothing depends on it further upstream
+- Sales Revenue Data, Supply Chain Data — depend on Product Catalogue Data
+- Customer Insights Data, D2C Financial Performance Data — depend on Sales Revenue Data
+- Data Analytics Lead oversees all 5 data products (manages Customer Insights Data directly; consumes the other 4) — a group-wide role, since they're employed by MDS Group Ltd rather than a subsidiary

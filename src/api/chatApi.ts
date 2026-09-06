@@ -83,6 +83,17 @@ export const chatApi = {
 
                         try {
                             const parsed = JSON.parse(data);
+                            if (parsed.error) {
+                                // Backend signals a stream failure this way (see
+                                // routes/chat.py's outer except block). Previously
+                                // unhandled here — it matched none of the other
+                                // branches, fell through, and the request looked
+                                // like a normal-but-empty success (fullMessage
+                                // stayed '""', rendered as a bare "..." in the UI
+                                // with no indication anything had gone wrong).
+                                onError?.(new Error(parsed.error));
+                                return;
+                            }
                             if (parsed.context) {
                                 usedContext = parsed.context;
                                 citations = parsed.context.citations;

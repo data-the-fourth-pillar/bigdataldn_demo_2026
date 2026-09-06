@@ -15,20 +15,20 @@ const PERSONA_LABELS: Record<string, string> = {
 
 const EXAMPLE_QUESTIONS: Record<string, string[]> = {
     ceo: [
-        'We want to launch D2C in the UK next quarter. Which categories and regions should we start with?',
+        'Which product category should we launch D2C first, and what return can we expect?',
         'What are the KPI targets and financial projections for the D2C launch?',
         'What is the expected return on investment and break-even for the D2C channel?',
         'Which legal contracts govern channel conflict between Wholesale and D2C?',
     ],
     vp_supply_chain: [
-        'Which supply chain nodes are ready for D2C fulfilment and which are blockers?',
+        'Which supply chain nodes are ready for D2C, and what should I fix first?',
         'What is the capacity and lead time of each DC supporting D2C?',
         'Which regions can we fulfil next-day D2C orders from today?',
         'What 3PL partners do we need to activate for Year 2 D2C expansion?',
     ],
     cdo: [
-        'What does our data tell us about the D2C revenue opportunity by category?',
-        'Which data products support the D2C launch decision?',
+        'Which data products power our D2C decisions, and how are they connected?',
+        'What governs the Customer domain, and are we set up for compliant personalization?',
         'What customer insights do we have on D2C propensity by segment?',
         'Which data domains govern the D2C product catalogue and customer data?',
     ],
@@ -201,6 +201,9 @@ export const ChatInterface: React.FC = () => {
                                 {message.role === 'assistant' && message.groundingMode === 'data_only' && (
                                     <div className="generic-mode-badge">📊 Data only — no Enterprise Context used. Relationships, ownership, and business meaning are not reflected in this answer.</div>
                                 )}
+                                {message.role === 'assistant' && message.groundingMode === 'kg_full' && (
+                                    <div className="generic-mode-badge">🕸️ Data + Enterprise Context — grounded in data, relationships, ownership, and business context.</div>
+                                )}
                                 {message.role === 'assistant' && isGraphGrounded && (
                                     reasoning ? (
                                         <details className="reasoning-details" open>
@@ -218,28 +221,24 @@ export const ChatInterface: React.FC = () => {
                                 )}
                                 <div className="message-text">
                                     {message.role === 'assistant'
-                                        ? <ReactMarkdown remarkPlugins={[remarkGfm]}>{cleanContent || (!isStreaming ? '...' : '')}</ReactMarkdown>
+                                        ? <ReactMarkdown remarkPlugins={[remarkGfm]}>{cleanContent || (!isStreaming ? '_No response was generated for this message — please try again._' : '')}</ReactMarkdown>
                                         : cleanContent}
                                 </div>
 
 
                                 {message.role === 'assistant' && (message.groundingMode === 'kg_full' || message.groundingMode === 'data_only') && (message.usedContext?.entities?.length ?? 0) > 0 && (
-                                    <DataUsedPanel entityIds={message.usedContext!.entities} />
+                                    <DataUsedPanel
+                                        entityIds={message.usedContext!.entities}
+                                        answerText={`${reasoning ?? ''} ${cleanContent}`}
+                                    />
                                 )}
 
                                 {message.role === 'assistant' && !isGenericResponse && message.groundingMode !== 'data_only' && (message.usedContext?.entities?.length ?? 0) > 0 && (
-                                    <details className="context-details" open>
-                                        <summary>
-                                            🕸️ Enterprise Context Used
-                                            <span className="context-details-count">
-                                                {' '}({message.usedContext!.entities.length} entities, {message.usedContext!.relationships.length} relationships)
-                                            </span>
-                                        </summary>
-                                        <ContextGraphPanel
-                                            entityIds={message.usedContext!.entities}
-                                            relationshipIds={message.usedContext!.relationships}
-                                        />
-                                    </details>
+                                    <ContextGraphPanel
+                                        entityIds={message.usedContext!.entities}
+                                        relationshipIds={message.usedContext!.relationships}
+                                        answerText={`${reasoning ?? ''} ${cleanContent}`}
+                                    />
                                 )}
 
                                 {message.role === 'assistant' && (message.followUpQuestions?.length ?? 0) > 0 && !isStreaming && (

@@ -44,7 +44,7 @@ export const GraphControlsPanel: React.FC = () => {
         const next = current.includes(typeId)
             ? current.filter(t => t !== typeId)
             : [...current, typeId];
-        setFilter({ entityTypes: next.length > 0 ? next : undefined });
+        setFilter({ entityTypes: next });
     };
 
     return (
@@ -108,7 +108,7 @@ export const GraphControlsPanel: React.FC = () => {
                         <button
                             type="button"
                             className="gc-clear-btn"
-                            onClick={() => setFilter({ entityTypes: undefined })}
+                            onClick={() => setFilter({ entityTypes: [] })}
                         >
                             Clear all
                         </button>

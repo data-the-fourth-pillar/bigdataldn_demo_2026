@@ -102,8 +102,14 @@ async def stream_message(request: ChatRequest):
             })
             yield f"data: {done_payload}\n\n"
 
-        except Exception:
-            # S2 Security Rule — Suppress exception details in SSE response
+        except Exception as e:
+            # S2 Security Rule — Suppress exception details in the SSE response
+            # (could leak URLs/headers/bodies to the client). Logging the exception
+            # TYPE only (never str(e), which could contain those same details) is
+            # safe and was previously entirely missing here — this handler wraps the
+            # whole request including context assembly and the LLM stream, so any
+            # failure in that path was silently invisible server-side too.
+            print(f"Chat stream error ({type(e).__name__}) — details suppressed for security")
             error_data = json.dumps({"error": "Stream error — please retry.", "done": True})
             yield f"data: {error_data}\n\n"
 
