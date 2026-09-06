@@ -64,7 +64,7 @@ export const ContextGraphPanel: React.FC<ContextGraphPanelProps> = ({ entityIds,
         setFocusEntity(null);
         setFilter({ entityIds });
         selectEntity(id);
-        navigate('/');
+        navigate('/graph');
     };
 
     return (

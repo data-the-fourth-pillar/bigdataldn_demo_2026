@@ -3,10 +3,10 @@ import { useChatStore } from '../../store/chatStore';
 import type { PersonaLens } from '../../types/chat';
 import './PersonaSelector.css';
 
-const PERSONA_OPTIONS: { value: PersonaLens; label: string }[] = [
-    { value: 'ceo', label: 'CEO' },
-    { value: 'vp_supply_chain', label: 'VP Supply Chain' },
-    { value: 'cdo', label: 'CDO' },
+const PERSONA_OPTIONS: { value: PersonaLens; label: string; accent: 'purple' | 'emerald' | 'cyan' }[] = [
+    { value: 'ceo', label: 'CEO', accent: 'purple' },
+    { value: 'vp_supply_chain', label: 'VP Supply Chain', accent: 'emerald' },
+    { value: 'cdo', label: 'CDO', accent: 'cyan' },
 ];
 
 export const PersonaSelector: React.FC = () => {
@@ -28,7 +28,7 @@ export const PersonaSelector: React.FC = () => {
                     <button
                         key={option.value}
                         type="button"
-                        className={`persona-btn ${personaLens === option.value ? 'active' : ''}`}
+                        className={`persona-btn persona-btn-${option.accent} ${personaLens === option.value ? 'active' : ''}`}
                         onClick={() => handlePersonaChange(option.value)}
                     >
                         {option.label}

@@ -18,7 +18,7 @@ interface AppLayoutProps {
 
 export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     const location = useLocation();
-    const isGraph = location.pathname === '/';
+    const isGraph = location.pathname === '/graph';
     const isChat = location.pathname === '/chat';
 
     const [settingsOpen, setSettingsOpen] = useState(false);
@@ -94,7 +94,8 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     };
 
     const navItems = [
-        { path: '/', label: 'Graph', icon: '🕸️' },
+        { path: '/', label: 'Home', icon: '🏠' },
+        { path: '/graph', label: 'Graph', icon: '🕸️' },
         { path: '/chat', label: 'Chat', icon: '💬' },
     ];
 
@@ -115,7 +116,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                             to={item.path}
                             className={`nav-item ${location.pathname === item.path ? 'active' : ''}`}
                         >
-                            <span className={`nav-icon${item.path === '/' ? ' icon-graph' : ''}`}>{item.icon}</span>
+                            <span className={`nav-icon${item.path === '/graph' ? ' icon-graph' : ''}`}>{item.icon}</span>
                             <span className="nav-label">{item.label}</span>
                         </Link>
                     ))}

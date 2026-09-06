@@ -52,12 +52,18 @@
 }
 
 .persona-btn.active {
-    background: var(--surface, #ffffff);
-    color: var(--color-accent-600, #2563eb);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    color: #ffffff;
 }
 
-[data-theme="dark"] .persona-btn.active {
-    background: var(--color-accent-600, #2563eb);
-    color: #ffffff;
+.persona-btn-purple.active {
+    background: #7c3aed;
+}
+
+.persona-btn-emerald.active {
+    background: #059669;
+}
+
+.persona-btn-cyan.active {
+    background: #0891b2;
 }
