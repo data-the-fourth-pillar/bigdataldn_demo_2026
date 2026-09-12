@@ -73,6 +73,27 @@ export function getCategoryConfig(type: EntityType): CategoryConfig | undefined 
     return DEMO_CATEGORIES.find(c => c.id === type);
 }
 
+/**
+ * Persona-aware node color: when the VP Supply Chain lens is active, supply
+ * chain nodes are colored by D2C readiness (ready/blocker/partial) instead of
+ * the flat category color, so the graph reads as a readiness heatmap. Shared
+ * by GraphCanvas.tsx (the main Graph page) and ContextGraphPanel.tsx (the
+ * chat's mini "Enterprise Context Cited" graph) so both stay in sync — a node
+ * shouldn't change color depending on which view is showing it.
+ */
+export function getNodeFillColor(
+    node: { type: EntityType; metadata?: Record<string, unknown> | null },
+    personaLens: string,
+): string {
+    if (personaLens === 'vp_supply_chain' && node.type === 'supply_chain_node') {
+        const status = node.metadata?.d2c_status;
+        if (status === 'ready') return '#22c55e';
+        if (status === 'blocker') return '#ef4444';
+        if (status === 'partial') return '#f59e0b';
+    }
+    return getCategoryConfig(node.type)?.color ?? 'var(--graph-node-default)';
+}
+
 export function isDemoEntityType(type: EntityType): boolean {
     return DEMO_ENTITY_TYPES.includes(type) || type === 'metadata_technical';
 }

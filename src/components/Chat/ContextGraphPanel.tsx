@@ -2,7 +2,8 @@ import React, { useMemo } from 'react';
 import * as d3 from 'd3';
 import { useNavigate } from 'react-router-dom';
 import { useGraphStore } from '../../store/graphStore';
-import { getCategoryConfig } from '../../constants/categories';
+import { useChatStore } from '../../store/chatStore';
+import { getCategoryConfig, getNodeFillColor } from '../../constants/categories';
 import type { GraphNode, GraphLink } from '../../types/graph';
 import { getCitedEntityIds } from '../../utils/citedEntities';
 import './ContextGraphPanel.css';
@@ -52,6 +53,7 @@ function layoutGraph(entityIds: string[], relationshipIds: string[], allEntities
 
 export const ContextGraphPanel: React.FC<ContextGraphPanelProps> = ({ entityIds, relationshipIds, answerText }) => {
     const { entities, relationships, setFocusEntity, setFilter, selectEntity } = useGraphStore();
+    const personaLens = useChatStore(state => state.personaLens);
     const navigate = useNavigate();
 
     // "Retrieved" (entityIds/relationshipIds) is everything sent to the LLM as
@@ -124,7 +126,7 @@ export const ContextGraphPanel: React.FC<ContextGraphPanelProps> = ({ entityIds,
                                     onClick={() => handleNodeClick(node.id)}
                                 >
                                     <title>{node.name}</title>
-                                    <circle r={NODE_RADIUS} fill={category?.color ?? 'var(--graph-node-default)'} stroke="white" strokeWidth={1.5} />
+                                    <circle r={NODE_RADIUS} fill={getNodeFillColor(node, personaLens)} stroke="white" strokeWidth={1.5} />
                                     <text textAnchor="middle" dy={5} fontSize={13} fill="white" style={{ pointerEvents: 'none' }}>
                                         {category?.icon ?? '•'}
                                     </text>

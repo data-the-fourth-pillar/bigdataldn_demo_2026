@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 import { useGraphStore } from '../../store/graphStore';
 import { useChatStore } from '../../store/chatStore';
 import type { GraphNode, GraphLink, Entity } from '../../types/graph';
-import { getCategoryConfig, isDemoEntityType, OPERATING_PILLAR_TYPES } from '../../constants/categories';
+import { getCategoryConfig, getNodeFillColor, isDemoEntityType, OPERATING_PILLAR_TYPES } from '../../constants/categories';
 import { getRelationshipDisplay } from '../../utils/relationshipPerspective';
 import './GraphCanvas.css';
 
@@ -19,16 +19,6 @@ function getNodeRadius(node: GraphNode, focusEntityId: string | null): number {
     if (node.id === focusEntityId) return 38;
     if (OPERATING_PILLAR_TYPES.includes(node.type as typeof OPERATING_PILLAR_TYPES[number])) return 32;
     return 26;
-}
-
-function getNodeFillColor(node: GraphNode, personaLens: string): string {
-    if (personaLens === 'vp_supply_chain' && node.type === 'supply_chain_node') {
-        const status = node.metadata?.d2c_status;
-        if (status === 'ready')   return '#22c55e';
-        if (status === 'blocker') return '#ef4444';
-        if (status === 'partial') return '#f59e0b';
-    }
-    return getCategoryConfig(node.type)?.color ?? 'var(--graph-node-default)';
 }
 
 function getEgoNetwork(
