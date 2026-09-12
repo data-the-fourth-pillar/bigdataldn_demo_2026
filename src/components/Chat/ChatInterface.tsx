@@ -13,6 +13,13 @@ const PERSONA_LABELS: Record<string, string> = {
     cdo: 'CDO',
 };
 
+// Same accent colors as the Home page's persona circles and Chat's PersonaSelector.
+const PERSONA_ACCENTS: Record<string, string> = {
+    ceo: 'purple',
+    vp_supply_chain: 'emerald',
+    cdo: 'cyan',
+};
+
 const EXAMPLE_QUESTIONS: Record<string, string[]> = {
     ceo: [
         'Which product category should we launch D2C first, and what return can we expect?',
@@ -182,11 +189,13 @@ export const ChatInterface: React.FC = () => {
                     return (
                         <div key={message.id} className={`message ${message.role}`}>
                             <div className="message-avatar">
-                                <div className="message-avatar-icon">
+                                <div className={`message-avatar-icon${message.role === 'user' ? ` message-avatar-${PERSONA_ACCENTS[personaLens] ?? 'purple'}` : ''}`}>
                                     {message.role === 'user' ? '👤' : '🤖'}
                                 </div>
                                 {message.role === 'user' && (
-                                    <span className="message-persona-label">{PERSONA_LABELS[personaLens] ?? personaLens}</span>
+                                    <span className="message-persona-label">
+                                        {PERSONA_LABELS[personaLens] ?? personaLens}
+                                    </span>
                                 )}
                             </div>
                             <div className="message-content">

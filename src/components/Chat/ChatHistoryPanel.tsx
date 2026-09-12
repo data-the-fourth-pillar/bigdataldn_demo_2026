@@ -3,7 +3,7 @@ import { useChatStore } from '../../store/chatStore';
 import './ChatHistoryPanel.css';
 
 export const ChatHistoryPanel: React.FC = () => {
-    const { sessions, messages, activeSessionId, newChat, loadSession, deleteSession, clearAllSessions } = useChatStore();
+    const { sessions, messages, activeSessionId, newChat, loadSession, deleteSession, clearAllSessions, isStreaming } = useChatStore();
 
     const formatTime = (iso: string) => {
         const d = new Date(iso);
@@ -37,8 +37,8 @@ export const ChatHistoryPanel: React.FC = () => {
                         type="button"
                         className="chp-new-btn"
                         onClick={newChat}
-                        disabled={messages.length === 0}
-                        title="Save current chat and start new"
+                        disabled={messages.length === 0 || isStreaming}
+                        title={isStreaming ? 'Wait for the current response to finish' : 'Save current chat and start new'}
                     >
                         + New
                     </button>
@@ -55,8 +55,8 @@ export const ChatHistoryPanel: React.FC = () => {
                                 type="button"
                                 className="chp-session-btn"
                                 onClick={() => loadSession(session.id)}
-                                title={session.title}
-                                disabled={activeSessionId === session.id}
+                                title={isStreaming ? 'Wait for the current response to finish' : session.title}
+                                disabled={activeSessionId === session.id || isStreaming}
                             >
                                 <span className="chp-session-title">{session.title}</span>
                                 <span className="chp-session-time">{formatTime(session.createdAt)}</span>
@@ -65,7 +65,8 @@ export const ChatHistoryPanel: React.FC = () => {
                                 type="button"
                                 className="chp-delete-btn"
                                 onClick={(e) => { e.stopPropagation(); deleteSession(session.id); }}
-                                title="Delete session"
+                                disabled={isStreaming && activeSessionId === session.id}
+                                title={isStreaming && activeSessionId === session.id ? 'Wait for the current response to finish' : 'Delete session'}
                             >
                                 ×
                             </button>
