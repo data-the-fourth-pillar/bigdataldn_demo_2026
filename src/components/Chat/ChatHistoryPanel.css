@@ -114,10 +114,7 @@
     min-width: 0;
 }
 
-/* Excludes the active session's own button — that one is always disabled (you're
-   already viewing it) and already has its own distinct highlight via .chp-item.active,
-   so dimming it here would misleadingly suggest it's unavailable rather than open. */
-.chp-item:not(.active) .chp-session-btn:disabled,
+.chp-session-btn:disabled,
 .chp-delete-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
@@ -131,6 +128,12 @@
     text-overflow: ellipsis;
     max-width: 100%;
     display: block;
+}
+
+.chp-session-meta {
+    font-size: 10px;
+    color: var(--text-tertiary);
+    font-weight: var(--font-weight-semibold);
 }
 
 .chp-session-time {

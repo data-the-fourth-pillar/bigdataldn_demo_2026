@@ -1,6 +1,20 @@
 import React from 'react';
 import { useChatStore } from '../../store/chatStore';
+import type { PersonaLens, GroundingMode } from '../../types/chat';
 import './ChatHistoryPanel.css';
+
+const PERSONA_LABELS: Record<PersonaLens, string> = {
+    ceo: 'CEO',
+    vp_supply_chain: 'VP Supply Chain',
+    cdo: 'CDO',
+};
+
+const GROUNDING_LABELS: Record<GroundingMode, string> = {
+    generic: 'Generic',
+    data_only: 'Data',
+    kg_full: 'Data + EC',
+    kg_only: 'EC',
+};
 
 export const ChatHistoryPanel: React.FC = () => {
     const { sessions, messages, activeSessionId, newChat, loadSession, deleteSession, clearAllSessions, isStreaming } = useChatStore();
@@ -59,6 +73,11 @@ export const ChatHistoryPanel: React.FC = () => {
                                 disabled={activeSessionId === session.id || isStreaming}
                             >
                                 <span className="chp-session-title">{session.title}</span>
+                                {session.personaLens && session.groundingMode && (
+                                    <span className="chp-session-meta">
+                                        {PERSONA_LABELS[session.personaLens] ?? session.personaLens} · {GROUNDING_LABELS[session.groundingMode] ?? session.groundingMode}
+                                    </span>
+                                )}
                                 <span className="chp-session-time">{formatTime(session.createdAt)}</span>
                             </button>
                             <button

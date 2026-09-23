@@ -6,6 +6,8 @@ export interface ChatSession {
     title: string;
     createdAt: string;
     messages: Message[];
+    personaLens: PersonaLens;
+    groundingMode: GroundingMode;
 }
 
 const SESSIONS_KEY = 'ec-chat-sessions';
@@ -26,7 +28,7 @@ function saveSessions(sessions: ChatSession[]): void {
     } catch {}
 }
 
-function makeSession(messages: Message[]): ChatSession {
+function makeSession(messages: Message[], personaLens: PersonaLens, groundingMode: GroundingMode): ChatSession {
     const firstUser = messages.find(m => m.role === 'user');
     const title = firstUser
         ? firstUser.content.slice(0, 60) + (firstUser.content.length > 60 ? '…' : '')
@@ -36,6 +38,8 @@ function makeSession(messages: Message[]): ChatSession {
         title,
         createdAt: new Date().toISOString(),
         messages,
+        personaLens,
+        groundingMode,
     };
 }
 
@@ -84,7 +88,7 @@ export const useChatStore = create<ChatState>((set) => ({
     messages: [],
     sessions: loadSessions(),
     activeSessionId: null,
-    groundingMode: 'kg_full',
+    groundingMode: 'generic',
     isStreaming: false,
     currentStreamingMessage: '',
     showExplainability: false,
@@ -113,13 +117,15 @@ export const useChatStore = create<ChatState>((set) => ({
 
         let sessions = state.sessions;
         if (state.activeSessionId) {
-            // Update the active session with latest messages
+            // Update the active session with latest messages and persona/mode
             sessions = sessions.map(s =>
-                s.id === state.activeSessionId ? { ...s, messages: state.messages } : s
+                s.id === state.activeSessionId
+                    ? { ...s, messages: state.messages, personaLens: state.personaLens, groundingMode: state.groundingMode }
+                    : s
             );
         } else {
             // Unsaved conversation — create a new session entry
-            const session = makeSession(state.messages);
+            const session = makeSession(state.messages, state.personaLens, state.groundingMode);
             sessions = [session, ...sessions];
         }
         saveSessions(sessions);
@@ -128,6 +134,7 @@ export const useChatStore = create<ChatState>((set) => ({
             sessions,
             activeSessionId: null,
             messages: [],
+            groundingMode: 'generic',
             highlightedEntities: [],
             highlightedRelationships: [],
         };
@@ -143,13 +150,15 @@ export const useChatStore = create<ChatState>((set) => ({
         let sessions = state.sessions;
         if (state.messages.length > 0) {
             if (state.activeSessionId) {
-                // Persist any new messages back to the session we're leaving
+                // Persist any new messages and the latest persona/mode back to the session we're leaving
                 sessions = sessions.map(s =>
-                    s.id === state.activeSessionId ? { ...s, messages: state.messages } : s
+                    s.id === state.activeSessionId
+                        ? { ...s, messages: state.messages, personaLens: state.personaLens, groundingMode: state.groundingMode }
+                        : s
                 );
             } else {
                 // Save the current unsaved conversation before switching
-                const current = makeSession(state.messages);
+                const current = makeSession(state.messages, state.personaLens, state.groundingMode);
                 sessions = [current, ...sessions];
             }
             saveSessions(sessions);
@@ -159,6 +168,10 @@ export const useChatStore = create<ChatState>((set) => ({
             sessions,
             activeSessionId: id,
             messages: session.messages,
+            // Restore the persona/grounding mode that was last used in the chat being opened,
+            // so the top-bar selectors reflect what actually applied to it.
+            personaLens: session.personaLens ?? state.personaLens,
+            groundingMode: session.groundingMode ?? state.groundingMode,
             highlightedEntities: [],
             highlightedRelationships: [],
         };
@@ -212,10 +225,12 @@ export const useChatStore = create<ChatState>((set) => ({
 
         if (activeSessionId) {
             sessions = sessions.map(s =>
-                s.id === activeSessionId ? { ...s, messages: newMessages } : s
+                s.id === activeSessionId
+                    ? { ...s, messages: newMessages, personaLens: state.personaLens, groundingMode: state.groundingMode }
+                    : s
             );
         } else {
-            const session = makeSession(newMessages);
+            const session = makeSession(newMessages, state.personaLens, state.groundingMode);
             activeSessionId = session.id;
             sessions = [session, ...sessions];
         }
