@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { useChatStore } from '../../store/chatStore';
-import { chatApi } from '../../api/chatApi';
+import { chatApi, ChatApiError } from '../../api/chatApi';
 import { ContextGraphPanel } from './ContextGraphPanel';
 import { DataUsedPanel } from './DataUsedPanel';
 import './ChatInterface.css';
@@ -98,10 +98,13 @@ export const ChatInterface: React.FC = () => {
                 (message, _reasoning) => finishStreaming(message),
                 (error) => {
                     console.error('Streaming error:', error);
+                    const isRateLimited = error instanceof ChatApiError && error.status === 429;
                     finishStreaming({
                         id: crypto.randomUUID(),
                         role: 'assistant',
-                        content: 'Sorry, I encountered an error processing your request. Make sure the backend is running on port 8000.',
+                        content: isRateLimited
+                            ? error.message
+                            : 'Sorry, I encountered an error processing your request. Make sure the backend is running on port 8000.',
                         timestamp: new Date().toISOString(),
                     });
                 },

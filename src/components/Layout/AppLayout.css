@@ -5,17 +5,52 @@
 }
 
 .sidebar {
-    width: 260px;
+    width: 300px;
     background: var(--surface);
     border-right: 1px solid var(--border-primary);
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
+    overflow: hidden;
+    transition: width var(--transition-fast, 0.2s ease);
+    padding-top: 52px; /* clears the fixed .sidebar-header bar above it */
 }
 
+.sidebar.sidebar-closed {
+    width: 0;
+    border-right: none;
+}
+
+.sidebar-backdrop {
+    display: none;
+}
+
+/* Fixed to the viewport rather than inside <aside> — see AppLayout.tsx for why
+   the header (logo + collapse toggle) has to live outside the collapsible part. */
 .sidebar-header {
-    padding: var(--space-6);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    height: 52px; /* matches .app-top-header so the two bars align with no seam */
+    width: 300px;
+    padding: 0 var(--space-4);
+    background: var(--surface);
     border-bottom: 1px solid var(--border-primary);
+    border-right: 1px solid var(--border-primary);
+    overflow: hidden;
+    transition: width var(--transition-fast, 0.2s ease);
+}
+
+.sidebar-header.sidebar-header-closed {
+    width: 62px;
+    border-right: none;
+}
+
+.sidebar-header.sidebar-header-closed .logo {
+    display: none;
 }
 
 .logo {
@@ -25,6 +60,13 @@
     font-size: var(--font-size-xl);
     font-weight: var(--font-weight-bold);
     color: var(--text-primary);
+    min-width: 0;
+}
+
+.logo-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .logo-icon {
@@ -252,11 +294,70 @@
     margin-left: auto;
 }
 
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-width: 0;
+}
+
+/* A normal flex child of .sidebar-header, pushed to the end of that row via
+   margin-left: auto — sits after the logo text regardless of how wide the
+   text renders, no pixel guessing needed. Stays visible whether the sidebar
+   body is open, collapsed (desktop) or off-screen (mobile) because it lives
+   in the always-fixed header bar, not inside the collapsible <aside>. */
+.sidebar-toggle-corner {
+    margin-left: auto;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background: var(--surface);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: 14px;
+    transition: all var(--transition-fast);
+}
+
+.sidebar-toggle-corner:hover {
+    background: var(--bg-secondary);
+    border-color: var(--color-accent-400);
+}
+
+.book-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 15px;
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-secondary);
+    text-decoration: none;
+    padding: 4px 10px;
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+}
+
+.book-link:hover {
+    color: var(--color-accent-600);
+    border-color: var(--color-accent-400);
+    background: var(--bg-secondary);
+}
+
 .main-wrapper {
     flex: 1;
     display: flex;
     flex-direction: column;
     overflow: hidden;
+}
+
+/* Clears the persistent 62px .sidebar-header-closed chip — see the comment on
+   this className in AppLayout.tsx for why it's only needed in the closed state. */
+.main-wrapper.main-wrapper-offset {
+    margin-left: 62px;
 }
 
 .app-top-header {
@@ -275,4 +376,38 @@
     flex: 1;
     overflow: hidden;
     background: var(--bg-primary);
+}
+
+/* Below this width the sidebar becomes an overlay drawer instead of a layout
+   column — there isn't room to push page content aside without squeezing it
+   unusably narrow. Placed last so it wins over the desktop .sidebar rules
+   above at equal selector specificity. */
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        z-index: 1000;
+        width: min(300px, 85vw);
+        transform: translateX(-100%);
+        transition: transform 0.25s ease;
+    }
+
+    .sidebar.sidebar-open {
+        transform: translateX(0);
+    }
+
+    .sidebar.sidebar-closed {
+        width: min(300px, 85vw);
+        transform: translateX(-100%);
+    }
+
+    .sidebar-backdrop {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 999;
+    }
 }

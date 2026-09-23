@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Request
 from fastapi.responses import StreamingResponse
 from datetime import datetime
 import uuid
@@ -6,6 +6,7 @@ import json
 from backend.models.chat import ChatRequest, ChatResponse, Message, UsedContext, Citation
 from backend.services.context_service import context_service
 from backend.services.llm_service import llm_service
+from backend.services.rate_limit_service import check_rate_limit
 
 router = APIRouter(tags=["chat"])
 
@@ -20,8 +21,10 @@ def _build_citations(context_data: dict) -> list:
     return [Citation(**c) for c in context_data.get('citations', [])]
 
 @router.post("/message", response_model=ChatResponse)
-async def send_message(request: ChatRequest):
+async def send_message(request: ChatRequest, http_request: Request):
     """Send a message and get a complete response"""
+
+    check_rate_limit(http_request)
 
     context_data = context_service.assemble_context(
         request.message,
@@ -59,8 +62,10 @@ async def send_message(request: ChatRequest):
     )
 
 @router.post("/stream")
-async def stream_message(request: ChatRequest):
+async def stream_message(request: ChatRequest, http_request: Request):
     """Send a message and get a streaming response"""
+
+    check_rate_limit(http_request)
 
     context_data = context_service.assemble_context(
         request.message,

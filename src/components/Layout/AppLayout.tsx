@@ -2,6 +2,7 @@ import React, { type ReactNode, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { PersonaSelector } from '../Controls/PersonaSelector';
 import { ProviderSelector } from '../Controls/ProviderSelector';
+import { PresenterKeyInput } from '../Controls/PresenterKeyInput';
 import { GraphControlsPanel } from '../Graph/GraphControlsPanel';
 import { ThemeToggle } from '../Controls/ThemeToggle';
 import { ChatHistoryPanel } from '../Chat/ChatHistoryPanel';
@@ -20,8 +21,13 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     const location = useLocation();
     const isGraph = location.pathname === '/graph';
     const isChat = location.pathname === '/chat';
+    const isHome = location.pathname === '/';
 
     const [settingsOpen, setSettingsOpen] = useState(false);
+    // Desktop starts with the sidebar open, mobile starts closed — it otherwise
+    // takes up the whole viewport on a phone. A one-time viewport check at mount
+    // is enough; we don't need to live-resync on window resize for this.
+    const [sidebarOpen, setSidebarOpen] = useState(() => window.innerWidth > 768);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const { setEntities, setRelationships, setFocusEntity, clearFilter, selectEntity } = useGraphStore();
 
@@ -99,22 +105,46 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
         { path: '/chat', label: 'Chat', icon: '💬' },
     ];
 
+    // On mobile the sidebar is an overlay drawer, so picking a destination should
+    // close it — otherwise it keeps covering the page you just navigated to.
+    // On desktop it pushes/reflows content instead, so it's fine to leave open.
+    const handleNavClick = () => {
+        if (window.innerWidth <= 768) setSidebarOpen(false);
+    };
+
     return (
         <div className="app-layout">
-            <aside className="sidebar">
-                <div className="sidebar-header">
-                    <h1 className="logo">
-                        <span className="logo-icon">MDS</span>
-                        <span className="logo-text">Enterprise Context</span>
-                    </h1>
-                </div>
+            {sidebarOpen && (
+                <div className="sidebar-backdrop" onClick={() => setSidebarOpen(false)} />
+            )}
 
+            {/* Fixed to the viewport, not inside <aside> — stays visible and clickable
+                even when the sidebar body is collapsed/off-screen (the only way to
+                reopen it), and the toggle sits after the logo text via normal flex
+                flow rather than a guessed pixel position. */}
+            <div className={`sidebar-header ${sidebarOpen ? 'sidebar-header-open' : 'sidebar-header-closed'}`}>
+                <h1 className="logo">
+                    <span className="logo-icon">MDS</span>
+                    <span className="logo-text">Enterprise Context</span>
+                </h1>
+                <button
+                    type="button"
+                    className="sidebar-toggle-corner"
+                    onClick={() => setSidebarOpen(o => !o)}
+                    title={sidebarOpen ? 'Collapse sidebar' : 'Expand sidebar'}
+                >
+                    ☰
+                </button>
+            </div>
+
+            <aside className={`sidebar ${sidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
                 <nav className="nav">
                     {navItems.map((item) => (
                         <Link
                             key={item.path}
                             to={item.path}
                             className={`nav-item ${location.pathname === item.path ? 'active' : ''}`}
+                            onClick={handleNavClick}
                         >
                             <span className={`nav-icon${item.path === '/graph' ? ' icon-graph' : ''}`}>{item.icon}</span>
                             <span className="nav-label">{item.label}</span>
@@ -140,6 +170,8 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                     {settingsOpen && (
                         <div className="settings-panel">
                             <ProviderSelector />
+                            <span className="settings-section-label">Presenter Mode</span>
+                            <PresenterKeyInput />
                             <button type="button" className="settings-reload-btn" onClick={handleReloadDemo}>
                                 🌱 Reload Demo
                             </button>
@@ -169,12 +201,30 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                 </div>
             </aside>
 
-            <div className="main-wrapper">
+            {/* When the sidebar is closed, .sidebar-header still persists as a small
+                fixed corner chip (see above) — main content needs to clear it here
+                explicitly, since a collapsed <aside> stops reserving that space via
+                normal flex layout (and on mobile it never reserved any space at all,
+                being position: fixed). When open, the sidebar/chip are the same
+                width, so flex layout already accounts for it and no offset is needed. */}
+            <div className={`main-wrapper ${sidebarOpen ? '' : 'main-wrapper-offset'}`}>
                 <header className="app-top-header">
-                    {isGraph && <GraphHeaderControls />}
-                    {isChat && <PersonaSelector />}
+                    <div className="header-left">
+                        {isGraph && <GraphHeaderControls />}
+                        {isChat && <PersonaSelector />}
+                    </div>
                     <div className="header-right">
                         {isChat && <GroundingModeSelector />}
+                        {isHome && (
+                            <a
+                                href="https://datathefourthpillar.com/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="book-link"
+                            >
+                                📖 Data As The Fourth Pillar
+                            </a>
+                        )}
                         <ThemeToggle />
                     </div>
                 </header>

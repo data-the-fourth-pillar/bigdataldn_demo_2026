@@ -1,5 +1,6 @@
 import axios from 'axios';
 import type { ChatRequest, ChatResponse, Message } from '../types/chat';
+import { useChatStore } from '../store/chatStore';
 
 // Detect if we are running in a browser environment and what the base URL should be
 const getBaseUrl = () => {
@@ -24,6 +25,14 @@ const getBaseUrl = () => {
 
 const API_BASE_URL = getBaseUrl();
 
+export class ChatApiError extends Error {
+    status: number;
+    constructor(message: string, status: number) {
+        super(message);
+        this.status = status;
+    }
+}
+
 const api = axios.create({
     baseURL: API_BASE_URL,
     headers: {
@@ -31,9 +40,17 @@ const api = axios.create({
     },
 });
 
+// Lets the presenter's browser skip the demo's rate limits regardless of what
+// IP venue WiFi assigns it (often shared/NAT'd with the whole room). Empty
+// when no presenter key has been set, so this is a no-op for everyone else.
+function presenterBypassHeaders(): Record<string, string> {
+    const key = useChatStore.getState().presenterKey;
+    return key ? { 'X-Demo-Bypass-Key': key } : {};
+}
+
 export const chatApi = {
     async sendMessage(request: ChatRequest): Promise<ChatResponse> {
-        const response = await api.post('/api/chat/message', request);
+        const response = await api.post('/api/chat/message', request, { headers: presenterBypassHeaders() });
         return response.data;
     },
 
@@ -50,12 +67,20 @@ export const chatApi = {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    ...presenterBypassHeaders(),
                 },
                 body: JSON.stringify(request),
             });
 
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                let detail = `HTTP error! status: ${response.status}`;
+                try {
+                    const body = await response.json();
+                    if (body?.detail) detail = body.detail;
+                } catch {
+                    // Non-JSON error body — keep the generic message
+                }
+                throw new ChatApiError(detail, response.status);
             }
 
             const reader = response.body?.getReader();

@@ -12,6 +12,15 @@ export interface ChatSession {
 
 const SESSIONS_KEY = 'ec-chat-sessions';
 const MAX_SESSIONS = 20;
+const PRESENTER_KEY_STORAGE = 'demo-presenter-key';
+
+function loadPresenterKey(): string {
+    try {
+        return localStorage.getItem(PRESENTER_KEY_STORAGE) || '';
+    } catch {
+        return '';
+    }
+}
 
 function loadSessions(): ChatSession[] {
     try {
@@ -55,6 +64,7 @@ interface ChatState {
 
     personaLens: PersonaLens;
     provider: LLMProvider;
+    presenterKey: string;
     highlightedEntities: string[];
     highlightedRelationships: string[];
 
@@ -72,6 +82,7 @@ interface ChatState {
     setGroundingMode: (mode: GroundingMode) => void;
     setPersonaLens: (lens: PersonaLens) => void;
     setProvider: (provider: LLMProvider) => void;
+    setPresenterKey: (key: string) => void;
 
     setHighlightedPath: (entities: string[], relationships: string[]) => void;
     clearHighlightedPath: () => void;
@@ -96,6 +107,7 @@ export const useChatStore = create<ChatState>((set) => ({
 
     personaLens: 'ceo',
     provider: 'gemini',
+    presenterKey: loadPresenterKey(),
     highlightedEntities: [],
     highlightedRelationships: [],
 
@@ -195,6 +207,14 @@ export const useChatStore = create<ChatState>((set) => ({
     setGroundingMode: (mode) => set({ groundingMode: mode }),
     setPersonaLens: (lens) => set({ personaLens: lens }),
     setProvider: (provider) => set({ provider }),
+    setPresenterKey: (key) => {
+        try {
+            localStorage.setItem(PRESENTER_KEY_STORAGE, key);
+        } catch {
+            // Best-effort only — key still applies for this session even if storage fails
+        }
+        set({ presenterKey: key });
+    },
 
     setHighlightedPath: (entities, relationships) => set({
         highlightedEntities: entities,
