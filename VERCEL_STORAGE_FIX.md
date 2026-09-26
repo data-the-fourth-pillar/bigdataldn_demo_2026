@@ -1,131 +1,54 @@
-# Vercel Storage Fix - Implementation Guide
+# Vercel Storage — Upstash Redis
+
+_Last updated 2026-09-26. The live deployment has used Redis since 2026-09-12 (commit `034d02a`)._
 
 ## Problem
-The "failed to save entity" error on Vercel was caused by attempting to write to the filesystem, which is **read-only** on Vercel serverless functions (except for `/tmp`).
 
-## Quick Fix Applied ✅
+Vercel runs the FastAPI backend as serverless functions. Different requests can land on different, **isolated container instances**. Each instance has its own in-memory `graph_service` and its own `/tmp` filesystem. So a graph seeded by one request appeared empty to the next, and the live API returned inconsistent entity/relationship counts (70/359, then 0/0, then a mix).
 
-### Changes Made to `backend/services/storage_service.py`:
+The earlier fix (writing to `/tmp/data/graph.json` when `VERCEL` is set) made saves stop failing. It could never make state consistent across containers.
 
-1. **Detect Vercel Environment**: Check for `VERCEL` environment variable
-2. **Use `/tmp` directory**: Vercel allows writes to `/tmp` (temporary storage)
-3. **Better Error Handling**: Raise exceptions instead of silently failing
+## Solution: Upstash Redis
 
-```python
-if os.environ.get('VERCEL'):
-    self.data_dir = '/tmp/data'
-else:
-    # Local development uses project data directory
-    base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    self.data_dir = os.path.join(base_dir, "data")
-```
+`backend/services/storage_service.py` stores the whole graph as one JSON value under the Redis key `graph` whenever both env vars are set:
 
-## ⚠️ Important Limitations
+| Env var | Source |
+|---|---|
+| `KV_REST_API_URL` | Vercel Storage → Upstash Redis marketplace integration |
+| `KV_REST_API_TOKEN` | same |
 
-**The `/tmp` directory is ephemeral:**
-- Data is lost when the serverless function "cold starts" (after inactivity)
-- Each function instance has its own `/tmp` directory
-- Not suitable for production use
+Dependency: `upstash-redis==1.8.0`, in both root `requirements.txt` (what Vercel builds from) and `backend/requirements.txt`.
 
-## Testing the Fix
+### Storage selection (in order)
 
-1. **Automatic Deployment**: Vercel should auto-deploy from your git push
-2. **Test Creating an Entity**: Try creating a new entity on your Vercel deployment
-3. **Check Logs**: View Vercel function logs to see debug messages
+1. **Redis**: if both KV vars are set, whatever the `VERCEL` setting. This is the live Vercel path.
+2. **Vercel without Redis**: `/tmp/data/graph.json`. Ephemeral and per-container. Last-resort fallback only.
+3. **Local**: `<repo_root>/data/graph.json`. Local dev never sets the KV vars, so it is unaffected.
 
-## Long-Term Solution: Use a Database
+### Behaviour
 
-For production, you need persistent storage. Here are the recommended options:
+- **Load**: reads the `graph` key. If it's empty or unreadable, it falls back to the bundled `backend/data/seed_mds_d2c.json`.
+- **Save**: writes the full graph on every mutation. Failures are logged, not raised, so a persistence error doesn't crash the request.
 
-### Option 1: Vercel Postgres (Recommended) 🌟
+## Also uses Redis: chat rate limiting
 
-**Setup:**
-```bash
-# Install Vercel CLI if not already installed
-npm i -g vercel
+`backend/services/rate_limit_service.py` (commit `24f505a`) keeps its fixed-window counters in the same Redis, for the same cross-container reason:
 
-# Link your project
-vercel link
+| Env var | Default | Meaning |
+|---|---|---|
+| `CHAT_RATE_LIMIT_PER_IP` | 40 | messages per IP per window |
+| `CHAT_RATE_LIMIT_WINDOW_SECONDS` | 600 | per-IP window |
+| `CHAT_DAILY_MESSAGE_LIMIT` | 500 | shared cap across all users, per UTC day |
+| `DEMO_BYPASS_TOKEN` | _(unset)_ | presenter secret; matching `x-demo-bypass-key` header skips all limits |
 
-# Create a Postgres database
-vercel postgres create
-```
+Without Redis (local dev), the counters fall back to an in-process dict.
 
-**Benefits:**
-- Fully managed by Vercel
-- Automatic backups
-- Easy integration
-- Free tier available
+## Verifying on Vercel
 
-### Option 2: Vercel KV (Redis)
+- Function logs should show `🔴 Using Upstash Redis for graph storage`. If you see `Running on Vercel without Redis configured`, the KV env vars are missing.
+- Repeated `GET /api/graph` calls should return the same counts every time.
 
-**Setup:**
-```bash
-vercel kv create
-```
+## History
 
-**Benefits:**
-- Simple key-value storage
-- Very fast
-- Good for caching and simple data structures
-
-### Option 3: External Database (Supabase, PlanetScale, etc.)
-
-**Setup:**
-- Create account on chosen provider
-- Get connection string
-- Add to Vercel environment variables
-
-## Next Steps
-
-### Immediate (Current Fix):
-✅ Your app should now work on Vercel
-✅ You can create entities
-⚠️ Data will be lost on cold starts
-
-### For Production:
-1. Choose a database solution (Vercel Postgres recommended)
-2. Update `storage_service.py` to use the database
-3. Migrate existing data
-4. Update API endpoints if needed
-
-## Migration to Vercel Postgres
-
-If you want to implement Vercel Postgres, here's what needs to change:
-
-1. **Install dependencies:**
-   ```bash
-   pip install psycopg2-binary
-   ```
-
-2. **Update `requirements.txt`:**
-   ```
-   psycopg2-binary
-   ```
-
-3. **Create new `postgres_storage_service.py`:**
-   - Replace JSON file operations with SQL queries
-   - Use connection pooling
-   - Handle transactions properly
-
-4. **Update environment variables:**
-   - Add `POSTGRES_URL` from Vercel
-
-Would you like me to implement the Vercel Postgres solution for you?
-
-## Monitoring
-
-Check Vercel logs to verify the fix:
-```bash
-vercel logs
-```
-
-Look for:
-- `DEBUG: Running on Vercel, using /tmp/data for storage`
-- `DEBUG: Successfully saved graph to /tmp/data/graph.json`
-
-## Summary
-
-✅ **Fixed**: Entity creation now works on Vercel
-⚠️ **Temporary**: Data persists only during function lifetime
-🔄 **Next**: Implement database for permanent storage
+- **Before 2026-09-12**: `/tmp` storage on Vercel. Saves worked, but state wasn't shared across containers.
+- **2026-09-12**: migrated to Upstash Redis. This replaces the Vercel Postgres / KV plan this document used to recommend.
